@@ -1,0 +1,78 @@
+<ECF>
+	<Algorithm>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry> <!-- velicina turnira -->
+		</SteadyStateTournament>
+		<RouletteWheel>
+			<Entry key="crxprob">0.5</Entry> 
+			<Entry key="selpressure">10</Entry> 
+		</RouletteWheel>
+		<MyAlg>
+			<Entry key="replace">worst</Entry>
+		</MyAlg>
+	
+	</Algorithm>
+
+	<Genotype>
+		<Tree>
+			<Entry key="initmaxdepth">3</Entry>
+			<Entry key="initmindepth">1</Entry>
+			<Entry key="maxdepth">5</Entry>
+			<Entry key="mindepth">2</Entry>
+			<Entry key="functionset">sin cos  - / * +</Entry> 
+			<Entry key="terminalset">X</Entry> 
+
+			<Entry key="crx.simple">0</Entry>
+			<Entry key="crx.simple.functionprob">0.9</Entry>
+			<Entry key="crx.context">0</Entry>
+			<Entry key="crx.sizefair">0</Entry>
+			<Entry key="crx.onepoint">0</Entry>
+			<Entry key="crx.uniform">0</Entry>
+		</Tree>
+	</Genotype>
+	<Genotype>
+		<FloatingPoint>
+			<Entry key="lbound">-1</Entry>
+			<Entry key="ubound">13.5</Entry>
+			<Entry key="dimension">5</Entry>
+		</FloatingPoint>
+	</Genotype>
+
+<!--
+		<MyGenotype>
+			<Entry key="size">5</Entry>
+		</MyGenotype>
+-->
+
+	<Registry>
+	<!--
+		<Entry key="parallel.type">eval</Entry>
+		<Entry key="parallel.sync">0</Entry>
+		<Entry key="parallel.jobsize">20</Entry>
+	-->
+
+		<Entry key="randomizer.seed">0</Entry> <!-- 0 znaci uzmi time(NULL) -->
+		<Entry key="population.size">200</Entry>
+		<Entry key="population.demes">2</Entry>
+		<Entry key="migration.freq">5</Entry>
+		<Entry key="migration.number">3</Entry>
+		
+<!--		<Entry key="mutation.protected">0</Entry> -->
+
+		<Entry key="mutation.indprob">0.3</Entry> <!-- vjerojatnost mutiranja jedinke; zajednicko za sve algoritme -->
+		<Entry key="crossover.genotypes">random</Entry>
+		<Entry key="term.maxgen">0</Entry> <!-- max broj generacija -->
+<!--		<Entry key="term.fitnessval">0.00001</Entry> --> <!-- fitness vrijednost -->
+		<Entry key="term.stagnation">2000</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.frequency">10</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="domain">0 2 4 6 8 10</Entry>
+		<Entry key="codomain">1.3 3.3 5.3 7.3 9.3 11.3</Entry>
+		<Entry key="batch.repeats">1</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
+		<Entry key="milestone.filename">milestone.txt</Entry>   <!-- milestone file (if stated) stores all the population (default: none) -->
+		<Entry key="milestone.interval">10</Entry>         <!-- milestone saving interval in generations; 0: save only at the end (default: 0) -->
+		<Entry key="batch.singlemilestone">1</Entry>      <!-- use only one milestone file for all the runs (1) or one for each run (0) (default: 0) -->
+	</Registry>
+</ECF>

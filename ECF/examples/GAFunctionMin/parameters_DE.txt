@@ -1,0 +1,25 @@
+<ECF>
+	<Algorithm>
+		<DifferentialEvolution>
+			<Entry key="F">0.5</Entry> <!-- mutation constant -->
+			<Entry key="CR">0.9</Entry> <!-- crossover probability -->
+		</DifferentialEvolution>
+	</Algorithm>
+
+	<Genotype>
+		<FloatingPoint>
+			<Entry key="lbound">-5</Entry>
+			<Entry key="ubound">5</Entry>
+			<Entry key="dimension">3</Entry>
+		</FloatingPoint>
+	</Genotype>
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry> <!-- 0 znaci uzmi time(NULL) -->
+		<Entry key="population.size">30</Entry>
+		<Entry key="term.maxgen">200</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+	</Registry>
+</ECF>
+

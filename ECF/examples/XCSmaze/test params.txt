@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ECF>
+	<Algorithm>
+		<XCS>
+			<Entry key="alpha">0.1</Entry>
+			<Entry key="beta">0.2</Entry>
+			<Entry key="gama">0.71</Entry>
+			<Entry key="delta">0.1</Entry>
+			<Entry key="pExplore">0.5</Entry>
+			<Entry key="thresholdGA">0</Entry>
+			<Entry key="thresholdDel">20</Entry>
+			
+			<Entry key="thresholdSub">20</Entry>
+			<Entry key="eps0">0.1</Entry>
+			
+			<Entry key="accExp">5</Entry>
+			<Entry key="pDontCare">0.33</Entry>
+			<Entry key="maxPopSize">1600</Entry>
+			<Entry key="mna">8</Entry>
+			<Entry key="pMutation">0.01</Entry>
+			<Entry key="pCrossover">0.8</Entry>
+		</XCS>
+	</Algorithm>
+	<Genotype>
+		<BitString>
+			<Entry key="size">24</Entry>
+		</BitString>
+		<BitString>
+			<Entry key="size">24</Entry>
+		</BitString>
+		<BitString>
+			<Entry key="size">3</Entry>
+		</BitString>
+		<ClassifierParams>
+			<Entry key="fitness">10</Entry>
+			<Entry key="prediction">10</Entry>
+			<Entry key="error">0</Entry>
+		</ClassifierParams>
+	</Genotype>
+	<Registry>
+		<Entry key="population.size">1</Entry>
+		<Entry key="term.maxgen">4000</Entry>
+		<Entry key="milestone.interval">0</Entry>
+		<Entry key="randomizer.seed">0</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="milestone.filename">out.txt</Entry>
+	</Registry>
+</ECF>

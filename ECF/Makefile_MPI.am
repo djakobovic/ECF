@@ -1,0 +1,139 @@
+pkginclude_maindir = $(includedir)/ecf
+pkginclude_treedir = $(includedir)/ecf/tree
+pkginclude_binarydir = $(includedir)/ecf/binary
+pkginclude_bitstringdir = $(includedir)/ecf/bitstring
+pkginclude_permutationdir = $(includedir)/ecf/permutation
+pkginclude_xmldir = $(includedir)/ecf/xml
+
+pkginclude_main_HEADERS = AlgAEliGPEA2.h \
+	AlgAEliGPEA.h \
+	Algorithm.h \
+	AlgRouletteWheel.h \
+	AlgSGenGPEA.h \
+	AlgSteadyStateTournament.h \
+	Communicator.h \
+	Crossover.h \
+	Deme.h \
+	ECF.h \
+	ECF_base.h \
+	ECF_derived.h \
+	ECF_macro.h \
+	EvaluateOp.h \
+	Fitness.h \
+	FitnessMax.h \
+	FitnessMin.h \
+	Genotype.h \
+	HallOfFame.h \
+	Individual.h \
+	Logger.h \
+	Migration.h \
+	Mutation.h \
+	Operator.h \
+	ParallelAlgorithm.h \
+	Population.h \
+	Randomizer.h \
+	Registry.h \
+	SelBestOp.h \
+	SelectionOperator.h \
+	SelFitnessProportionalOp.h \
+	SelRandomOp.h \
+	SelWorstOp.h \
+	SimpleRandomizer.h \
+	StatCalc.h \
+	State.h \
+	TermFitnessValOp.h \
+	TermMaxGenOp.h \
+	TermMaxTimeOp.h \
+	TermStagnationOp.h
+pkginclude_tree_HEADERS = tree/Add.h \
+	tree/Cos.h \
+	tree/Div.h \
+	tree/Mul.h \
+	tree/Node.h \
+	tree/Pos.h \
+	tree/Primitive.h \
+	tree/PrimitiveSet.h \
+	tree/Sin.h \
+	tree/Sub.h \
+	tree/Terminal.h \
+	tree/Tree.h \
+	tree/Tree_c.h \
+	tree/TreeCrxSimple.h \
+	tree/TreeMutPermutation.h
+pkginclude_binary_HEADERS = binary/Binary.h \
+	binary/BinaryCrsOnePoint.h \
+	binary/BinaryMutSimple.h \
+	binary/BinaryMutMix.h \
+	binary/BinaryCrsUniform.h
+pkginclude_bitstring_HEADERS = bitstring/BitString.h \
+	bitstring/BitStringCrsOnePoint.h \
+	bitstring/BitStringMutSimple.h \
+	bitstring/BitStringMutMix.h \
+	bitstring/BitStringCrsUniform.h
+pkginclude_permutation_HEADERS = permutation/Permutation.h \
+	permutation/PermutationCrsOX.h \
+	permutation/PermutationCrsPBX.h \
+	permutation/PermutationCrsPMX.h \
+	permutation/PermutationMutIns.h \
+	permutation/PermutationMutInv.h \
+	permutation/PermutationMutToggle.h
+pkginclude_xml_HEADERS = xml/xmlParser.h
+
+lib_LTLIBRARIES = libecf.la
+libecf_la_SOURCES = AlgAEliGPEA2.cpp \
+	AlgAEliGPEA.cpp \
+	Algorithm.cpp \
+	AlgRouletteWheel.cpp \
+	AlgSGenGPEA.cpp \
+	AlgSteadyStateTournament.cpp \
+	Communicator.cpp \
+	Crossover.cpp \
+	Deme.cpp \
+	FitnessMax.cpp \
+	FitnessMin.cpp \
+	Genotype.cpp \
+	HallOfFame.cpp \
+	Individual.cpp \
+	Logger.cpp \
+	Migration.cpp \
+	Mutation.cpp \
+	Population.cpp \
+	Registry.cpp \
+	SelBestOp.cpp \
+	SelFitnessProportionalOp.cpp \
+	SelRandomOp.cpp \
+	SelWorstOp.cpp \
+	SimpleRandomizer.cpp \
+	StatCalc.cpp \
+	State.cpp \
+	TermFitnessValOp.cpp \
+	TermMaxGenOp.cpp \
+	TermMaxTimeOp.cpp \
+	TermStagnationOp.cpp \
+	binary/Binary.cpp \
+	binary/BinaryCrsOnePoint.cpp \
+	binary/BinaryMutSimple.cpp \
+	binary/BinaryCrsUniform.cpp \
+	binary/BinaryMutMix.cpp \
+	bitstring/BitStringCrsOnePoint.cpp \
+	bitstring/BitStringMutSimple.cpp \
+	bitstring/BitStringCrsUniform.cpp \
+	bitstring/BitStringMutMix.cpp \
+	tree/Cos.cpp \
+	tree/Node.cpp \
+	tree/Primitive.cpp \
+	tree/PrimitiveSet.cpp \
+	tree/Sin.cpp \
+	tree/Tree.cpp \
+	tree/TreeCrxSimple.cpp \
+	tree/TreeMutPermutation.cpp \
+	permutation/PermutationMutToggle.cpp \
+	permutation/Permutation.cpp \
+	permutation/PermutationCrsOX.cpp \
+	permutation/PermutationCrsPBX.cpp \
+	permutation/PermutationCrsPMX.cpp \
+	permutation/PermutationMutIns.cpp \
+	permutation/PermutationMutInv.cpp \
+	xml/xmlParser.cpp
+
+libecf_la_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/binary -I$(top_srcdir)/bitstring -I$(top_srcdir)/tree -I$(top_srcdir)/permutation -I$(top_srcdir)/xml

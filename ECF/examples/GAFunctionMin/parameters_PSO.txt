@@ -1,0 +1,28 @@
+<ECF>
+  <Algorithm>
+    <ParticleSwarmOptimization>
+      <Entry key="weightType">1</Entry>
+      <Entry key="weight">0.9</Entry>
+      <Entry key="maxVelocity">100</Entry>
+    </ParticleSwarmOptimization>
+ 		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry> <!-- velicina turnira -->
+		</SteadyStateTournament>
+  </Algorithm>
+
+  <Genotype>
+    <FloatingPoint>
+      <Entry key="lbound">-10</Entry>
+      <Entry key="ubound">10</Entry>
+      <Entry key="dimension">2</Entry>
+    </FloatingPoint>
+  </Genotype>
+
+  <Registry>
+    <Entry key="population.size">30</Entry>
+    <Entry key="term.maxgen">100000</Entry> 
+    <Entry key="term.fitnessval">0</Entry> 
+    <Entry key="log.level">3</Entry> 
+    <Entry key="log.frequency">1000</Entry> 
+  </Registry>
+</ECF> 

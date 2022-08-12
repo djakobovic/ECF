@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1250">
+	<TITLE>Customizing Tree genotype</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGED" CONTENT="20100423;14001300">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<STYLE TYPE="text/css">
+	<!--
+		H3.western { font-family: "Albany", sans-serif }
+		H3.cjk { font-family: "HG Mincho Light J" }
+		H3.ctl { font-family: "Arial Unicode MS" }
+		PRE.cjk { font-family: "NSimSun", monospace }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="hr-HR" DIR="LTR">
+<p><a href="documentation.html">
+<img border="0" src="up.png" width="30" height="30"></a></p>
+<H1>5. Customizing the <I>Tree </I>genotype</H1>
+<ol>
+	<LI>
+	<P><span style="font-size: 13pt"><a href="#types">Types of terminals</a></span></P>
+	<LI>
+	<P><span style="font-size: 13pt"><a href="#constants">Defining constants</a></span></P>
+	<LI>
+	<P><span style="font-size: 13pt"><a href="#ERC">Defining Ephemereal random 
+	constants (ERCs)</a></span></P>
+	<LI>
+	<P><FONT SIZE=3 STYLE="font-size: 13pt"><a href="#functions">Adding
+	a user defined function primitive</a></FONT></P>
+	<LI>
+	<P><span style="font-size: 13pt"><a href="#usertype">Adding custom type 
+	terminals and functions</a></span><FONT SIZE=3 STYLE="font-size: 13pt">
+	</FONT></P>
+</ol>
+<p>(This part of the documentation presumes you have already studied the basic 
+usage of Tree genotype, described in the <a href="tutorial.html#tree">Symbolic 
+regression example</a> in Tutorial)</p>
+<hr>
+<H3 CLASS="western"><a name="types"></a>1. Types of terminals (in-built)</H3>
+<p>Terminals in Tree are of type <i>double </i>by default, but may be any of the 
+following types: DOUBLE, INT, BOOL, CHAR, STRING. The type is determined with 
+type name before series of terminals, e.g.:</p>
+<pre STYLE="background: #ccccff url('')"><font COLOR="#000000" face="Courier New, monospace">&lt;Entry key=&quot;terminalset&quot;&gt;DOUBLE X Y INT a b c BOOL active&lt;/Entry&gt;</font></pre>
+<p><font color="#FF0000"><b>NOTE</b></font>: currently <i>no type control</i> is 
+implemented in ECF (strongly-typed GP is planned), so the terminals and 
+functions used should be of the same type (or the user-defined type, see
+<a href="#usertype">example below</a>).</p>
+<p>&nbsp;</p>
+<h3 CLASS="western"><a name="constants"></a>2. Defining constants</h3>
+<p>Terminals of constant values are defined simply by listing them in the 
+&quot;terminalset&quot; parameter. Here the following rule applies: <i>the constant's name 
+is its value</i>.</p>
+<pre STYLE="background: #ccccff url('')"><font COLOR="#000000" face="Courier New, monospace">&lt;Entry key=&quot;terminalset&quot;&gt;X Y 0 1 3.141592 BOOL true false&lt;/Entry&gt;</font></pre>
+<p>Alternatively, the user can introduce a variable terminal (e.g. with the name 
+&quot;PI&quot;), define its value at the begining (EvaluationOp::initialize) and simply not change it during the 
+evolution.</p>
+<p>&nbsp;</p>
+<H3 CLASS="western"><a name="ERC"></a>3. Defining Ephemereal random constants (ERCs)</H3>
+<p CLASS="western">
+<a href="http://cs.gmu.edu/~eclab/projects/ecj/docs/classdocs/ec/gp/ERC.html">
+ERCs</a> of in-built types may be defined in the configuration file in the 
+&quot;terminalset&quot; variable, e.g.:</p>
+<pre STYLE="background: #ccccff url('')"><font COLOR="#000000" face="Courier New, monospace">&lt;Entry key=&quot;terminalset&quot;&gt;DOUBLE {1.5 3.14159 42} [-3.14 3.14] INT {1 2 3 4 5} BOOL {true false}&lt;/Entry&gt;</font></pre>
+<p CLASS="western">Explanation:</p>
+<ul>
+	<li>
+	<p CLASS="western"><font face="Courier New" size="2">[&lt;lower_bound&gt; 
+	&lt;upper_bound&gt;]</font> will work only for DOUBLE typed ERCs and will create a 
+	random double (of uniform distribution) in the defined <b>interval</b></li>
+<li>
+<p CLASS="western"><font face="Courier New" size="2">{&lt;value1&gt; &lt;value2&gt; ...}
+</font>will create ERCs which can assume only values stated in the <b>set</b></li>
+</ul>
+<p CLASS="western">ERCs of types other than<i> double </i>assume a specific 
+value when inserted in a new tree and that value remains constant during the 
+evolution. Double-typed ERCs <i>can </i>change value if mutated by Gaussian 
+mutation operator (&quot;mut.gauss&quot; in Tree genotype parameters).</p>
+<p CLASS="western">To distinguish ERCs from constants in output, any ERC will 
+have a prefix denoting its type, e.g. D_1.234, I_3</p>
+<p CLASS="western"><i>TODO</i>: user-type ERCs</p>
+<p CLASS="western">&nbsp;</p>
+<H3 CLASS="western"><a name="functions"></a>4. Adding a user defined function 
+primitive</H3>
+<P>Tree genotype may accept user defined functional primitives (for
+an example of a functional primitive structure, see example below or
+existing primitives in 'tree' folder). Adding a functional primitive
+is performed before <I>State</I> initialization:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-style: normal; font-weight: normal">TreeP tree = (TreeP) new Tree;             // create Tree object
+PrimitiveP prim = (PrimitiveP) new Prim;   // create primitive object
+tree-&gt;addFunction(prim);                   // add primitive to Tree
+state-&gt;addGenotype(tree);                  // add Tree (replaces original Tree)<BR><BR>state-&gt;initialize(argc, argv);<BR>state-&gt;run();</PRE><P STYLE="margin-bottom: 0cm">
+The primitive is now added to the existing functions, but will be
+used <I>only if</I> its name is stated in the &quot;primitiveset&quot;
+variable in the configuration file.</P>
+<P STYLE="margin-bottom: 0cm">
+&nbsp;</P>
+<H3 CLASS="western"><a name="usertype"></a>5. Adding custom-type terminals and functions</H3>
+<P>The user may want to perform tree execution with a custom data
+type; in that case, both function(s) and primitive(s) of that type
+must be defined. An example:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#008000"><FONT SIZE=2 STYLE="font-size: 11pt">// user-defined type example</FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#0000ff"><SPAN LANG="">struct</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> my_type</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">	</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">double</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> v;</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">	</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">bool</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> b;</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">};</FONT>
+
+<FONT COLOR="#008000"><FONT SIZE=2 STYLE="font-size: 11pt">// terminal class of type my_type</FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#0000ff"><SPAN LANG="">class</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> MyTerminal : </SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">public</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> Primitives::Primitive</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#0000ff"><SPAN LANG="">public</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG="">:</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	my_type value_;</FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt">	MyTerminal()</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		nArguments_ = 0;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	}</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">	</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">void</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> execute(</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">void</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG="">* result, Tree&amp; tree)</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		my_type&amp; res = *(my_type*)result;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		res = value_;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	}</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">	</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">void</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> setValue(</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">void</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG="">* value)</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		value_ = *(my_type*)value;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	}</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	~MyTerminal()</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	{	}</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">};</FONT>
+
+<FONT COLOR="#008000"><FONT SIZE=2 STYLE="font-size: 11pt">// example function with arguments of my_type</FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#0000ff"><SPAN LANG="">class</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> MyFunc : </SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">public</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> Primitives::Primitive</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#0000ff"><SPAN LANG="">public</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG="">:</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	MyFunc()</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		nArguments_ = 2;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">		name_ = </SPAN></FONT><FONT COLOR="#800000"><SPAN LANG="">&quot;func&quot;</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG="">;</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	}</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">	</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">void</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> execute(</SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">void</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG="">* result, Tree&amp; tree)</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	{</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		my_type first, second;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		my_type&amp; func = *(my_type*)result;</FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt">		getNextArgument(&amp;first, tree);</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		getNextArgument(&amp;second, tree);</FONT>
+
+		<FONT COLOR="#008000"><FONT SIZE=2 STYLE="font-size: 11pt">// example calculation</FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		func.b = first.b &amp;&amp; second.b;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">		func.v = first.v + second.v;</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	}</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	~MyFunc()</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">	{	}</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">};</SPAN></FONT></FONT></PRE><P>
+After this, the defined function and terminal may be added to the
+Tree genotype:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="">TreeP tree = (TreeP) </SPAN><FONT COLOR="#0000ff"><SPAN LANG="">new</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> Tree;</SPAN></FONT></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">PrimitiveP myFunc = (PrimitiveP) </SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">new</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> MyFunc;</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">tree-&gt;addFunction(myFunc);</FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">PrimitiveP myTerm = (PrimitiveP) </SPAN></FONT><FONT COLOR="#0000ff"><SPAN LANG="">new</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG=""> MyTerminal;</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">myTerm-&gt;setName(</SPAN></FONT><FONT COLOR="#800000"><SPAN LANG="">&quot;term&quot;</SPAN></FONT><FONT COLOR="#000000"><SPAN LANG="">);</SPAN></FONT></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt">tree-&gt;addTerminal(myTerm);</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#008000"><SPAN LANG="">// for multiple terminals of this type, new objects (with different name) must be created</SPAN></FONT></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt">state-&gt;addGenotype(tree);</FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt">state-&gt;initialize(argc, argv);</FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><FONT COLOR="#000000"><SPAN LANG="">state-&gt;run();</SPAN></FONT></FONT></PRE><P>
+Finally, the functions and terminals may be used by stating them in the
+configuration file, e.g.:</P>
+<PRE CLASS="western" STYLE="background: #ccccff">&lt;Tree&gt;
+	&lt;Entry key=&quot;functionset&quot;&gt;func&lt;/Entry&gt;
+	&lt;Entry key=&quot;terminalset&quot;&gt;term&lt;/Entry&gt;
+&lt;/Tree&gt;</PRE><P>
+<BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

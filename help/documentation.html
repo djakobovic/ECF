@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.3  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Domagoj Jakoboviæ">
+	<META NAME="CREATED" CONTENT="20090117;14284976">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakoboviæ">
+	<META NAME="CHANGED" CONTENT="20090129;16383234">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakoboviæ">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm }
+		H3.western { font-family: "Albany", sans-serif }
+		H3.cjk { font-family: "HG Mincho Light J" }
+		H3.ctl { font-family: "Arial Unicode MS" }
+		H2.western { font-family: "Albany", sans-serif; font-size: 16pt; font-style: italic }
+		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
+		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<h1>ECF - Documentation (v 1.5)</h1>
+<hr />
+<p><h3>For a headfirst introduction, see the examples in <strong><a href="tutorial.html">Tutorial examples &ndash; by genotype</a></strong></h3></p>
+<ol>
+<li><strong><a href="documentation.html#short">In short</a></strong>- an overview (below)</li>
+<li><strong><a href="tutorial.html">Tutorial examples &ndash; by genotype</a></strong> (or &ldquo;<em>I just want to solve my problem, show me how</em>&rdquo;)</li>
+<li><strong><a href="algorithms.html">Evolutionary algorithms in ECF</a></strong> (or &ldquo;<em>What exactly does it do??</em>&rdquo;)</li>
+<li><strong><a href="parameters.html">Using the parameters </a></strong> (or &ldquo;<em>Hm, it doesn't work that well, can I make it any better</em>&rdquo;)</li>
+<li><strong><a href="gp.html">Customizing the Tree genotype</a></strong> (or &ldquo;<em>Where's GP? I want genetic programming</em>&rdquo;)</li>
+<li><strong><a href="components.html">Adding components to ECF</a></strong> (or &ldquo;<em>I know EC, I just want to use my special genotype/algorithm/whatever, how do I do it</em>&rdquo;)</li>
+</ol>
+<hr />
+<h3 class="western">In short...</h3>
+<p>To use ECF, you can combine/parametrize the following components:</p>
+<ul>
+<li>
+<p><strong>Genotype</strong>. The basic component of ECF is <em>Genotype</em>. Each individual in the population has one or more genotypes &ndash; any genotypes of any number. The simplest way of defining genotypes is listing them (and their parameters) in the configuration file. Genotype is <em>the only</em> component that <em>has </em>to be defined in a configuration file &ndash; all the others may be used by default.<br />Each genotype in ECF has its data structure and associated genetic operators &ndash; of crossover and mutation type (so there's no possibility of using wrong operator on wrong genotype). Knowing the genotype's data structure is a requirement for defining the <em>fitness function </em>that will evaluate the individual containing the given genotype.</p>
+</li>
+<li>
+<p><strong>Algorithm</strong>. The ECF runs an algorithm. The desired algorithm (and its parameters) can be stated in the configuration file. But you don't even have to, there's a <a href="algorithms.html#sst">default one</a>.</p>
+</li>
+<li>
+<p><strong>Evolutionary system &ndash; the state</strong>. Algorithm and genotypes exist in a context that takes care of everything else: the size of the population, termination condition, logging etc.</p>
+</li>
+</ul>
+<p>The above components are fully configurable without compilation via configuration file. The only element you <em>need</em> to program and define programmatically is the <strong>evaluation operator </strong>which embodies the fitness function. Once you write the evaluation operator, you only need to reference it in <em>main</em> and then run the ECF. So a typical <em>main </em>function might look like this:
+</p><PRE STYLE="background: #ccccff; font-style: normal; font-weight: medium">int main(int argc, char **argv)
+{
+        StateP state (new State);
+        state-&gt;setEvalOp(new MyEvalOperator);
+
+        state-&gt;initialize(argc, argv);
+        state-&gt;run();
+        return 0;
+}</PRE><P>
+while the <B>configuration file </B>might look like this:</P>
+<PRE STYLE="background: #ccccff; font-style: normal; font-weight: medium">&lt;ECF&gt;
+  &lt;Algorithm&gt;
+    &lt;SteadyStateTournament&gt;
+      &lt;Entry key=&quot;tsize&quot;&gt;3&lt;/Entry&gt;
+    &lt;/SteadyStateTournament&gt;
+  &lt;/Algorithm&gt;
+
+  &lt;Genotype&gt;
+    &lt;BitString&gt;
+      &lt;Entry key=&quot;size&quot;&gt;20&lt;/Entry&gt;
+    &lt;/BitString&gt;
+    &lt;Tree&gt;
+      &lt;Entry key=&quot;functionset&quot;&gt;sin cos + - / *&lt;/Entry&gt;
+      &lt;Entry key=&quot;terminalset&quot;&gt;X Y&lt;/Entry&gt;
+    &lt;/Tree&gt;
+  &lt;/Genotype&gt;
+
+  &lt;Registry&gt;
+    &lt;Entry key=&quot;population.size&quot;&gt;30&lt;/Entry&gt;
+    &lt;Entry key=&quot;term.maxgen&quot;&gt;100&lt;/Entry&gt; 
+  &lt;/Registry&gt;
+&lt;/ECF&gt;</PRE>
+<P STYLE="font-style: normal; font-weight: medium">
+<B>Implementation note</B>:
+each <I>Class</I> in ECF has an associated type <I>ClassP</I> which
+is a <i>boost</i> smart pointer to an object of that class. <br>
+See <a href="http://www.codeproject.com/KB/stl/boostsmartptr.aspx">more 
+information on using boost</a>.</P>
+</BODY>
+</HTML>

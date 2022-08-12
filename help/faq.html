@@ -1,0 +1,74 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html">
+<title>ECF FAQ</title>
+<style>
+<!--
+		H2.western { font-family: "Albany", sans-serif; font-size: 16pt; font-style: italic }
+-->
+</style>
+</head>
+
+<body>
+
+<h1>ECF FAQ</h1>
+<h2>How do I output an individual?</h2>
+<p>You can use the Individual's toString() method:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">std::cout &lt;&lt; individual-&gt;toString();</font></pre>
+<p>Alternatively, you can use the Individual's write method for output to XMLNode, then 
+convert XML to string:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">XMLNode xInd; 
+individual-&gt;write(xInd); 
+char *s = xInd.createXMLString(); 
+logger-&gt;log(1, &quot;Individual: \n&quot; + std::string(s)); 
+// or just output with std::cout
+freeXMLString(s);	// NOTE: XMLNode::createXMLString requires manual deletion!</font></pre>
+<h2>How do I log things?</h2>
+<p>Use the predefined ECF_LOG macro; it requires a pointer to State object, log 
+level and string message, e.g.:</p>
+<pre STYLE="background: #ccccff url('')">ECF_LOG(state, 1, &quot;message: &quot; + uint2str(4) + dlb2str(3.14));</pre>
+<p>Level 1 is the highest (always logs), all the other (up to 5) depend on the 
+&quot;log.level&quot; parameter (the default is 3).</p>
+<h2>How do I make something happen each generation?</h2>
+<p>Write and add a minimal operator (for more complex ones, see
+<a href="components.html">Adding the components</a>) that does... something, 
+e.g.:</p>
+<pre class="western" style="background: rgb(204, 204, 255)"><font style="font-size: 11pt;" size="2"><font color="#0000ff">class</font><font color="#000000"> MyOp : </font><font color="#0000ff">public</font><font color="#000000"> Operator</font></font>
+<font style="font-size: 11pt;" size="2">{</font>
+<font style="font-size: 11pt;" size="2"><font color="#0000ff">public</font><font color="#000000">:</font></font>
+<font color="#000000">        </font><font style="font-size: 11pt;" size="2" color="#0000ff">bool</font><font color="#000000"> <font style="font-size: 11pt;" size="2">operate(StateP state)</font></font>
+        <font style="font-size: 11pt;" size="2">{</font>
+<font style="font-size: 11pt;" size="2">                std::cout &lt;&lt; state-&gt;getRandomizer()-&gt;getRandomDouble() &lt;&lt; std::endl;
+                </font><font style="font-size: 11pt;" size="2" color="#0000ff">return</font><font color="#000000"> </font><font style="font-size: 11pt;" size="2" color="#0000ff">true</font><font style="font-size: 11pt;" size="2" color="#000000">;</font>
+        <font style="font-size: 11pt;" size="2">}</font>
+<font style="font-size: 11pt;" size="2">};</font>
+<font style="font-size: 11pt;" size="2"><font color="#0000ff">typedef</font><font color="#000000"> boost::shared_ptr&lt;MyOp&gt; MyOpP;</font></font></pre>
+<p>and add it to State before State::initialize():</p>
+<pre class="western" style="font-style: normal; font-weight: normal; background: rgb(204, 204, 255)">MyOpP myOp = (MyOpP) new MyOp;
+state-&gt;addOperator(myOp);</pre>
+<h2>How do I access population, hall of fame, statistics...?</h2>
+<p>All of those are available through the (local) copy of StateP pointer:</p>
+<font style="font-size: 11pt">
+<div style="background-color: #CCCCFF">
+	<pre><span style="font-size: 11pt">state-&gt;getPopulation(); </span></font><font COLOR="#008000" style="font-size: 11pt">      // population (vector of demes)</font><font style="font-size: 11pt">
+state-&gt;getStats();            </font><font COLOR="#008000" style="font-size: 11pt">// population statistics</font><font style="font-size: 11pt">
+state-&gt;getHoF(); </font><font COLOR="#008000" style="font-size: 11pt">             // population hall of fame</font><font style="font-size: 11pt">
+state-&gt;getAlgorithm(); </font><font COLOR="#008000" style="font-size: 11pt">       // current algorithm</font><font style="font-size: 11pt">
+state-&gt;getIndividualObject(); </font><font COLOR="#008000" style="font-size: 11pt">// initialized individual</font><font style="font-size: 11pt">
+state-&gt;getFitnessObject(); </font><font COLOR="#008000" style="font-size: 11pt">   // initialized fitness object</font><font style="font-size: 11pt">
+state-&gt;getGenerationNo(); </font><font COLOR="#008000" style="font-size: 11pt">    // current generation</font><font style="font-size: 11pt">
+state-&gt;getGenotypes(); </font><font COLOR="#008000" style="font-size: 11pt">       // current genotypes (vector)</font><font style="font-size: 11pt">
+state-&gt;getRegistry(); </font><font COLOR="#008000" style="font-size: 11pt">        // parameter repository</font><font style="font-size: 11pt">
+state-&gt;getRandomizer(); </font><font COLOR="#008000" style="font-size: 11pt">      // current randomizer</font><font style="font-size: 11pt">
+state-&gt;getTerminateCond(); </font><font COLOR="#008000" style="font-size: 11pt">   // is evolution terminating</font><font style="font-size: 11pt">
+state-&gt;getElapsedTime(); </font><font COLOR="#008000" style="font-size: 11pt">     // since start, in seconds</font><font style="font-size: 11pt">
+state-&gt;getCommunicator(); </font><font COLOR="#008000" style="font-size: 11pt">    // communicator (parallel ECF)</pre>
+</div>
+</font>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

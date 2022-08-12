@@ -1,0 +1,24 @@
+<ECF>
+	<Genotype>
+		<Cartesian>
+			<Entry key="type">double</Entry>   <!-- define data type, if not defined default is double -->
+			<Entry key="numoutputs">2</Entry>  <!-- number of outputs, must be parameter -->
+			<Entry key="numinputconns">2</Entry>  <!-- number of input connections entering every node, must be parameter -->
+			<Entry key="numrows">2</Entry>   <!-- number of rows in genotype, must be parameter -->
+			<Entry key="numcols">2</Entry>   <!-- number of columns in genotype, must be parameter -->
+			<Entry key="levelsback">1</Entry>   <!-- levels back parameter, if not defined default is 1 -->
+			<!-- defined function nodes, must be defined at least one, some of them can have number of arguments
+			  defined, even multiple (e.g. + 2 3 4 - 2 4 * 3 4), note that e.g. if function nodes for addition with
+			  2, 3 and 4 arguments are wanted, the corrent syntax is (+ 2 3 4) not (+ 2 + 3 + 4) -->
+			<Entry key="functionset">+ - * sin  cos</Entry>   
+			<Entry key="numvariables">2</Entry>   <!-- number of variables to be placed on inputs, must be parameter -->
+			<Entry key="constantset">1</Entry>  <!-- constants placed on inputs, if not defined, there are no constants -->
+			<Entry key="mut.onepoint.prob">0.005</Entry> <!-- mutation probability, isn't necessary -->
+		</Cartesian>
+	</Genotype>
+	<Registry>
+		<Entry key="population.size">200</Entry>
+		<Entry key="domain">0 1 2 3 -1 -2</Entry>
+		<Entry key="codomain">-1 2 -1 12 2 0</Entry>
+	</Registry>
+</ECF>

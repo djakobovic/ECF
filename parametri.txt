@@ -1,0 +1,187 @@
+<!-- 
+     Primjer konfiguracijske datoteke:
+     - ovdje su navedeni svi parametri koji se mogu definirati
+     - dane su default vrijednosti parametara (ako postoje)
+ -->
+
+<ECF>
+	<Algorithm>	<!-- only one should be stated -->
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>              <!-- tournament size -->
+		</SteadyStateTournament>
+		<RouletteWheel>
+			<Entry key="crxprob">0.5</Entry>          <!-- crossover rate -->
+			<Entry key="selpressure">10</Entry>       <!-- selection pressure: how much is the best individual 'better' than the worst -->
+		</RouletteWheel>
+		<DifferentialEvolution>
+			<Entry key="F">1</Entry>                  <!-- scaling constant -->
+			<Entry key="CR">0.9</Entry>               <!-- crossover rate -->
+		</DifferentialEvolution>
+		<ParticleSwarmOptimization>
+			<Entry key="weightType">0</Entry>         <!-- weight type update: 0 - constant, 1 - time dependant (based on max generations) -->
+			<Entry key="weight">0.8</Entry>           <!-- initial inertia weight (either constant or time dependant) -->
+			<Entry key="maxVelocity">100</Entry>      <!-- max particle velocity -->
+		</ParticleSwarmOptimization>
+		<Elimination>
+			<Entry key="gengap">0.6</Entry>            <!-- generation gap (percentage of population to be eliminated) -->
+			<Entry key="selpressure">10</Entry>        <!-- selection pressure: how much is the worst individual 'worse' than the best -->
+		</Elimination>
+		<GeneticAnnealing>
+			<Entry key="energybank">100</Entry>        <!-- total starting energy bank (fitness dependant) -->
+			<Entry key="coolingfactor">0.7</Entry>     <!-- simulated annealing cooling factor -->
+			<Entry key="elitism">0</Entry>             <!-- is the best individual preserved -->
+		</GeneticAnnealing>
+		<ArtificialBeeColony>
+			<Entry key="elitism">1</Entry>             <!-- Elitism: the current best food source is preserved -- >
+			<Entry key="limit">300</Entry>             <!-- Maximum number of cycles for each individual -- >
+		</ArtificialBeeColony>
+		<Clonalg>
+			<Entry key="beta">1</Entry>			<!-- number of clones (percentage) for every antibody (default: 1.0) -->
+			<Entry key="c">0.2</Entry>			<!-- mutation rate (default: 0.2) -->
+			<Entry key="cloningVersion">proportional</Entry>			<!-- cloning version, static or proportional (default: proportional) -->
+			<Entry key="d">0</Entry>			<!-- fraction of population regenerated every generation (default: 0) -->
+			<Entry key="n">100</Entry>			<!-- number of antibodies cloned every generation (default: 100) -->
+			<Entry key="selectionScheme">CLONALG1</Entry>			<!-- which selection scheme to use, CLONALG1 or CLONALG2 (default: CLONALG1) -->
+		</Clonalg>
+		<EvolutionStrategy>
+			<Entry key="lambda">4</Entry>			<!-- number of offspring created in each iteration (default: 4) -->
+			<Entry key="mu">1</Entry>			<!-- the size of parent population (default: 1) -->
+			<Entry key="rho">1</Entry>			<!-- number of parents used to create an offspring; may be 1 or 2 (default: 1) -->
+			<Entry key="selection">plus</Entry>			<!-- selection scheme: "plus", uses both parents and offspring) or "comma", uses just offspring (default: plus) -->
+		</EvolutionStrategy>
+		<RandomSearch>
+		</RandomSearch>
+	<!-- parallel algorithms: -->
+		<AlgSGenGPEA> <!-- synchronous generational global parallel EA -->
+			<Entry key="crxprob">0.5</Entry>          <!-- crossover rate -->
+			<Entry key="selpressure">10</Entry>       <!-- selection pressure: how much is the best individual 'better' than the worst -->
+			<Entry key="jobsize">5</Entry>            <!-- number of individuals sent for evaluation to a worker process -->
+		</AlgSGenGPEA>
+		<AlgAEliGPEA> <!-- asynchronous steady-state global parallel EA -->
+			<Entry key="tsize">3</Entry>              <!-- tournament size -->
+			<Entry key="jobsize">5</Entry>            <!-- number of individuals sent for evaluation to a worker process -->
+		</AlgAEliGPEA>
+	</Algorithm>
+
+	<Genotype>	<!-- mandatory parameters are commented -->
+		<BitString>
+			<Entry key="size">20</Entry>              <!-- mandatory -->
+
+			<Entry key="crx.onepoint">1</Entry>
+			<Entry key="crx.uniform">1</Entry>
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.bitprob">0.001</Entry>
+			<Entry key="mut.mix">1</Entry>
+		</BitString>
+		<Binary>
+			<Entry key="lbound">-5</Entry>            <!-- mandatory -->
+			<Entry key="ubound">5</Entry>             <!-- mandatory -->
+			<Entry key="precision">1</Entry>          <!-- mandatory -->
+			<Entry key="dimension">2</Entry>          <!-- mandatory -->
+			<Entry key="rounding">0</Entry>
+
+			<Entry key="crx.halfuniform">1</Entry>
+			<Entry key="crx.masked">1</Entry>
+			<Entry key="crx.nongeometric">1</Entry>
+			<Entry key="crx.onepoint">1</Entry>
+			<Entry key="crx.randomrespectful">1</Entry>
+			<Entry key="crx.reducedsurrogate">1</Entry>
+			<Entry key="crx.segmented">1</Entry>
+			<Entry key="crx.shuffle">1</Entry>
+			<Entry key="crx.twopoint">1</Entry>
+			<Entry key="crx.uniform">1</Entry>
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.bitprob">0.001</Entry>
+			<Entry key="mut.mix">1</Entry>
+		</Binary>
+		<FloatingPoint>
+			<Entry key="lbound">-50</Entry>           <!-- mandatory -->
+			<Entry key="ubound">50</Entry>            <!-- mandatory -->
+			<Entry key="dimension">2</Entry>          <!-- mandatory -->
+
+			<Entry key="crx.arithmetic">1</Entry>
+			<Entry key="crx.arithmeticsimple">1</Entry>
+			<Entry key="crx.arithmeticsingle">1</Entry>
+			<Entry key="crx.average">1</Entry>
+			<Entry key="crx.bga">1</Entry>
+			<Entry key="crx.blxalpha">1</Entry>
+			<Entry key="crx.blxalphabeta">1</Entry>
+			<Entry key="crx.discrete">1</Entry>
+			<Entry key="crx.flat">1</Entry>
+			<Entry key="crx.heuristic">1</Entry>
+			<Entry key="crx.local">1</Entry>
+			<Entry key="crx.onepoint">1</Entry>
+			<Entry key="crx.sbx">1</Entry>
+			<Entry key="mut.simple">1</Entry>
+		</FloatingPoint>
+		<Tree>
+			<Entry key="maxdepth">5</Entry>                    <!-- mandatory -->
+			<Entry key="mindepth">1</Entry>                    <!-- mandatory -->
+			<Entry key="functionset">sin cos + - / *</Entry>   <!-- mandatory -->
+			<Entry key="terminalset">X</Entry>                 <!-- mandatory -->
+			<Entry key="initmaxdepth">5</Entry>
+			<Entry key="initmindepth">1</Entry>
+
+			<Entry key="crx.simple">1</Entry>
+			<Entry key="crx.simple.functionprob">0.9</Entry>
+			<Entry key="crx.context">1</Entry>
+			<Entry key="crx.sizefair">1</Entry>
+			<Entry key="crx.onepoint">1</Entry>
+			<Entry key="crx.uniform">1</Entry>
+			<Entry key="mut.subtree">1</Entry>
+			<Entry key="mut.permutation">1</Entry>
+			<Entry key="mut.gauss">1</Entry>
+			<Entry key="mut.hoist">1</Entry>
+			<Entry key="mut.nodecomplement">1</Entry>
+			<Entry key="mut.nodereplace">1</Entry>
+			<Entry key="mut.shrink">1</Entry>
+		</Tree>
+		<Permutation>
+			<Entry key="size">30</Entry>              <!-- mandatory -->
+
+			<Entry key="crx.COSA">1</Entry>
+			<Entry key="crx.cyclic">1</Entry>
+			<Entry key="crx.cyclic2">1</Entry>
+			<Entry key="crx.OBX">1</Entry>
+			<Entry key="crx.OX">1</Entry>
+			<Entry key="crx.OX2">1</Entry>
+			<Entry key="crx.PBX">1</Entry>
+			<Entry key="crx.PMX">1</Entry>
+			<Entry key="crx.ULX">1</Entry>
+			<Entry key="mut.toggle">0.2</Entry>
+			<Entry key="mut.inv">0.4</Entry>
+			<Entry key="mut.ins">0.4</Entry>
+		</Permutation>
+	</Genotype>
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry>            <!-- 0 uses time(NULL) (default: 0) -->
+		<Entry key="population.size">100</Entry>          <!-- number of individuals (default: 100) -->
+		<Entry key="population.demes">1</Entry>           <!-- number of demes (default: 1) -->
+		<Entry key="migration.freq">10</Entry>            <!-- individuals are exchanged each 'freq' generations (default: none) -->
+		<Entry key="migration.number">5</Entry>           <!-- number of individuals to be sent to another deme (default: 1) -->
+		<Entry key="mutation.indprob">0.3</Entry>         <!-- individual mutation probability (regardless of the algorithm!) (default: 0.3) -->
+		<Entry key="mutation.genotypes">random</Entry>    <!-- if there are multiple genotypes, which to mutate? 'random': a random one, all: mutate all (default: random) -->
+		<Entry key="mutation.protected"></Entry>          <!-- indexes of genotypes that are excluded (protected) from mutation (default: none) -->
+		<Entry key="crossover.genotypes">random</Entry>   <!-- if there are multiple genotypes, which to cross? 'random': a random pair, 'all': all pairs (default: random) -->
+		<Entry key="crossover.protected"></Entry>         <!-- indexes of genotypes that are excluded (protected) from crossover (default: none) -->
+		<Entry key="term.stagnation">100</Entry>          <!-- max number of consecutive generations without improvement (default: 5000 / pop_size) -->
+		<Entry key="term.maxgen">10</Entry>               <!-- max number of generations (default: none) -->
+		<Entry key="term.maxtime">1000</Entry>            <!-- max number of seconds to run (default: none) -->
+		<Entry key="term.fitnessval">1</Entry>            <!-- fitness value for termination (default: none) -->
+		<Entry key="term.eval">9999</Entry>               <!-- max number of fitness evaluations (default: none) -->
+		<Entry key="log.level">3</Entry>                  <!-- log level; valid values are 1 (minimal) to 5 (verbose) (default: 3) -->
+		<Entry key="log.filename">log.txt</Entry>         <!-- log filename (default: none) -->
+		<Entry key="log.frequency">1</Entry>              <!-- log only every 'frequency' generations (default: 1) -->
+		<Entry key="milestone.filename">out.txt</Entry>   <!-- milestone file (if stated) stores all the population (default: none) -->
+		<Entry key="milestone.interval">0</Entry>         <!-- milestone saving interval in generations; 0: save only at the end (default: 0) -->
+		<Entry key="batch.repeats">1</Entry>              <!-- number of independent runs to perform (default: 1) -->
+		<Entry key="batch.singlemilestone">0</Entry>      <!-- use only one milestone file for all the runs (1) or one for each run (0) (default: 0) -->
+		<Entry key="batch.statsfile">stats.txt</Entry>    <!-- output batch end of run stats in a single file (default: none) -->
+
+	<!-- parallel ECF parameters: -->
+		<Entry key="parallel.type">eval</Entry>           <!-- implicit parallelization method: eval - evaluation, mut - mutation + eval -->
+		<Entry key="parallel.sync">0</Entry>              <!-- implicit parallelization synchronicity: 0 - async, 1 - sync -->
+		<Entry key="parallel.jobsize">10</Entry>          <!-- implicit parallelization jobsize (individuals per job) -->
+	</Registry>
+</ECF>

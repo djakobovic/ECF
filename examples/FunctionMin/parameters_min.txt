@@ -1,0 +1,10 @@
+<ECF>
+	<Genotype>
+		<FloatingPoint>
+			<Entry key="lbound">-50</Entry>
+			<Entry key="ubound">50</Entry>
+			<Entry key="dimension">3</Entry>
+		</FloatingPoint>
+	</Genotype>
+</ECF>
+

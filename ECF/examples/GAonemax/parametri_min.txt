@@ -1,0 +1,8 @@
+<ECF>
+	<Genotype>
+		<BitString>
+			<Entry key="size">20</Entry>
+		</BitString>
+	</Genotype>
+</ECF>
+

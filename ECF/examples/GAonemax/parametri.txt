@@ -1,0 +1,27 @@
+<ECF>
+	<Algorithm>
+		<RouletteWheel>
+			<Entry key="crxprob">0.5</Entry> <!-- koliki postotak populacije se kriza -->
+			<Entry key="selpressure">10</Entry> <!-- ukratko: koliko puta vecu vjerojatnost prezivljavanja (odabira) ima najbolja jedinka u odnosu na najgoru -->
+		</RouletteWheel>
+	</Algorithm>
+
+	<Genotype>
+		<BitString>
+			<Entry key="size">50</Entry>
+		</BitString>
+	</Genotype>
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry> <!-- 0 znaci uzmi time(NULL) -->
+		<Entry key="population.size">30</Entry>
+		<Entry key="population.demes">1</Entry>
+		<Entry key="mutation.indprob">0.3</Entry> <!-- vjerojatnost mutiranja jedinke; zajednicko za sve algoritme -->
+		<Entry key="term.maxgen">20</Entry> <!-- max broj generacija -->
+		<Entry key="log.level">1</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="milestone.filename">out.txt</Entry> <!-- u milestone se sprema citava populacija i svi parametri (ako je ovaj parametar naveden) -->
+		<Entry key="milestone.interval">0</Entry> <!-- svakih koliko generacija se sprema milestone; 0 znaci samo na kraju evolucije -->
+	</Registry>
+</ECF>
+

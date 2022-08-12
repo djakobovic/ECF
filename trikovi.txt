@@ -1,0 +1,73 @@
+- kako implementirati primjenu proizvoljnog operatora (funkcije unutar stabla) za racunanje vrijednosti izraza koji sadrzi samo konstante??
+- kako definirati sve koristene operatore i njihovu sintaksu? - pokusati dohvatiti te podatke iz PrimitiveSeta
+
+
+// dohvati prvi genotip - nadamo se da je to Tree
+Tree::Tree* tree = (Tree::Tree*) state->getGenotypes().at(0).get();
+
+// izlistaj sve koristene funkcije
+std::map<std::string, Tree::PrimitiveP>::iterator it = tree->primitiveSet_->mAllPrimitives_.begin();
+while(it != tree->primitiveSet_->mAllPrimitives_.end()) {
+    Tree::PrimitiveP func;
+    if(func = tree->primitiveSet_->getFunctionByName(it->first)) {
+        cout << func->getName();
+        cout << "\t" << func->getNumberOfArguments() << endl;
+    }
+    it++;
+}
+
+// izracunaj rezultat izvodjenja neke funkcije nad konstantama
+// konstante su navedene u parametrima (inace se nece niti pojaviti u stablu)
+Tree::Tree* copyTree = tree->copy();
+std::string izraz = "<Tree size=\"3\">+ D_1 D_2</Tree>";
+XMLNode xTree = XMLNode::parseString(izraz.c_str());
+tree->read(xTree);
+double result;
+tree->execute(&result);
+cout << result << endl;
+
+
+
+std::string stablo = "<Tree size=\"3\">+ X X </Tree>";
+XMLNode xTree = XMLNode::parseString(stablo.c_str());
+tree->read(xTree);
+
+novo stablo treba staviti u potpuni XML format i treba nariktati vrijednost za "size"; onda se samo primjene donje dvije naredbe i to je to... recimo na kraju evolucije, iza state.run():
+
+    // prvo dohvatimo najbolju jedinku
+    IndividualP ind = state->getHoF()->getBest().at(0);
+    // pa izvadimo string:
+    Tree::Tree* tree = (Tree::Tree*) ind->getGenotype().get();
+    std::string stablo = tree->toString();
+    // pa napravimo novi string...
+    stablo = "<Tree size=\"3\">+ X X </Tree>";
+    // i vratimo u Tree
+    XMLNode xTree = XMLNode::parseString(stablo.c_str());
+    tree->read(xTree);
+    // pa ispisemo ili evaluiramo ili sto vec
+    cout << tree->toString() << endl;
+    ind->fitness = state->getEvalOp()->evaluate(ind);
+    cout << ind->toString() << endl;
+
+
+- kako dohvatiti i promijeniti parametre, recimo nekog genotipa:
+
+	static std::string configTerminals = *((std::string*) state->getGenotypes()[0]->getParameterValue(state, "terminalset").get());
+	//configTerminals = *((std::string*) state->getRegistry()->getEntry("Tree.terminalset").get());
+
+	varNames.clear();
+	std::string terminalSet;
+	for(uint i = 0; i < nVariables; i++) {
+		varNames.push_back ("x" + uint2str(i + 1));
+		terminalSet += varNames[i] + " ";
+	}
+
+	// set terminal names
+	terminalSet = configTerminals + " " + terminalSet;
+	state->getGenotypes()[0]->setParameterValue(state, "terminalset", (voidP) new std::string(terminalSet));
+	//state->getRegistry()->modifyEntry("Tree.terminalset", (voidP) new std::string(terminalSet));
+
+	// reinitialize population with updated terminals
+	Tree::Tree* hometree = (Tree::Tree*) state->getGenotypes()[0].get();
+	hometree->primitiveSet_ = Tree::PrimitiveSetP();
+	state->getPopulation()->initialize(state);

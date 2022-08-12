@@ -1,0 +1,12 @@
+<ECF>
+	<Genotype>
+		<Permutation>
+			<Entry key="size">29</Entry>
+		</Permutation>
+	</Genotype>
+
+	<Registry>
+		<Entry key="tsp.infile">./bays29.tsp</Entry>
+	</Registry>
+</ECF>
+

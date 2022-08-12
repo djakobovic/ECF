@@ -1,0 +1,56 @@
+
+ECF - todo lista
+
+Sustav:
+	+ registriranje parametara
+	+ logiranje (zapisnici)
+	+ pohrana i ucitavanje stanja
+	+ doxygen potpora
+	+- batch pokretanje uz statistike
+	- ECDL parser
+	- vizualizacija logova (zapisa)
+	- GUI za parametre i statistiku
+	+ evolucijski kontekst (jedinka koja se evaluira, mutira, kriza, roditelji)
+		-> kao objekt unutar State
+	- razmisliti o koristenju TinyXML
+
+Evolucija - zajednicko:
+	- genotipovi:
+		+ binarni GA
+		+ bitstring
+		+ tree
+		+ (permutacijski) vektor
+	- slijedni algoritmi:
+		+ eliminacijski turnirski
+		+ generacijski RW (SGA)
+		- ES
+		- EA
+		+ differential evolution
+		- classifier systems
+		- stohastièka difuzijska pretraga
+		+ genetsko kaljenje
+	- lokalni algoritmi:
+		- local search operatori (neovisni o genotipu)
+	+ MPI podsustav
+	+ eksplicitna paralelizacija
+		+ definicija elemenata paralelnog algoritma
+		+ DGA
+		+ GPGA
+		- poopcenje migracije
+	- implicitna paralelizacija
+		- razina trivial
+		+ razina evaluation
+		+- razina operators
+	- multiobjective fitness
+	- coevolution
+	- usporedba primjeraka genotipa, opcija za izbjegavanje ponovljene evaluacije jednakih jedinki
+
+GP:
+	+ implementacija okoline u kojoj 'zive' GP jedinke
+	- evaluacija preko pointera na funkcije
+	- strongly typed GP
+	- semanticki GP
+	- intervalna aritmetika, linearno skaliranje
+	- ADF-ovi
+	- statistika koristenja varijabli i funkcija
+	

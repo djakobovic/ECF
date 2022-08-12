@@ -1,0 +1,28 @@
+<ECF>
+	<Algorithm>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>
+		</SteadyStateTournament>
+	</Algorithm>
+
+	<Genotype>
+		<Binary>
+			<Entry key="lbound">-15</Entry>
+			<Entry key="ubound">15</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">3</Entry>
+		</Binary>
+	</Genotype>
+
+	<Registry>
+		<Entry key="function">1</Entry>         <!-- sets the objective function -->
+		<Entry key="population.size">300</Entry>
+		<Entry key="mutation.indprob">0.3</Entry>
+		<Entry key="term.stagnation">30</Entry>
+		<Entry key="term.fitnessval">1e-12</Entry>
+		<Entry key="log.frequency">10</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+	</Registry>
+</ECF>
+

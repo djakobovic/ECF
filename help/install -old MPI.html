@@ -1,0 +1,58 @@
+<h1>ECF installation / running the examples</h1>
+<hr />
+<h2>Prerequisites &ndash; boost library</h2>
+<p>ECF uses some features of <em>boost </em>C++ library (<a href="http://www.boost.org/">www.boost.org</a>). To use ECF, a minimal boost installation (only header files, no compilation) is needed. After the boost source files are extracted, the ECF projects may be compiled (on Windows, check the boost directory location!).</p>
+<p><strong>NOTE</strong>: in Visual Studio projects included in the ECF, <em>boost </em>include directory is set to "C:\Program Files\boost\boost_1_64_0". If you installed to a different location (or use a newer boost version), change the directory accordingly (in project's <em> Additional include directories</em>).</p>
+<p><strong>Obtaining boost</strong>: the latest version can be downloaded from <a href="https://www.boost.org/users/download/"> https://www.boost.org/users/download/</a>.
+For linux packages, be sure to search for 'libboost-dev' package (e.g. 'sudo apt-get install libboost-dev').</p>
+<hr />
+
+<h2>Installation</h2>
+
+<h3>Visual Studio</h3>
+<p>In the main directory you can find a "VS" subdirectory which contains Visual Studio solution file <strong>ECF_lib.sln.</strong> Open it and just build the solution (release and/or debug version). The solution produces library <em>ECF.lib </em>(in either ./<em>release </em>or ./<em>debug </em>directory) which can be used to build examples and user projects. Each example has its "VS" subdirectory with a VS solution file that can be used to build either debug or release version (having previously built the ECF_lib project).&nbsp;</p>
+
+<h3>CMake</h3>
+<p><a href="https://cmake.org/">CMake</a>&nbsp;project files ("CMakeLists.txt") are provided in the main directory for the ECF library, and in example subfolders for each example.</p>
+
+<h3>CLion</h3>
+<p>The ECF library and the examples can also be compiled with <a href="https://www.jetbrains.com/clion/">CLion</a>, for which the project files are suplied in subdirectory .idea for each example.</p>
+
+<h3>Autotools (Linux)</h3>
+<p><em>Semi-automatic </em>installation is available with this <a href="ecf_install.sh">nifty little script</a> (thanks to Jernej Makovsek), tested on Ubuntu.</p>
+<p>Otherwise, standard installation procedure applies (you may need to <em>chmod</em> the 'configure' script beforehand to be able to execute it):</p>
+<pre> $ ./configure [ --prefix=DIR ]
+ $ make
+ $ make install</pre>
+<p>By default, the compiled libraries are installed in folder '/usr/local/lib', while the headers are installed in '/usr/local/include'. <br /> You can specify a different installation folder by giving the option '<span style="font-family: Courier New;">--prefix=&lt;PATH&gt;</span>' to the 'configure' script, e.g. <span style="font-family: Courier New;">--prefix=/home/someuser/ecf/</span>.</p>
+<p>Should any errors occurr, try reconfiguring the package by running <span style="font-family: Courier New;">aclocal</span>, <span style="font-family: Courier New;">autoconf</span> and <span style="font-family: Courier New;">automake</span>&nbsp; (or just <span style="font-family: Courier New;">autoreconf -fi</span>) before ./<span style="font-family: Courier New;">configure</span>.</p>
+<p>Each directory in /examples contains a Makefile used to build a specific example:</p>
+<pre> $ cd examples/GAonemax
+ $ make
+ g++ -Wall OneMaxEvalOp.cpp -c -o OneMaxEvalOp.o
+ g++ -Wall main.cpp -c -o main.o
+ g++ -Wall OneMaxEvalOp.o main.o -lecf -o onemax</pre>
+<p>If necessary, modify the Makefile to include the ECF installation library directory as the compilation flags (if not installed to the default system location), e.g.:</p>
+<pre>CFLAGS = $(WARN) -I/home/someuser/ecf/include
+LDFLAGS = $(WARN) -lecf -L/home/someuser/ecf/lib</pre>
+<p>Make sure libecf is installed and can be found by the linker (add the above installation library directory defined with <span style="font-family: Courier New;">./configure</span> to LD_LIBRARY_PATH if necessary, e.g. '<span style="font-family: Courier New;">export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH</span>').</p>
+<p>Each example is started by calling its name and given parameters file (e.g. "./onemax parameters.txt"). The examples and parameters are explained in more detail in the <a href="tutorial.html"><strong>Tutorial</strong></a>.</p>
+<hr />
+<h1>Parallel ECF</h1>
+<h2 class="western">Prerequisites &ndash; MPI library</h2>
+<p>In order to run parallel ECF on one or more processors or computers, an MPI (<a href="http://www.mcs.anl.gov/mpi/">Message Passing Interface</a>) implementation such as <a href="http://www.mcs.anl.gov/research/projects/mpich2/">MPICH2</a> or <a href="http://www.open-mpi.org/">OpenMPI</a> has to be installed. ECF has been tested with MPICH2 and simple installation instructions can be found with the MPI implementation.</p>
+<p><strong>Note</strong><span style="font-weight: medium;">: in Visual Studio projects included in the ECF, <em>MPICH2</em></span> <span style="font-weight: medium;">directory is presumed to be "<span style="font-family: Courier New;">C:\Program Files\MPICH2</span>". If you installed to a different location, change the directory accordingly.</span></p>
+<h2 class="western">Windows: installation</h2>
+<p>The "VS" subdirectory of the main project directory contains the Visual Studio 2005 solution file <strong>ECF_lib_MPI.sln.</strong> The solution produces library <em>ECF.lib </em><span style="font-style: normal;">(in ./</span><em>release </em><span style="font-style: normal;">or ./</span><em>debug </em><span style="font-style: normal;">directory) </span>which can be used to build MPI programs that can be executed in parallel. Note that this library overwrites the sequential library with the same name (and vice versa). If you need to have both <em>ECF.lib</em> variants at the same time, copy one to a different location.</p>
+<h2 class="western">Windows: running the examples</h2>
+<p>The examples are built <em>in the same way</em> as for the serial version: the only difference is that MPI-capable library is now used, which allows the executable to be run as an MPI program. To use a parallel evolutionary algorithm, one only has to be stated in the configuration file.</p>
+<p>Note that to run parallel ECF as an MPI program - in several processes on different machines - you need to start it using the currently installed MPI implementation (e.g. "mpiexec" gui or command utility with MPICH2). The number of processes and the machines to run on are also defined using the MPI program environment.</p>
+<h2 class="western">Linux: installation</h2>
+<p class="western">To compile ECF libraries with MPI support, use <span style="font-family: Courier New;">--with-mpi=&lt;MPI directory&gt;</span> option with the <span style="font-family: Courier New;">configure</span> script, e.g.:</p>
+<pre>&nbsp; $ ./configure --with-mpi=/home/user/mpi
+  $ make
+  $ make install</pre>
+<p class="western">Should any errors occurr, try reconfiguring the package by running <span style="font-family: Courier New;">aclocal</span>, <span style="font-family: Courier New;">autoconf</span> and <span style="font-family: Courier New;">automake</span>&nbsp; (or just <span style="font-family: Courier New;">autoreconf -fi</span>) before ./<span style="font-family: Courier New;">configure</span>.</p>
+<h2 class="western">Linux: running the examples</h2>
+<p>The compiler in the project's makefile has to be set to the installed MPI compiler (e.g. set as "<span style="font-family: Courier New;">CXX = mpicxx</span>"). Other than that, the example projects are built in the same manner as for the sequential ECF.</p>
+<p>Automatic execution with MPI is available <a href="go-parallel.sh">with another script </a>(thanks to Jernej Makovsek) tested on Ubuntu.</p>

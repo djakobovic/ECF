@@ -1,0 +1,32 @@
+<ECF>
+    <Algorithm>
+        <SteadyStateTournament>
+            <Entry desc="" key="tsize">3</Entry>
+        </SteadyStateTournament>
+    </Algorithm>
+    <Genotype>
+		<APGenotype>
+			<Entry key="lbound">-1</Entry>
+			<Entry key="ubound">1</Entry>
+			<Entry key="dimension">9</Entry>
+			<Entry key="functionset">+ - / * sin cos</Entry>
+			<Entry key="terminalset">X 1 [-1 1]</Entry>
+		</APGenotype>
+    </Genotype>
+        <Tree>
+            <Entry desc="" key="functionset">sin cos + - / *</Entry>
+            <Entry desc="" key="maxdepth">4</Entry>
+            <Entry desc="" key="terminalset">1 X [-1 1]</Entry>
+        </Tree>
+    <Registry>
+        <Entry desc="" key="batch.repeats">0</Entry>
+        <Entry desc="" key="log.filename">log.txt</Entry>
+        <Entry desc="" key="log.level">3</Entry>
+		<Entry desc="" key="log.frequency">10</Entry>
+        <Entry desc="" key="mutation.indprob">0.3</Entry>
+        <Entry desc="" key="population.size">50</Entry>
+		<Entry desc="" key="term.maxgen">100</Entry>
+        <Entry desc="" key="term.stagnation">100</Entry>
+		<Entry desc="" key="term.fitnessval">0</Entry>
+    </Registry>
+</ECF>

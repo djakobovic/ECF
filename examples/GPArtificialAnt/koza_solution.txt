@@ -1,0 +1,4 @@
+<Individual size="1">
+	<FitnessMax/>
+	<Tree size="18">ifa move p3 left p2 ifa move right p2 right p2 left right p2 ifa move left move</Tree>
+</Individual>

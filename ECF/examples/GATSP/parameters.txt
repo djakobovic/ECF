@@ -1,0 +1,49 @@
+<ECF>
+  <Algorithm>
+  		<RandomSearch>
+		</RandomSearch>
+    <SteadyStateTournament>
+      <Entry key="tsize">3</Entry>
+    </SteadyStateTournament>
+  </Algorithm>
+  <Genotype>
+    <Permutation>
+      <Entry key="size">29</Entry>
+
+      <Entry key="crx.COSA">0</Entry>
+      <Entry key="crx.cyclic">0</Entry>
+      <Entry key="crx.cyclic2">0</Entry>
+      <Entry key="crx.OBX">0</Entry>
+      <Entry key="crx.OX">0</Entry>
+      <Entry key="crx.OX2">0</Entry>
+      <Entry key="crx.PBX">0</Entry>
+      <Entry key="crx.PMX">0</Entry>
+      <Entry key="crx.ULX">0</Entry>
+
+      <Entry key="crx.OPX">0</Entry>
+      <Entry key="crx.SPX">0</Entry>
+      <Entry key="crx.DPX">0</Entry>
+      <Entry key="crx.UPMX">0</Entry>
+
+      <Entry key="mut.toggle">0</Entry>
+    </Permutation>
+    <Permutation>
+      <Entry key="size">5</Entry>
+      <Entry key="crx.PMX">1</Entry>
+    </Permutation>
+  </Genotype>
+
+
+  <Registry>
+    <Entry key="tsp.infile">./examples/GATSP/udaljenosti.txt</Entry>
+    <Entry key="randomizer.seed">0</Entry>
+    <Entry key="population.size">150</Entry>
+    <Entry key="mutation.indprob">0.3</Entry>
+    <Entry key="term.maxgen">50</Entry>
+    <Entry key="log.filename">log.txt</Entry>
+    <Entry key="log.level">3</Entry>
+    <Entry key="log.frequency">10</Entry>
+    <Entry key="batch.repeats">5</Entry>
+    <Entry key="batch.statsfile">stats.txt</Entry>
+  </Registry>
+</ECF>

@@ -1,0 +1,14 @@
+<ECF>
+	<Genotype>
+		<Tree>
+			<Entry key="maxdepth">4</Entry>
+			<Entry key="mindepth">2</Entry>
+			<Entry key="functionset">sin cos + - / *</Entry>
+			<Entry key="terminalset">X</Entry>
+		</Tree>
+	</Genotype>
+	<Registry>
+		<Entry key="domain">0 2 4 6 8 10</Entry>
+		<Entry key="codomain">1 3 5 7 9 11</Entry>
+	</Registry>
+</ECF>

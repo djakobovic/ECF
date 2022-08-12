@@ -1,0 +1,28 @@
+<ECF>
+	<Algorithm>
+		<RouletteWheel>
+			<Entry key="crxprob">0.5</Entry> 
+			<Entry key="selpressure">10</Entry> 
+		</RouletteWheel>
+	</Algorithm>
+
+	<Genotype>
+		<BitString>
+			<Entry key="size">500</Entry>
+		</BitString>
+	</Genotype>
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry> 
+		<Entry key="population.size">100</Entry>
+		<Entry key="mutation.indprob">0.3</Entry> 
+		<Entry key="term.eval">30000</Entry>
+		<Entry key="term.fitnessval">500</Entry> 
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.frequency">10</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="batch.repeats">1</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
+	</Registry>
+</ECF>
+

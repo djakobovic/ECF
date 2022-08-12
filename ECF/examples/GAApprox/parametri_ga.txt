@@ -1,0 +1,97 @@
+<ECF>
+	<Algorithm>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry> 
+		</SteadyStateTournament>
+		<AlgAEliGPEA2>
+			<Entry key="jobsize">50</Entry>
+			<Entry key="tsize">3</Entry>
+		</AlgAEliGPEA2>
+		<AlgSGenGPEA>
+			<Entry key="crxprob">0.5</Entry> 
+			<Entry key="selpressure">10</Entry> 
+			<Entry key="jobsize">200</Entry>
+		</AlgSGenGPEA>
+		<RouletteWheel>
+			<Entry key="crxprob">0.5</Entry> 
+			<Entry key="selpressure">10</Entry> 
+		</RouletteWheel>
+	</Algorithm>
+
+	<Genotype>
+		<Binary> <!-- a[0]=konstanta -->
+			<Entry key="lbound">-10</Entry>
+			<Entry key="ubound">70</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">1</Entry>
+
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.prob">0.01</Entry>
+			<Entry key="mut.simple.extra">1</Entry>
+		</Binary>
+		<Binary> <!-- a[1]=linearni èlan -->
+			<Entry key="lbound">-1</Entry>
+			<Entry key="ubound">10</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">1</Entry>
+
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.prob">0.01</Entry>
+			<Entry key="mut.simple.extra">1</Entry>
+		</Binary>
+		<Binary> <!-- a[3i-1]=amplituda, 12 komada -->
+			<Entry key="lbound">-70</Entry>
+			<Entry key="ubound">70</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">12</Entry>
+
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.prob">0.01</Entry>
+			<Entry key="mut.simple.extra">1</Entry>
+		</Binary>
+		<Binary> <!-- a[3i]=frekvencija, 12 komada -->
+			<Entry key="lbound">0</Entry>
+			<Entry key="ubound">2</Entry>
+			<Entry key="precision">5</Entry>
+			<Entry key="dimension">12</Entry>
+
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.prob">0.01</Entry>
+			<Entry key="mut.simple.extra">1</Entry>
+		</Binary>
+		<Binary> <!-- a[3i+1]=pomak, 12 komada -->
+			<Entry key="lbound">-10</Entry>
+			<Entry key="ubound">10</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">12</Entry>
+
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.prob">0.01</Entry>
+			<Entry key="mut.simple.extra">1</Entry>
+		</Binary>
+	</Genotype>
+
+	<Registry>
+<!--
+		<Entry key="parallel.type">mut</Entry>
+		<Entry key="parallel.sync">0</Entry>
+		<Entry key="parallel.jobsize">100</Entry>
+-->
+		<Entry key="iksovi">1  4  5  7  9 11 14 15 16 17 20 22 25 27 29  31 34 36 38 40</Entry>
+		<Entry key="ipsiloni">1 50 51 52 60 71 76 73 79 68 55 57 80 82 78 100 90 85 80 78</Entry>
+		<Entry key="mutation.genotypes">all</Entry> 
+		<Entry key="randomizer.seed">0</Entry> 
+		<Entry key="population.size">40</Entry>
+		<Entry key="population.demes">2</Entry>
+
+		<Entry key="migration.freq">10</Entry>
+		<Entry key="migration.number">3</Entry>
+
+		<Entry key="mutation.indprob">1</Entry>
+		<Entry key="term.maxgen">20</Entry>
+		<Entry key="term.maxtime">1000</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="log.frequency">1</Entry>
+	</Registry>
+</ECF>

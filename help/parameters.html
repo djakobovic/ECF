@@ -1,0 +1,726 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Using the parameters</title>
+<style>
+<!--
+		H2.western { font-family: "Albany", sans-serif; font-size: 16pt; font-style: italic }
+-->
+</style>
+</head>
+
+<body>
+
+<p><a href="documentation.html">
+<img border="0" src="up.png" width="30" height="30"></a></p>
+
+<H1 ALIGN=LEFT><A NAME="Using the parameters"></A>4. Using the
+parameters</H1>
+<p ALIGN=LEFT>A file with complete parameter list may be obtained by running the 
+ECF executable with '<font face="Courier New" size="2">-pardump &lt;file&gt;</font>' 
+option, e.g. '<font face="Courier New" size="2">&lt;executable&gt; -pardump par.txt</font>'.</p>
+<ol>
+	<li><b><a href="#configuration">The configuration file</a></b></li>
+	<li><b><a href="#algorithm">The Algorithm section</a></b></li>
+	<li><b><a href="#registry">The Registry section</a></b></li>
+	<li><b><a href="#crsmut">Choosing crossover and mutation</a></b></li>
+	<li><b><a href="#multiple genotypes">Using multiple genotypes</a></b></li>
+	<li><b><a href="#milestone">Saving and restoring evolution state</a></b></li>
+	<li><b><a href="#batch">Performing multiple ECF runs (batch mode)</a></b></li>
+	<li><b><a href="#user_defined">User defined parameters</a></b></li>
+	<li><b><a href="#complete">A complete parameter list</a></b></li>
+</ol>
+<p><b>Note</b>: the parameters for parallel version of ECF are described in 
+the section <a href="pecf.html">Parallel ECF</a>.</p>
+<H2 CLASS="western"><a name="configuration"></a>1. The configuration file</H2>
+<P>The name of the configuration file is given as a command line argument.</P>
+<P>The file consists of three XML blocks inside the ECF block: Algorithm,
+Genotype and Registry. <B>Only the Genotype has to be stated </B>in the 
+configuration. An example structure:</P>
+<PRE STYLE="background: #ccccff; font-style: normal; font-weight: medium">&lt;ECF&gt;
+  <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Algorithm&gt;
+	...</SPAN>
+  <SPAN STYLE="font-weight: medium; font-style:normal">&lt;/Algorithm&gt;</SPAN>
+
+  <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Genotype&gt;
+	...</SPAN>
+  <SPAN STYLE="font-weight: medium; font-style:normal">&lt;/Genotype&gt;</SPAN>
+
+  <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Registry&gt;
+	...</SPAN>
+  <SPAN STYLE="font-weight: medium; font-style:normal">&lt;/Registry&gt;</SPAN>
+&lt;/ECF&gt;</PRE>
+<P>If no other parameters are stated, ECF uses the following setting:</P>
+<ul>
+	<li>algorithm: SteadyStateTournament (tournament size 3)</li>
+	<li>population size: 100</li>
+	<li>individual mutation probability: 0.3</li>
+	<li>termination: 50 consecutive generations without improvement of the best 
+	individual (&quot;term.stagnation&quot; parameter)</li>
+</ul>
+<H2 CLASS="western"><a name="algorithm"></a>2. The Algorithm section</H2>
+<P>Only one algorithm should be stated in the configuration file
+(otherwise the first one is used). Currently supported sequential algorithms and
+their parameters are:</P>
+<PRE STYLE="background: #ccccff"><FONT COLOR="#000000">&lt;Algorithm&gt;     &lt;!-- should be only one inside --&gt;
+	&lt;SteadyStateTournament&gt;
+		&lt;Entry key=&quot;tsize&quot;&gt;3&lt;/Entry&gt;
+		&lt;!-- tournament size (individuals selected randomly, worst one eliminated) --&gt;
+	&lt;/SteadyStateTournament&gt;
+	&lt;ArtificialBeeColony&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- Elitism: the current best food source is preserved (default: 1) --&gt;
+		&lt;Entry key=&quot;limit&quot;&gt;300&lt;/Entry&gt;
+		&lt;!-- Maximum number of cycles for each individual (default: 300) --&gt;
+	&lt;/ArtificialBeeColony&gt;
+	&lt;Clonalg&gt;
+		&lt;Entry key=&quot;beta&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- number of clones (percentage) for every antibody (default: 1.0) --&gt;
+		&lt;Entry key=&quot;c&quot;&gt;0.2&lt;/Entry&gt;
+		&lt;!-- mutation rate (default: 0.2) --&gt;
+		&lt;Entry key=&quot;cloningVersion&quot;&gt;proportional&lt;/Entry&gt;
+		&lt;!-- cloning version, static or proportional (default: proportional) --&gt;
+		&lt;Entry key=&quot;d&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- fraction of population regenerated every generation (default: 0) --&gt;
+		&lt;Entry key=&quot;n&quot;&gt;100&lt;/Entry&gt;
+		&lt;!-- number of antibodies cloned every generation (default: 100) --&gt;
+		&lt;Entry key=&quot;selectionScheme&quot;&gt;CLONALG1&lt;/Entry&gt;
+		&lt;!-- which selection scheme to use, CLONALG1 or CLONALG2 (default: CLONALG1) --&gt;
+	&lt;/Clonalg&gt;
+	&lt;DifferentialEvolution&gt;
+		&lt;Entry key=&quot;CR&quot;&gt;0.9&lt;/Entry&gt;
+		&lt;!-- crossover rate --&gt;
+		&lt;Entry key=&quot;F&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- scaling constant --&gt;
+		&lt;Entry key=&quot;bounded&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- should the algorithm respect the bounds defined in the genotype or not (default: 0) --&gt;
+	&lt;/DifferentialEvolution&gt;
+	&lt;Elimination&gt;
+		&lt;Entry key=&quot;gengap&quot;&gt;0.6&lt;/Entry&gt;
+		&lt;!-- generation gap (percentage of population to be eliminated) --&gt;
+		&lt;Entry key=&quot;selpressure&quot;&gt;10&lt;/Entry&gt;
+		&lt;!-- selection pressure: how much is the worst individual 'worse' than the best --&gt;
+	&lt;/Elimination&gt;
+	&lt;EvolutionStrategy&gt;
+		&lt;Entry key=&quot;lambda&quot;&gt;4&lt;/Entry&gt;
+		&lt;!-- number of offspring created in each iteration (default: 4) --&gt;
+		&lt;Entry key=&quot;mu&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- the size of parent population (default: 1) --&gt;
+		&lt;Entry key=&quot;rho&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- number of parents used to create an offspring; may be 1 or 2 (default: 1) --&gt;
+		&lt;Entry key=&quot;selection&quot;&gt;plus&lt;/Entry&gt;
+		&lt;!-- selection scheme: &quot;plus&quot;, uses both parents and offspring) or &quot;comma&quot;, uses just offspring (default: plus) --&gt;
+	&lt;/EvolutionStrategy&gt;
+	&lt;GeneticAnnealing&gt;
+		&lt;Entry key=&quot;coolingfactor&quot;&gt;0.7&lt;/Entry&gt;
+		&lt;!-- simulated annealing cooling factor --&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- is the best individual preserved --&gt;
+		&lt;Entry key=&quot;energybank&quot;&gt;200&lt;/Entry&gt;
+		&lt;!-- total starting energy bank (fitness dependant) --&gt;
+	&lt;/GeneticAnnealing&gt;
+	&lt;OptIA&gt;
+		&lt;Entry key=&quot;c&quot;&gt;0.2&lt;/Entry&gt;
+		&lt;!-- mutation rate (default: 0.2) --&gt;
+		&lt;Entry key=&quot;dup&quot;&gt;5&lt;/Entry&gt;
+		&lt;!-- number of clones for each individual in clone population (dafault: 5) --&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- use elitism (default: 0) --&gt;
+		&lt;Entry key=&quot;tauB&quot;&gt;100&lt;/Entry&gt;
+		&lt;!-- maximum number of generations to keep an individual without improvement (default: 100) --&gt;
+	&lt;/OptIA&gt;
+	&lt;ParticleSwarmOptimization&gt;
+		&lt;Entry key=&quot;bounded&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- should the algorithm respect the bounds defined in the genotype or not (default: 0) --&gt;
+		&lt;Entry key=&quot;maxVelocity&quot;&gt;10&lt;/Entry&gt;
+		&lt;!-- max particle velocity --&gt;
+		&lt;Entry key=&quot;weight&quot;&gt;0.8&lt;/Entry&gt;
+		&lt;!-- initial inertia weight (either constant or time dependant) --&gt;
+		&lt;Entry key=&quot;weightType&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- weight type update: 0 - constant, 1 - time dependant (based on max generations) --&gt;
+	&lt;/ParticleSwarmOptimization&gt;
+	&lt;RandomSearch/&gt;
+	&lt;RouletteWheel&gt;
+		&lt;Entry key=&quot;crxprob&quot;&gt;0.5&lt;/Entry&gt;
+		&lt;!-- crossover rate --&gt;
+		&lt;Entry key=&quot;selpressure&quot;&gt;10&lt;/Entry&gt;
+		&lt;!-- selection pressure: how much is the best individual 'better' than the worst --&gt;
+	&lt;/RouletteWheel&gt;
+&lt;/Algorithm&gt;</FONT></PRE>
+<P>
+If the algorithm block is not stated, the default is used:
+<I>SteadyStateTournament</I>.</P>
+<P>
+&nbsp;</P>
+<H2 CLASS="western"><a name="registry"></a>3. The Registry section</H2>
+<P>The Registry collects all the parameters that are not a part of
+the algorithm or the genotype. Currently supported parameters and
+their default values are stated below. If the default value is <span lang="hr">
+&quot;none&quot;, then the parameter is <b>not used</b> unless stated in the configuration file!</span></P>
+<PRE STYLE="background: #ccccff">&lt;Registry&gt;
+	&lt;!-- population --&gt;
+	&lt;Entry key=&quot;randomizer.seed&quot;&gt;0&lt;/Entry&gt; &lt;!-- 0 uses time(NULL) (default: 0) --&gt;
+	&lt;Entry key=&quot;population.size&quot;&gt;100&lt;/Entry&gt; &lt;!-- number of individuals (default: 100) --&gt;
+	&lt;Entry key=&quot;population.demes&quot;&gt;1&lt;/Entry&gt; &lt;!-- number of demes (default: 1) --&gt;
+	&lt;Entry key=&quot;migration.freq&quot;&gt;10&lt;/Entry&gt; &lt;!-- individuals are exchanged each 'freq' generations (default: none) --&gt;
+	&lt;Entry key=&quot;migration.number&quot;&gt;5&lt;/Entry&gt; &lt;!-- number of individuals to be sent to another deme (default: 1) --&gt;
+
+	&lt;!-- operators --&gt;
+	&lt;Entry key=&quot;mutation.indprob&quot;&gt;0.3&lt;/Entry&gt; &lt;!-- individual mutation probability (regardless of the algorithm!) (default: 0.3) --&gt;
+	&lt;Entry key=&quot;mutation.genotypes&quot;&gt;random&lt;/Entry&gt; &lt;!-- if there are multiple genotypes, which to mutate? 'random': a random one, 'all': mutate all (default: random) --&gt;
+	&lt;Entry key=&quot;mutation.protected&quot;&gt;&lt;/Entry&gt; &lt;!-- indexes of genotypes that are excluded (protected) from mutation (default: none) --&gt;
+	&lt;Entry key=&quot;crossover.genotypes&quot;&gt;random&lt;/Entry&gt; &lt;!-- if there are multiple genotypes, which to cross? 'random': a random pair, 'all': all pairs (default: random) --&gt;
+	&lt;Entry key=&quot;crossover.protected&quot;&gt;&lt;/Entry&gt; &lt;!-- indexes of genotypes that are excluded (protected) from crossover (default: none) --&gt;
+
+	&lt;!-- termination conditions --&gt;
+	&lt;Entry key=&quot;term.stagnation&quot;&gt;100&lt;/Entry&gt; &lt;!-- max number of consecutive generations without improvement (default: 5000 / pop_size) --&gt;
+	&lt;Entry key=&quot;term.maxgen&quot;&gt;10&lt;/Entry&gt; &lt;!-- max number of generations (default: none) --&gt;
+	&lt;Entry key=&quot;term.maxtime&quot;&gt;1000&lt;/Entry&gt; &lt;!-- max number of seconds to run (default: none) --&gt;
+	&lt;Entry key=&quot;term.fitnessval&quot;&gt;1&lt;/Entry&gt; &lt;!-- fitness value for termination (default: none) --&gt;
+	&lt;Entry key=&quot;term.eval&quot;&gt;9999&lt;/Entry&gt; &lt;!-- max number of fitness evaluations (default: none) --&gt;
+
+	&lt;!-- logging and checkpointing --&gt;
+	&lt;Entry key=&quot;log.level&quot;&gt;3&lt;/Entry&gt; &lt;!-- log level; valid values are 1 (minimal) to 5 (verbose) (default: 3) --&gt;
+	&lt;Entry key=&quot;log.filename&quot;&gt;log.txt&lt;/Entry&gt; &lt;!-- log filename (default: none) --&gt;
+	&lt;Entry key=&quot;log.frequency&quot;&gt;1&lt;/Entry&gt; &lt;!-- log only every 'frequency' generations (default: 1) --&gt;
+	&lt;Entry key=&quot;milestone.filename&quot;&gt;out.txt&lt;/Entry&gt; &lt;!-- milestone file (if stated) stores all the population (default: none) --&gt;
+	&lt;Entry key=&quot;milestone.interval&quot;&gt;0&lt;/Entry&gt; &lt;!-- milestone saving interval in generations; 0: save only at the end (default: 0) --&gt;
+
+	&lt;!-- multiple runs (batch mode) --&gt;
+	&lt;Entry key=&quot;batch.repeats&quot;&gt;1&lt;/Entry&gt; &lt;!-- number of independent runs to perform (default: 1) --&gt;
+	&lt;Entry key=&quot;batch.singlemilestone&quot;&gt;0&lt;/Entry&gt; &lt;!-- use only one milestone file for all the runs (1) or one for each run (0) (default: 0) --&gt;
+	<font color="#000000">&lt;Entry key=&quot;batch.statsfile&quot;&gt;stats.txt&lt;/Entry&gt; &lt;!-- output batch end of run stats in a single file (default: none) --&gt;</font>
+
+	&lt;!-- parallel ECF parameters: --&gt;
+	&lt;Entry key=&quot;parallel.type&quot;&gt;eval&lt;/Entry&gt; &lt;!-- implicit parallelization method: eval - evaluation, mut - mutation + eval (default: none) --&gt;
+	&lt;Entry key=&quot;parallel.sync&quot;&gt;0&lt;/Entry&gt; &lt;!-- implicit parallelization synchronicity: 0 - async, 1 - sync (default: none) --&gt;
+	&lt;Entry key=&quot;parallel.jobsize&quot;&gt;10&lt;/Entry&gt; &lt;!-- implicit parallelization jobsize (individuals per job) (default: none) --&gt;
+&lt;/Registry&gt;</PRE>
+<p>&nbsp;</p><H2 CLASS="western">
+<a name="crsmut"></a>4. Choosing crossover and mutation</H2>
+<P>Each genotype may define more than one crossover and/or mutation
+operator. If no parameters are given, the operator is selected
+randomly each time crossover or mutation is performed. Otherwise, the
+user may specify the probability of using a single or more operators.
+</P>
+<P>An example: if there are two mutation operators and one is given
+the probability of 0.3 and the other of 0.7, they will be used in 30%
+and 70% of the cases, respectively. If the probability is defined
+only for <B>one of them </B>(with <I>any</I> probability value), then
+only that one will be used.</P>
+<p>Currently supported genotypes and associated operators are:</p>
+<pre STYLE="font-style: normal; font-weight: medium; background: #ccccff url('')">&lt;Binary&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.halfuniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.nongeometric&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.randomrespectful&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.reducedsurrogate&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.segmented&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.shuffle&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.twopoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.uniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;dimension&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of real valued variables (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;lbound&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- lower bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.mix&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple.bitprob&quot;&gt;0.001&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;precision&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of digits after the decimal point (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;rounding&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- should the real value be rounded to the 'precision'-th decimal (default: no) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;ubound&quot;&gt;10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- upper bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/Binary&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;BitString&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.uniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.mix&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple.bitprob&quot;&gt;0.001&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;size&quot;&gt;10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of bits (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/BitString&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;FloatingPoint&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.arithmetic&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.arithmeticsimple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.arithmeticsingle&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.average&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.bga&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.blxalpha&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.blxalphabeta&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.discrete&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.flat&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.heuristic&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.local&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.sbx&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;dimension&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of real valued variables (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;lbound&quot;&gt;-10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- lower bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;ubound&quot;&gt;10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- upper bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/FloatingPoint&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;Permutation&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.COSA&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.DPX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OBX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OPX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OX2&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.PBX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.PMX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.SPX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.ULX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.UPMX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.cyclic&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.cyclic2&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.ins&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.inv&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.toggle&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;size&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- genotype size: number of indices (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/Permutation&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;Tree&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.context&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.simple.functionprob&quot;&gt;0.9&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.sizefair&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.uniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;functionset&quot;&gt;&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- set of functional tree elements (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;initmaxdepth&quot;&gt;5&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- maximum initial tree depth (default: 5) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;initmindepth&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- minimum initial tree depth (default: 1) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;maxdepth&quot;&gt;5&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- maximum tree depth (default: 5) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mindepth&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- minimum tree depth (default: 1) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.gauss&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.hoist&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.nodecomplement&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.nodereplace&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.permutation&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.shrink&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.subtree&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;terminalset&quot;&gt;&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- set of terminal tree elements (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/Tree&gt;</pre>
+<h3><u><b>4.1 Protected genotypes</b></u></h3>
+<P>Some genotypes in the individual may also be <i>protected</i>, i.e. excluded 
+from either mutation and/or crossover (this is useful if you need to store 
+additional information in the individual, but don't want it to evolve). To do 
+so, just state <b>the indexes </b>of protected genotypes in parameters 
+&quot;crossover.protected&quot; or &quot;mutation.protected&quot;, e.g.</P>
+<pre STYLE="background: #ccccff url('')">	&lt;Entry key=&quot;mutation.protected&quot;&gt;1 2 &lt;/Entry&gt;
+	&lt;Entry key=&quot;crossover.protected&quot;&gt;0 2 &lt;/Entry&gt;</pre>
+<p>&nbsp;</p>
+<h2 CLASS="western"><A NAME="multiple genotypes"></A>5. Using multiple
+genotypes</h2>
+<P>In case you want to use more than one genotype (say multiple trees
+or Binary's), you only have to state them in the configuration file,
+e.g.:</P>
+<PRE STYLE="background: #ccccff; font-style: normal; font-weight: medium"><FONT COLOR="#000000">&lt;Genotype&gt;</FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Binary&gt;             &lt;!-- genotype with index 0 --&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;lbound&quot;&gt;0&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;ubound&quot;&gt;50&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;precision&quot;&gt;1&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;dimension&quot;&gt;3&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-weight: medium; font-style:normal">&lt;/Binary&gt;</SPAN></FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Binary&gt;             &lt;!-- genotype with index 1 --&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;lbound&quot;&gt;-10&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;ubound&quot;&gt;10&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;precision&quot;&gt;3&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">               <SPAN STYLE="font-weight: medium; font-style:normal">&lt;Entry key=&quot;dimension&quot;&gt;2&lt;/Entry&gt;</SPAN></FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-weight: medium; font-style:normal">&lt;/Binary&gt;
+	</SPAN>&lt;Permutation&gt;<SPAN STYLE="font-weight: medium; font-style:normal">        &lt;!-- genotype with index 2 --&gt;</SPAN>
+		&lt;Entry key=&quot;size&quot;&gt;30&lt;/Entry&gt;
+	&lt;/Permutation&gt;</FONT>
+<FONT COLOR="#000000">&lt;/Genotype&gt;</FONT></PRE><P>
+Of course, the evaluation function should take this into account and
+read all the relevant genotypes.</P>
+<P>
+&nbsp;</P>
+<h2 CLASS="western">
+<a name="milestone"></a>6. Saving and restoring the evolution state</h2>
+<P>
+With &quot;milestone.filename&quot; parameter stated in the configuration, ECF will save 
+the population and current evolution state in the milestone every 
+&quot;milestone.interval&quot; generations. If the interval is 0 (or the parameter is not 
+stated), the milestone will be saved at the end of the run.</P>
+<P>
+Restoration of the saved population is performed simply by running the ECF 
+executable with the milestone file as its&nbsp; command line argument, e.g.:&nbsp;
+<b>./&lt;executable&gt; &lt;milestone_file&gt;</b>.<br>
+The evolution process will then continue, depending on the active termination 
+criteria. You can manually edit the Registry section in the milestone file and 
+change the termination conditions (e.g. increase the value of &quot;term.maxgen&quot; 
+parameter).</P>
+<P>
+&nbsp;</P>
+<h2 CLASS="western">
+<b><a name="batch"></a>7. Performing multiple runs (batch mode</b>)</h2>
+<P>
+ECF can perform multiple runs in a sequence (e.g. for statistical analysis). 
+Multiple runs are controlled with the following parameters:</P>
+<pre STYLE="font-style: normal; font-weight: medium; background: #ccccff url('')"><font color="#000000">	&lt;Entry key=&quot;batch.repeats&quot;&gt;1&lt;/Entry&gt; &lt;!-- number of independent runs to perform (default: 1) --&gt;
+	&lt;Entry key=&quot;batch.singlemilestone&quot;&gt;0&lt;/Entry&gt; &lt;!-- use only one milestone file for all the runs (1) or one for each run (0) (default: 0) --&gt;
+	&lt;Entry key=&quot;batch.statsfile&quot;&gt;stats.txt&lt;/Entry&gt; &lt;!-- output batch end of run stats in a single file (default: none) --&gt;</font></pre>
+<p>A separate log file is generated for every run with the run number as 
+extension: &lt;log&gt;_01, &lt;log&gt;_02 etc. A separate milestone is also saved, unless 
+the &quot;singlemilestone&quot; option is set to 1. <br>
+Note that if the batch run is interrupted before all the runs are performed, it 
+can also be continued with the last milestone file (ECF will perform the 
+remaining runs).</p>
+<p>If the &quot;batch.statsfile&quot; option is included, the final fitness statistics 
+from the end of every run will be output in the file, e.g.:</p>
+<p><font face="Courier New">runId&nbsp;&nbsp;&nbsp; fit_min&nbsp;&nbsp;&nbsp; 
+fit_max&nbsp;&nbsp;&nbsp; fit_avg&nbsp;&nbsp;&nbsp; fit_std<br>
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+*<br>
+...</font></p>
+<p><b><i>In implementation</i></b>: changing parameter values in different runs</p>
+<p>&nbsp;</p>
+<H2 CLASS="western"><a name="user_defined"></a>8. User defined parameters</H2>
+<P>It is possible to define parameters programatically so they can be
+used in the configuration file. Suppose you want to load the symbolic
+regression data (see the <a href="genotype.html#tree">example in genotypes 
+section</a>)
+from the configuration file instead of generating it in the
+<I>initialize</I> function (that way you can train on different data
+without recompilation). Say you want the parameters to look like
+this:</P>
+<PRE STYLE="background: #ccccff url('') repeat scroll; font-style: normal; font-weight: medium"><FONT COLOR="#000000">&lt;Entry key=&quot;domain&quot;&gt;0 2 4 6 8 10&lt;/Entry&gt;</FONT>
+<FONT COLOR="#000000">&lt;Entry key=&quot;codomain&quot;&gt;1 3 5 7 9 11&lt;/Entry&gt;</FONT></PRE><P>
+(Let's ignore the fact that it is probably better to define only one
+text parameter as a filename of the separate data file, since the
+data may be large.) In order to use these parameters, the evaluation
+operator needs to <I>register</I> them. Parameter registratoin is
+performed simply by implementing the virtual function
+<I>registerParameters</I> that gets called once before the <I>initialize</I>
+function:</P>
+<PRE STYLE="background: #ccccff url('') repeat scroll; font-style: normal; font-weight: medium">void SymbRegEvalOp::registerParameters(StateP state)
+{
+<SPAN STYLE="background: #ccccff">        </SPAN><SPAN STYLE="font-weight: medium; font-style:normal">state-&gt;getRegistry()-&gt;registerEntry(&quot;domain&quot;, (voidP) (new std::string), ECF::STRING);</SPAN>
+<SPAN STYLE="background: #ccccff">        </SPAN><SPAN STYLE="font-weight: medium; font-style:normal">state-&gt;getRegistry()-&gt;registerEntry(&quot;codomain&quot;, (voidP) (new std::string), ECF::STRING);</SPAN>
+}</PRE><P>
+In the registration, you need to reserve the space for parameter
+storage and tell the framework what type is it (the types can be
+<SPAN STYLE="font-weight: medium; font-style:normal">ECF::</SPAN>STRING, <SPAN STYLE="font-weight: medium; font-style:normal">
+ECF::</SPAN>UINT, <SPAN STYLE="font-weight: medium; font-style:normal">ECF::</SPAN>INT, <SPAN STYLE="font-weight: medium; font-style:normal">
+ECF::</SPAN>DOUBLE, <SPAN STYLE="font-weight: medium; font-style:normal">ECF::</SPAN>FLOAT, <SPAN STYLE="font-weight: medium; font-style:normal">
+ECF::</SPAN>CHAR). After the parameters are read from
+the configuration file, you can interpret them in <I>initialize</I>
+function:</P>
+<PRE STYLE="background: #ccccff"><SPAN STYLE="background: #ccccff"><FONT COLOR="#0000ff">bool</FONT><FONT COLOR="#000000"> SymbRegEvalOp::initialize(StateP state)</FONT></SPAN>
+<SPAN STYLE="background: #ccccff">{</SPAN>
+<SPAN STYLE="background: #ccccff">        </SPAN><FONT COLOR="#008000">// check if the parameters are stated (used) in the conf. file</FONT>
+<FONT COLOR="#008000"><SPAN STYLE="background: #ccccff">        // if not, we return false so the initialization fails</SPAN></FONT>
+<FONT COLOR="#0000ff"><SPAN STYLE="background: #ccccff">        </SPAN><FONT SIZE=2><SPAN STYLE="background: #ccccff">if</SPAN></FONT></FONT><FONT COLOR="#000000">(!state-&gt;getRegistry()-&gt;isModified(</FONT><FONT COLOR="#800000">&quot;domain&quot;</FONT><FONT SIZE=2 COLOR="#000000"><SPAN STYLE="background: #ccccff">) || </SPAN></FONT><FONT COLOR="#000000">!state-&gt;getRegistry()-&gt;isModified(</FONT><FONT COLOR="#800000">&quot;codomain&quot;</FONT><FONT SIZE=2 COLOR="#000000">))</FONT>
+<FONT COLOR="#000000"><SPAN STYLE="background: #ccccff">                </SPAN></FONT><FONT COLOR="#0000ff">return</FONT><FONT COLOR="#000000"><SPAN STYLE="background: #ccccff"> </SPAN></FONT><FONT COLOR="#0000ff"><SPAN STYLE="background: #ccccff">false</SPAN></FONT><FONT SIZE=2 COLOR="#000000"><SPAN STYLE="background: #ccccff">;</SPAN></FONT>
+<BR>        <FONT COLOR="#0000ff"><SPAN STYLE="background: #ccccff">double</SPAN></FONT> datum;
+<SPAN STYLE="background: #ccccff">        std::stringstream ss;</SPAN>
+
+<SPAN STYLE="background: #ccccff">        voidP sptr = state-&gt;getRegistry()-&gt;getEntry(&quot;domain&quot;); </SPAN><FONT COLOR="#008000">// get parameter value</FONT>
+<SPAN STYLE="background: #ccccff">        ss &lt;&lt; *((std::string*) sptr.get());                    </SPAN><FONT COLOR="#008000">// convert from voidP to user defined type</FONT>
+<SPAN STYLE="background: #ccccff">        </SPAN><FONT COLOR="#0000ff"><SPAN STYLE="background: #ccccff">while</SPAN></FONT><SPAN STYLE="background: #ccccff">(ss &gt;&gt; datum) {                                   </SPAN><FONT COLOR="#008000">// read all the data from string</FONT>
+<SPAN STYLE="background: #ccccff">                domain.push_back(datum);</SPAN>
+<SPAN STYLE="background: #ccccff">        }</SPAN>
+<SPAN STYLE="background: #ccccff">        ss.str(&quot;&quot;); ss.clear();                                </SPAN><FONT COLOR="#008000">// reset stringstream object</FONT>
+<SPAN STYLE="background: #ccccff">        sptr = state-&gt;getRegistry()-&gt;getEntry(&quot;codomain&quot;);     </SPAN><FONT COLOR="#008000">// get codomain parameter</FONT>
+<SPAN STYLE="background: #ccccff">        ss &lt;&lt; *((std::string*) sptr.get());</SPAN>
+<SPAN STYLE="background: #ccccff">        </SPAN><FONT COLOR="#0000ff"><SPAN STYLE="background: #ccccff">while</SPAN></FONT><SPAN STYLE="background: #ccccff">(ss &gt;&gt; datum) {                                   </SPAN><FONT COLOR="#008000">// read values</FONT>
+<SPAN STYLE="background: #ccccff">                codomain.push_back(datum);</SPAN>
+<SPAN STYLE="background: #ccccff">        }</SPAN>
+
+<FONT COLOR="#000000"><SPAN STYLE="background: #ccccff">        </SPAN></FONT><FONT COLOR="#0000ff"><SPAN STYLE="background: #ccccff">if</SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="background: #ccccff">(domain.size() != codomain.size())                   </SPAN></FONT><FONT COLOR="#008000">// if the parameters are ill defined, return false</FONT>
+<SPAN STYLE="background: #ccccff"><FONT COLOR="#000000">                </FONT><FONT COLOR="#0000ff">return false</FONT><FONT COLOR="#000000">;</FONT></SPAN>
+<FONT COLOR="#000000"><SPAN STYLE="background: #ccccff">        nSamples = (uint) domain.size();</SPAN></FONT>
+<SPAN STYLE="background: #ccccff"><FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff">return</FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#0000ff">true</FONT><FONT COLOR="#000000">;</FONT></SPAN>
+<SPAN STYLE="background: #ccccff">}</SPAN></PRE><P>
+And the <I>evaluate </I>function stays the same. The choice of
+parameter names must be such that all parameter names are unique
+(otherwise the registration will fail).</P>
+<P>
+&nbsp;</P>
+<H2 CLASS="western">Setting the parameters programmatically</H2>
+<P><b>todo</b>: setParameter, setGenotype, setAlgorithm</P>
+<P>&nbsp;</P>
+<H2 CLASS="western"><a name="complete"></a>9. A complete parameter list</H2>
+<p ALIGN=LEFT>A file with complete parameter list may be obtained by running the 
+ECF executable with '<font face="Courier New" size="2">-pardump &lt;file&gt;</font>' 
+option, e.g. '<font face="Courier New" size="2">&lt;executable&gt; -pardump par.txt</font>'.</p>
+<pre STYLE="background: #ccccff url('')">&lt;ECF&gt;
+<FONT COLOR="#000000">&lt;Algorithm&gt;     &lt;!-- should be only one inside --&gt;</FONT>
+<FONT COLOR="#000000">	&lt;SteadyStateTournament&gt;
+		&lt;Entry key=&quot;tsize&quot;&gt;3&lt;/Entry&gt;
+		&lt;!-- tournament size (individuals selected randomly, worst one eliminated) --&gt;
+	&lt;/SteadyStateTournament&gt;
+	&lt;ArtificialBeeColony&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- Elitism: the current best food source is preserved (default: 1) --&gt;
+		&lt;Entry key=&quot;limit&quot;&gt;300&lt;/Entry&gt;
+		&lt;!-- Maximum number of cycles for each individual (default: 300) --&gt;
+	&lt;/ArtificialBeeColony&gt;
+	&lt;Clonalg&gt;
+		&lt;Entry key=&quot;beta&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- number of clones (percentage) for every antibody (default: 1.0) --&gt;
+		&lt;Entry key=&quot;c&quot;&gt;0.2&lt;/Entry&gt;
+		&lt;!-- mutation rate (default: 0.2) --&gt;
+		&lt;Entry key=&quot;cloningVersion&quot;&gt;proportional&lt;/Entry&gt;
+		&lt;!-- cloning version, static or proportional (default: proportional) --&gt;
+		&lt;Entry key=&quot;d&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- fraction of population regenerated every generation (default: 0) --&gt;
+		&lt;Entry key=&quot;n&quot;&gt;100&lt;/Entry&gt;
+		&lt;!-- number of antibodies cloned every generation (default: 100) --&gt;
+		&lt;Entry key=&quot;selectionScheme&quot;&gt;CLONALG1&lt;/Entry&gt;
+		&lt;!-- which selection scheme to use, CLONALG1 or CLONALG2 (default: CLONALG1) --&gt;
+	&lt;/Clonalg&gt;
+	&lt;DifferentialEvolution&gt;
+		&lt;Entry key=&quot;CR&quot;&gt;0.9&lt;/Entry&gt;
+		&lt;!-- crossover rate --&gt;
+		&lt;Entry key=&quot;F&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- scaling constant --&gt;
+		&lt;Entry key=&quot;bounded&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- should the algorithm respect the bounds defined in the genotype or not (default: 0) --&gt;
+	&lt;/DifferentialEvolution&gt;
+	&lt;Elimination&gt;
+		&lt;Entry key=&quot;gengap&quot;&gt;0.6&lt;/Entry&gt;
+		&lt;!-- generation gap (percentage of population to be eliminated) --&gt;
+		&lt;Entry key=&quot;selpressure&quot;&gt;10&lt;/Entry&gt;
+		&lt;!-- selection pressure: how much is the worst individual 'worse' than the best --&gt;
+	&lt;/Elimination&gt;
+	&lt;EvolutionStrategy&gt;
+		&lt;Entry key=&quot;lambda&quot;&gt;4&lt;/Entry&gt;
+		&lt;!-- number of offspring created in each iteration (default: 4) --&gt;
+		&lt;Entry key=&quot;mu&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- the size of parent population (default: 1) --&gt;
+		&lt;Entry key=&quot;rho&quot;&gt;1&lt;/Entry&gt;
+		&lt;!-- number of parents used to create an offspring; may be 1 or 2 (default: 1) --&gt;
+		&lt;Entry key=&quot;selection&quot;&gt;plus&lt;/Entry&gt;
+		&lt;!-- selection scheme: &quot;plus&quot;, uses both parents and offspring) or &quot;comma&quot;, uses just offspring (default: plus) --&gt;
+	&lt;/EvolutionStrategy&gt;
+	&lt;GeneticAnnealing&gt;
+		&lt;Entry key=&quot;coolingfactor&quot;&gt;0.7&lt;/Entry&gt;
+		&lt;!-- simulated annealing cooling factor --&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- is the best individual preserved --&gt;
+		&lt;Entry key=&quot;energybank&quot;&gt;200&lt;/Entry&gt;
+		&lt;!-- total starting energy bank (fitness dependant) --&gt;
+	&lt;/GeneticAnnealing&gt;
+	&lt;OptIA&gt;
+		&lt;Entry key=&quot;c&quot;&gt;0.2&lt;/Entry&gt;
+		&lt;!-- mutation rate (default: 0.2) --&gt;
+		&lt;Entry key=&quot;dup&quot;&gt;5&lt;/Entry&gt;
+		&lt;!-- number of clones for each individual in clone population (dafault: 5) --&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- use elitism (default: 0) --&gt;
+		&lt;Entry key=&quot;tauB&quot;&gt;100&lt;/Entry&gt;
+		&lt;!-- maximum number of generations to keep an individual without improvement (default: 100) --&gt;
+	&lt;/OptIA&gt;
+	&lt;ParticleSwarmOptimization&gt;
+		&lt;Entry key=&quot;bounded&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- should the algorithm respect the bounds defined in the genotype or not (default: 0) --&gt;
+		&lt;Entry key=&quot;maxVelocity&quot;&gt;10&lt;/Entry&gt;
+		&lt;!-- max particle velocity --&gt;
+		&lt;Entry key=&quot;weight&quot;&gt;0.8&lt;/Entry&gt;
+		&lt;!-- initial inertia weight (either constant or time dependant) --&gt;
+		&lt;Entry key=&quot;weightType&quot;&gt;0&lt;/Entry&gt;
+		&lt;!-- weight type update: 0 - constant, 1 - time dependant (based on max generations) --&gt;
+	&lt;/ParticleSwarmOptimization&gt;
+	&lt;RandomSearch/&gt;
+	&lt;RouletteWheel&gt;
+		&lt;Entry key=&quot;crxprob&quot;&gt;0.5&lt;/Entry&gt;
+		&lt;!-- crossover rate --&gt;
+		&lt;Entry key=&quot;selpressure&quot;&gt;10&lt;/Entry&gt;
+		&lt;!-- selection pressure: how much is the best individual 'better' than the worst --&gt;
+	&lt;/RouletteWheel&gt;
+&lt;/Algorithm&gt;
+
+</FONT>
+&lt;Genotype&gt; &lt;!-- mandatory parameters are commented --&gt;
+
+&lt;Binary&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.halfuniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.nongeometric&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.randomrespectful&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.reducedsurrogate&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.segmented&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.shuffle&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.twopoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.uniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;dimension&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of real valued variables (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;lbound&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- lower bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.mix&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple.bitprob&quot;&gt;0.001&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;precision&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of digits after the decimal point (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;rounding&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- should the real value be rounded to the 'precision'-th decimal (default: no) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;ubound&quot;&gt;10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- upper bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/Binary&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;BitString&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.uniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.mix&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple.bitprob&quot;&gt;0.001&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;size&quot;&gt;10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of bits (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/BitString&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;FloatingPoint&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.arithmetic&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.arithmeticsimple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.arithmeticsingle&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.average&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.bga&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.blxalpha&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.blxalphabeta&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.discrete&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.flat&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.heuristic&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.local&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.sbx&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;dimension&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- number of real valued variables (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;lbound&quot;&gt;-10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- lower bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;ubound&quot;&gt;10&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- upper bound for each variable (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/FloatingPoint&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;Permutation&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.COSA&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.DPX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OBX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OPX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.OX2&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.PBX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.PMX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.SPX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.ULX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.UPMX&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.cyclic&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.cyclic2&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.ins&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.inv&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.toggle&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;size&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- genotype size: number of indices (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/Permutation&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+
+</span>&lt;Tree&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.context&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.onepoint&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.simple&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.simple.functionprob&quot;&gt;0.9&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.sizefair&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;crx.uniform&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;functionset&quot;&gt;&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- set of functional tree elements (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;initmaxdepth&quot;&gt;5&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- maximum initial tree depth (default: 5) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;initmindepth&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- minimum initial tree depth (default: 1) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;maxdepth&quot;&gt;5&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- maximum tree depth (default: 5) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mindepth&quot;&gt;1&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- minimum tree depth (default: 1) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.gauss&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.hoist&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.nodecomplement&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.nodereplace&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.permutation&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.shrink&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;mut.subtree&quot;&gt;0&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;Entry key=&quot;terminalset&quot;&gt;&lt;/Entry&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+	</span>&lt;!-- set of terminal tree elements (mandatory) --&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>&lt;/Tree&gt;<span style="background-color: #CCCCFF; background-position: 0% 0%">
+</span>
+&lt;/Genotype&gt;
+
+
+&lt;Registry&gt;
+	&lt;Entry key=&quot;batch.repeats&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- number of independent runs to perform (default: 1) --&gt;
+	&lt;Entry key=&quot;batch.singlemilestone&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- use only one milestone file for all the batch runs (1) or one for each run (0) (default: 0) --&gt;
+	&lt;Entry key=&quot;batch.statsfile&quot;&gt;&lt;/Entry&gt;
+	&lt;!-- output batch end of run stats in a single file (default: none) --&gt;
+	&lt;Entry key=&quot;beta&quot;&gt;0.25&lt;/Entry&gt;
+	&lt;Entry key=&quot;crossover.genotypes&quot;&gt;random&lt;/Entry&gt;
+	&lt;!-- if there are multiple genotypes, which to cross? 'random': a random pair, 'all': all pairs (default: random) --&gt;
+	&lt;Entry key=&quot;crossover.protected&quot;&gt;&lt;/Entry&gt;
+	&lt;!-- indexes of genotypes (separated by spaces) that are excluded (protected) from crossover (default: none) --&gt;
+	&lt;Entry key=&quot;log.filename&quot;&gt;&lt;/Entry&gt;
+	&lt;!-- log filename (default: none) --&gt;
+	&lt;Entry key=&quot;log.frequency&quot;&gt;1&lt;/Entry&gt;
+	&lt;!-- log only every 'frequency' generations (default: 1) --&gt;
+	&lt;Entry key=&quot;log.level&quot;&gt;3&lt;/Entry&gt;
+	&lt;!-- log level; valid values are 1 (minimal) to 5 (verbose) (default: 3) --&gt;
+	&lt;Entry key=&quot;migration.freq&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- individuals are exchanged each 'freq' generations (default: none) --&gt;
+	&lt;Entry key=&quot;migration.number&quot;&gt;1&lt;/Entry&gt;
+	&lt;!-- number of individuals to be sent to another deme (default: 1) --&gt;
+	&lt;Entry key=&quot;milestone.elapsedtime_&quot;&gt;0&lt;/Entry&gt;
+	&lt;Entry key=&quot;milestone.filename&quot;&gt;milestone.txt&lt;/Entry&gt;
+	&lt;!-- milestone file (if stated) stores all the population (default: none) --&gt;
+	&lt;Entry key=&quot;milestone.generation_&quot;&gt;0&lt;/Entry&gt;
+	&lt;Entry key=&quot;milestone.interval&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- milestone saving interval in generations; 0: save only at the end (default: 0) --&gt;
+	&lt;Entry key=&quot;mutation.genotypes&quot;&gt;random&lt;/Entry&gt;
+	&lt;!-- if there are multiple genotypes, which to mutate? 'random': a random one, all: mutate all (default: random) --&gt;
+	&lt;Entry key=&quot;mutation.indprob&quot;&gt;0.3&lt;/Entry&gt;
+	&lt;!-- individual mutation probability (unless the algorithm overrides it) (default: 0.3) --&gt;
+	&lt;Entry key=&quot;mutation.protected&quot;&gt;&lt;/Entry&gt;
+	&lt;!-- indexes of genotypes (separated by spaces) that are excluded (protected) from mutation (default: none) --&gt;
+	&lt;Entry key=&quot;population.demes&quot;&gt;1&lt;/Entry&gt;
+	&lt;!-- number of demes (default: 1) --&gt;
+	&lt;Entry key=&quot;population.size&quot;&gt;100&lt;/Entry&gt;
+	&lt;!-- number of individuals (default: 100) --&gt;
+	&lt;Entry key=&quot;randomizer.seed&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- randomizer seed, 0 uses time(NULL) (default: 0) --&gt;
+	&lt;Entry key=&quot;stats.file&quot;&gt;&lt;/Entry&gt;
+	&lt;Entry key=&quot;term.eval&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- max number of fitness evaluations (default: none) --&gt;
+	&lt;Entry key=&quot;term.fitnessval&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- fitness value for termination (default: none) --&gt;
+	&lt;Entry key=&quot;term.maxgen&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- max number of generations (default: none) --&gt;
+	&lt;Entry key=&quot;term.maxtime&quot;&gt;0&lt;/Entry&gt;
+	&lt;!-- max number of seconds to run (default: none) --&gt;
+	&lt;Entry key=&quot;term.stagnation&quot;&gt;50&lt;/Entry&gt;
+	&lt;!-- max number of consecutive generations without improvement (default: 5000 / pop_size) --&gt;
+
+	&lt;!-- parallel ECF parameters: --&gt;
+	&lt;Entry key=&quot;parallel.type&quot;&gt;eval&lt;/Entry&gt; &lt;!-- implicit parallelization method: eval - evaluation, mut - mutation + eval --&gt;
+	&lt;Entry key=&quot;parallel.sync&quot;&gt;0&lt;/Entry&gt; &lt;!-- implicit parallelization synchronicity: 0 - async, 1 - sync --&gt;
+	&lt;Entry key=&quot;parallel.jobsize&quot;&gt;10&lt;/Entry&gt; &lt;!-- implicit parallelization jobsize (individuals per job) --&gt;
+&lt;/Registry&gt;
+&lt;/ECF&gt;</pre>
+
+</body>
+
+</html>

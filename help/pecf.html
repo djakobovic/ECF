@@ -1,0 +1,139 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Parallel ECF</title>
+<style>
+<!--
+		H2.western { font-family: "Albany", sans-serif; font-size: 16pt; font-style: italic }
+-->
+</style>
+</head>
+
+<body>
+
+<p><a href="documentation.html">
+<img border="0" src="up.png" width="30" height="30"></a></p>
+
+<h1>7. Parallel ECF</h1>
+<p>To use parallelization, the framework must be compiled with MPI library 
+enabled (see <a href="install.html">installation instructions</a>).</p>
+<p>When using parallel version of ECF, some additional components are available 
+which are described below. To run parallel ECF in more processes, you need to 
+start it with the installed MPI implementation.<br>
+Running ECF in parallel is possible regardless of the choice of genotypes 
+(individual structure) or, for some parallelization methods, of the algorithm 
+used.</p>
+<h2 CLASS="western">Parallel algorithms</h2>
+<p CLASS="western">Parallel algorithms operate on a <i>single deme</i> and may 
+be run in more than one process (see below for multiple demes parallel models). 
+Currently supported parallel algorithms are:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- should be only one inside --&gt;
+	&lt;AlgSGenGPEA&gt; &lt;!-- synchronous generational global parallel EA --&gt;
+		&lt;Entry key=&quot;crxprob&quot;&gt;0.5&lt;/Entry&gt; &lt;!-- crossover rate --&gt;
+		&lt;Entry key=&quot;selpressure&quot;&gt;10&lt;/Entry&gt; &lt;!-- selection pressure: how much the best individual is 'better' than the worst --&gt;
+		&lt;Entry key=&quot;jobsize&quot;&gt;5&lt;/Entry&gt; &lt;!-- number of individuals sent for evaluation to a worker process --&gt;
+	&lt;/AlgSGenGPEA&gt;
+
+	&lt;AlgAEliGPEA&gt; &lt;!-- asynchronous steady-state global parallel EA --&gt;
+		&lt;Entry key=&quot;tsize&quot;&gt;3&lt;/Entry&gt; &lt;!-- tournament size --&gt;
+		&lt;Entry key=&quot;jobsize&quot;&gt;5&lt;/Entry&gt; &lt;!-- number of individuals sent for evaluation to a worker process --&gt;
+	&lt;/AlgAEliGPEA&gt;
+&nbsp;&lt;/Algorithm&gt;</font></pre>
+<h2 CLASS="western">Implicit parallelization</h2>
+<p CLASS="western"><i>NOTE: this section is still under development.</i></p>
+<p CLASS="western">Implicit parallelization uses a <i>sequential </i>algorithm, 
+but the user may state what parts of the algorithm should be executed in 
+parallel. Currently these parts are parallelizable:</p>
+<ul>
+	<li>
+	<p CLASS="western"><b>evaluation</b>: individuals to be evaluated are sent 
+	to worker processes and fitness is returned to the master</p></li>
+	<li>
+	<p CLASS="western"><b>mutation</b>: individuals to be mutated are mutated <i>
+	and evaluated</i> at worker processes and then returned to the master</p>
+	</li>
+</ul>
+<p CLASS="western">The only thing needed to use implicit paralleization is 
+setting the following Registry options:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Entry key=&quot;parallel.type&quot;&gt;eval&lt;/Entry&gt; &lt;!-- implicit parallelization method: eval - evaluation, mut - mutation + eval --&gt;
+&lt;Entry key=&quot;parallel.jobsize&quot;&gt;10&lt;/Entry&gt; &lt;!-- implicit parallelization jobsize (individuals per job) --&gt;</font></pre>
+<p CLASS="western">This kind of parallelization is <i>asynchronous</i> because 
+the algorithm may use (incomplete) individuals that are still not returned from 
+the workers. <br>
+ECF also offers the <i>synchronous</i> implicit parallelelization: in this mode 
+the affected individuals are temporarily <i>removed</i> from the population, 
+until they are returned to the master. Synchronicity is controlled with the 
+following parameter in the Registry:</p>
+<pre STYLE="background: #ccccff url('')">&lt;Entry key=&quot;parallel.sync&quot;&gt;1&lt;/Entry&gt; &lt;!-- implicit parallelization synchronicity: 0 - async, 1 - sync (default: 0) --&gt;</pre>
+<p CLASS="western">Of course, although a sequential algorithm is used, these 
+options are valid only with parallel ECF version.</p>
+<p CLASS="western">&nbsp;</p>
+<h2 CLASS="western">Multiple deme population</h2>
+<p>The above algorithms distribute only the fitness evaluation between different 
+processes, and are therefore most suitable for problems with complex fitness 
+evaluation. If this is not the case, then distributing <i>the population </i>in 
+several <i>demes</i> (subpopulations, islands) usually yields better results in 
+terms of speedup and convergence.</p>
+<p>To use multiple deme population in ECF, you need to set the parameter &quot;<i>population.demes</i>&quot; 
+in the Registry block to more than 1 (which is the default value). For example:</p>
+<pre STYLE="background: #ccccff url('')"><font COLOR="#000000">&lt;Entry key=&quot;population.size&quot;&gt;50&lt;/Entry&gt; &lt;!-- number of individuals (default: 100) --&gt;
+&lt;Entry key=&quot;population.demes&quot;&gt;4&lt;/Entry&gt; &lt;!-- number of demes (default: 1) --&gt;</font></pre>
+<p>In the above setting, the population consists of 4 demes with <i>each deme 
+containing</i> 50 individuals.</p>
+<p>Each deme currently runs the same algorithm (stated in the Algorithm XML 
+block). Note that the demes may run the sequential <i>as well as parallel 
+algorithms</i>; in the latter case, the parallel algorithm operates only within 
+each deme (i.e. it does not 'see' other demes by default).</p>
+<h2 CLASS="western">The migration operator</h2>
+<p>Multiple demes do not make much difference by themselves if there is no 
+communication between the subpopulations - that's where the migration operator 
+steps in. The migration operator can copy some individuals from a deme into 
+another deme, depending on the user parameters. Currently supported parameters 
+for migration are the following (stated in the Registry block):</p>
+<pre STYLE="background: #ccccff url('')"><font COLOR="#000000">&lt;Entry key=&quot;migration.freq&quot;&gt;10&lt;/Entry&gt; &lt;!-- individuals are exchanged each 'freq' generations (default: none) --&gt;
+&lt;Entry key=&quot;migration.number&quot;&gt;5&lt;/Entry&gt; &lt;!-- number of individuals to be sent to another deme --&gt;</font></pre>
+<p>The migration operator is <i>not</i> active unless you set the <i>
+migration.freq </i>parameter. Additional migration properties are currently set 
+as follows:</p>
+<ul>
+	<li>migration occurs each '<i>migration.freq</i>' generations (for all the 
+	demes)</li>
+	<li>individuals chosen for migration: the best one and additional random 
+	ones (up to '<i>migration.number</i>')</li>
+	<li>deme sending structure: ring (each deme sends its individuals to the 
+	following deme with index + 1)</li>
+	<li>individuals chosen for replacement at recepient deme: random except the 
+	best individual</li>
+</ul>
+<p><b>Note</b>: multiple deme population and migration operator can also be 
+employed with the <i>sequential ECF</i>, where one process evolves all the demes 
+in sequence.</p>
+<h2 CLASS="western">The ECF parallel models</h2>
+<p>Combining the previous components, ECF offers the following parallel 
+combinations:</p>
+<ul>
+	<li>single deme, sequential algorithm - sequential EA</li>
+	<li>single deme, parallel algorithm - global parallel EA</li>
+	<li>single deme, implicitly parallel algorithm - global parallel EA</li>
+	<li>multiple demes, sequential algorithm - distributed EA<ul>
+		<li>in this setting, the number of MPI processes must equal the number 
+		of demes stated in the configuration file!</li>
+	</ul>
+	</li>
+	<li>multiple demes, parallel algorithm - hybrid distributed EA<ul>
+		<li>in this setting, the number of processes must be <i>equal or greater</i> 
+		than the number of demes, but should be greater for the parallel 
+		algorithm to make sense</li>
+	</ul>
+	</li>
+	<li>multiple demes, implicitly parallel algorithm - hybrid distributed EA</li>
+</ul>
+<p>The choice of the algorithm and migration parameters will depend mostly on 
+the problem at hand and parallel environment (the machines) the algorithm is run 
+on.</p>
+
+</body>
+
+</html>

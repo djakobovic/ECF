@@ -1,0 +1,38 @@
+<ECF>
+	<Algorithm>
+		<XCS>
+			<Entry key="p_explore">0.1</Entry>
+			<Entry key="mna">2</Entry>
+		</XCS>
+	</Algorithm>
+
+	<Genotype>
+		<BitString>
+			<Entry key="size">6</Entry>
+		</BitString>
+		<BitString>
+			<Entry key="size">6</Entry>
+		</BitString>
+		<BitString>
+			<Entry key="size">1</Entry>
+			<Entry key="mut.simple">1</Entry>
+		</BitString>
+		<ClassifierParams>
+			<Entry key="fitness">0</Entry>
+			<Entry key="prediction">0</Entry>
+			<Entry key="error">0</Entry>
+		</ClassifierParams>
+	</Genotype>
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry> <!-- 0 znaci uzmi time(NULL) -->
+		<Entry key="population.size">100</Entry>
+		<Entry key="mutation.indprob">0.3</Entry> <!-- vjerojatnost mutiranja jedinke; zajednicko za sve algoritme -->
+		<Entry key="term.maxgen">1000</Entry> <!-- max broj generacija -->
+		<Entry key="log.level">2</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="milestone.filename">out.txt</Entry> <!-- u milestone se sprema citava populacija i svi parametri (ako je ovaj parametar naveden) -->
+		<Entry key="milestone.interval">1</Entry> <!-- svakih koliko generacija se sprema milestone; 0 znaci samo na kraju evolucije -->
+	</Registry>
+</ECF>
+

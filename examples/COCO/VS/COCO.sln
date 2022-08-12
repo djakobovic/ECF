@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COCO", "COCO.vcxproj", "{5082EB89-7EE9-4F3B-8273-B9599C6E3780}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BBOB_experiment", "BBOB_experiment.vcxproj", "{C2600820-2462-41B9-89F3-FC46BB4B717D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5082EB89-7EE9-4F3B-8273-B9599C6E3780}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5082EB89-7EE9-4F3B-8273-B9599C6E3780}.Debug|Win32.Build.0 = Debug|Win32
+		{5082EB89-7EE9-4F3B-8273-B9599C6E3780}.Release|Win32.ActiveCfg = Release|Win32
+		{5082EB89-7EE9-4F3B-8273-B9599C6E3780}.Release|Win32.Build.0 = Release|Win32
+		{C2600820-2462-41B9-89F3-FC46BB4B717D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C2600820-2462-41B9-89F3-FC46BB4B717D}.Debug|Win32.Build.0 = Debug|Win32
+		{C2600820-2462-41B9-89F3-FC46BB4B717D}.Release|Win32.ActiveCfg = Release|Win32
+		{C2600820-2462-41B9-89F3-FC46BB4B717D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

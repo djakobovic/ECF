@@ -1,0 +1,420 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html">
+	<TITLE>Adding Components to ECF</TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.1.2 (Windows)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGED" CONTENT="20141219;83744170000000">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakoboviæ">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakoboviæ">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		H3.western { font-family: "Albany", sans-serif }
+		H3.cjk { font-family: "HG Mincho Light J" }
+		H3.ctl { font-family: "Arial Unicode MS" }
+		PRE.cjk { font-family: "NSimSun", monospace }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="hr-HR" DIR="LTR">
+<p><a href="documentation.html">
+<img border="0" src="up.png" width="30" height="30"></a></p>
+<H1>6. Adding components to ECF</H1>
+<OL>
+	<LI><P><A HREF="#genotype"><FONT SIZE=3 STYLE="font-size: 13pt">Adding
+	a genotype</FONT></A></P>
+	<LI><P><A HREF="#algorithm"><FONT SIZE=3 STYLE="font-size: 13pt">Adding
+	an algorithm</FONT></A></P>
+	<LI><P><A HREF="#operator"><FONT SIZE=3 STYLE="font-size: 13pt">Adding
+	an operator</FONT></A></P>
+</OL>
+<P>General rules:</P>
+<UL>
+	<LI><P>Components must be added <I>before</I> <SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">the
+	initialization phase (before 'State::initialize').</SPAN></SPAN></P>
+	<LI><P><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal"><B>Adding</B></SPAN></SPAN>
+	<SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">a
+	component does not mean the component </SPAN></SPAN><I>will</I> <SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">be
+	used; adding only makes it possible to choose that component in the
+	configuration file (e.g. you may add an Algorithm, but it will only
+	be used if stated in the configuration file).</SPAN></SPAN></P>
+	<LI><P>All components may register their parameters
+	('registerParameters' method) and initialize themselves
+	('initialize' method).</P>
+</UL>
+<P>&nbsp;</P>
+<H3 CLASS="western"><A NAME="genotype"></A>1. Adding a genotype</H3>
+<P>New genotype classes may be added with
+'State::addGenotype(GenotypeP)' function before 'State::initialize',
+e.g.:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">NewGenotypeP gen = (NewGenotypeP) new NewGenotype;
+state-&gt;addGenotype(gen);</PRE><P>
+New genotype class must inherit from the abstract <I>Genotype</I>
+class (see 'Genotype.h'). A genotype <I>should</I> define its own
+crossover and mutation classes so it can be used in an evolutionary
+algorithm (see example below). If it does not, it will not change
+during crossover and mutation of individuals (other genotypes in the
+individual may change). This might be useful for additional data
+structures you may want to put in the individual, but don't want them
+to evolve. Alternatively, you can use the genotype protection option
+to exclude it from mutation and/or crossover (see the <A HREF="parameters.html#crsmut">parameters
+section</A>).</P>
+<P>Adding a genotype with the same name as an existing one will
+replace the original one (if you need to change the genotype's
+functionality).</P>
+<P STYLE="font-variant: normal; font-style: normal">An example: a
+genotype with a vector of double variables (and a pair of operators
+which do nothing):</P>
+<PRE CLASS="western" STYLE="background: #ccccff">
+<FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// empty crx op</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">class</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyGenotypeCrxOp : </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> CrossoverOp</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> mate(GenotypeP gen1, GenotypeP gen2, GenotypeP child)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// does nothing! (see existing operators)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">};</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">typedef</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> boost::shared_ptr&lt;MyGenotypeCrxOp&gt; MyGenotypeCrxOpP;</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// empty mut op</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">class</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyGenotypeMutOp : </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MutationOp</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> mutate(GenotypeP gene)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// does nothing! (see existing operators)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">};</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">typedef</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> boost::shared_ptr&lt;MyGenotypeMutOp&gt; MyGenotypeMutOpP;</SPAN></FONT></FONT></FONT>
+
+
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">class</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyGenotype : </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> Genotype</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	std::vector&lt;</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">double</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&gt; realValues_;</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory: define name, other things as needed</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	MyGenotype()</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		name_ = </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;MyGenotype&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory: must provide copy method</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	MyGenotype* copy()</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		MyGenotype *newObject = </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyGenotype(*</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">this</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> newObject;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: declare crx operators (if not, no crossover will be performed)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	std::vector&lt;CrossoverOpP&gt; getCrossoverOp()</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		std::vector&lt;CrossoverOpP&gt; crx;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		crx.push_back(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">static_cast</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&lt;CrossoverOpP&gt; (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyGenotypeCrxOp));</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> crx;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: declare mut operators (if not, no mutation will be performed)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	std::vector&lt;MutationOpP&gt; getMutationOp()</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		std::vector&lt;MutationOpP&gt; mut;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		mut.push_back(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">static_cast</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&lt;MutationOpP&gt; (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyGenotypeMutOp));</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> mut;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: register any parameters</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">void</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> registerParameters(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		registerParameter(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;size&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, (voidP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> uint(1)), ECF::UINT);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory: build initial genotype structure</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> initialize(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(!isParameterDefined(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;size&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">)) {</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			state-&gt;getLogger()-&gt;log(1, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;Error: MyGenotype size not defined&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">throw</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		voidP sizep = getParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;size&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		uint size = *((uint*) sizep.get());</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		realValues_.resize(size);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// generate random doubles in [0, 1]</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">for</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(uint i = 0; i &lt; size; i++)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			realValues_[i] = state-&gt;getRandomizer()-&gt;getRandomDouble();</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory: write to XMLNode</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">void</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> write(XMLNode &amp;xMyGenotype)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		xMyGenotype = XMLNode::createXMLTopNode(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;MyGenotype&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		std::stringstream sValue;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		sValue &lt;&lt; realValues_.size();</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		xMyGenotype.addAttribute(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;size&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, sValue.str().c_str());</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		sValue.str(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">for</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(uint iVar = 0; iVar &lt; realValues_.size(); iVar++)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			sValue &lt;&lt; </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;\t&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> &lt;&lt; realValues_[iVar];</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		xMyGenotype.addText(sValue.str().c_str());</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// read from XMLNode</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory if running parallel ECF or reading population from a milestone file</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">void</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> read(XMLNode&amp; xMyGenotype)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		XMLCSTR values = xMyGenotype.getText();</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		std::stringstream sValues;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		sValues &lt;&lt; values;</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">for</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(uint iVar = 0; iVar &lt; realValues_.size(); iVar++)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			sValues &gt;&gt; realValues_[iVar];</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">};</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">typedef</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> boost::shared_ptr&lt;MyGenotype&gt; MyGenotypeP;</SPAN></FONT></FONT></FONT></PRE><H3 CLASS="western">
+&nbsp;</H3>
+<H3 CLASS="western"><A NAME="algorithm"></A>2. Adding an algorithm</H3>
+<P>Algoritm must inherit from the abstract <I>Algorithm</I> <SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">class
+(see 'Algorithm.h'). Algorithm may be genotype independent or may
+define a mandatory genotype structure. It may use genotype's
+crossover and mutation operators or may define its own (algorithm
+specific) </SPAN></SPAN><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">operators</SPAN></SPAN><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">.
+As an example, see </SPAN></SPAN><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">below
+or e.g. </SPAN></SPAN><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">'AlgSteadyStateTournament.cpp'
+or 'AlgRouletteWheel.cpp'.</SPAN></SPAN></P>
+<P STYLE="font-variant: normal; font-style: normal">An example: the
+following algorithm illustrates the basic mechanisms and contains <B>HOW
+TO</B> code snippets (note that the code is longer than it could be
+because of optional explanatory parts). The application of a new
+algorithm is done in 3 steps:</P>
+<P STYLE="font-variant: normal; font-style: normal">Step 1: First,
+write an algorithm class:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">class</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyAlg : </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> Algorithm</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">protected</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// declare all available selection operators (not all get used)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	SelFitnessProportionalOpP selFitOp_;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	SelRandomOpP selRandomOp_;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	SelBestOpP selBestOp_;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	SelWorstOpP selWorstOp_;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// what individual to replace (worst or random)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> replaceWorst_;</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory: define name, construct selection operators</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	MyAlg()</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// the algorithm name will be used in config file (see below)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		name_ = </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;MyAlg&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selFitOp_ = (SelFitnessProportionalOpP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> SelFitnessProportionalOp);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selRandomOp_ = (SelRandomOpP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> SelRandomOp);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selBestOp_ = (SelBestOpP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> SelBestOp);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selWorstOp_ = (SelWorstOpP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> SelWorstOp);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: register any parameters</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">void</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> registerParameters(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: define a parameter</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// string parameter, options: random, worst</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		registerParameter(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;replace&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, (voidP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> std::string(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;random&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">)), ECF::STRING);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: initialize components, read parameters</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> initialize(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// selection operators must be initialized if used!</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selFitOp_-&gt;initialize(state);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: set ratio between the best and the worst individual's selection probability</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selFitOp_-&gt;setSelPressure(10);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// if the ratio is &lt; 1, the selection favours worse over better individuals</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">//selFitOp_-&gt;setSelPressure(0.1);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selRandomOp_-&gt;initialize(state);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selBestOp_-&gt;initialize(state);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		selWorstOp_-&gt;initialize(state);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: read a parameter value</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// get parameter, decide what to replace</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		voidP par = getParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;replace&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		std::string replace = *((std::string*) par.get());</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		replaceWorst_ = </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">false</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(replace == </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;worst&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">				replaceWorst_ = </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: check if genotype is of a specific kind</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// suppose we only accept FloatingPoint</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		FloatingPointP flp (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> FloatingPoint::FloatingPoint);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(state-&gt;getGenotypes()[0]-&gt;getName() != flp-&gt;getName()) {</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			ECF_LOG_ERROR(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;Error: this algorithm accepts only a single FloatingPoint genotype!&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">throw</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> (</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: read the dimension and domain boundaries</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		voidP sptr = state-&gt;getGenotypes()[0]-&gt;getParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;dimension&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		uint numDimension = *((uint*) sptr.get());</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		voidP lBound = state-&gt;getGenotypes()[0]-&gt;getParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;lbound&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">double</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> lbound = *((</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">double</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">*) lBound.get());</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		voidP uBound = state-&gt;getGenotypes()[0]-&gt;getParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;ubound&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">double</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> ubound = *((</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">double</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">*) uBound.get());</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: add another genotype in all individuals (if algorithm requires)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// new FloatingPoint genotype with same parameters</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		FloatingPointP fp (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">static_cast</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&lt;FloatingPoint::FloatingPoint*&gt; (state-&gt;getGenotypes()[0]-&gt;copy()));</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">//state-&gt;setGenotype(fp);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		fp-&gt;setParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;dimension&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, (voidP) </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> uint(numDimension));</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		fp-&gt;setParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;lbound&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, (voidP) </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">double</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(lbound));</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		fp-&gt;setParameterValue(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;ubound&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, (voidP) </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">double</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(ubound));</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: read population (local deme) size</SPAN></FONT></FONT></FONT>
+<font size="2" face="Courier New, serif" color="#000000">		voidP psizep = state-&gt;getRegistry()-&gt;getEntry(&quot;population.size&quot;); 
+		uint popSize = *((uint*) psizep.get()); </font>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory: perform single 'generation' (however the algorithm defines it)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> advanceGeneration(StateP state, DemeP deme)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: select parents</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		IndividualP first = selFitOp_-&gt;select(*deme);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		IndividualP second = selBestOp_-&gt;select(*deme);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// select child (random or worst)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		IndividualP child;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(replaceWorst_)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">				child = selWorstOp_-&gt;select(*deme);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">else</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">				child = selRandomOp_-&gt;select(*deme);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: cross two individuals</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		mate(first, second, child);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: mutate an individual</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mutation probability defined in Registry!</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		mutate(child);				</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// to explicitly mutate an individual:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">//mutation_-&gt;mutate(child);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: evaluate an individual</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		evaluate(child);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: create a trial individual (e.g. a copy of an existing individual)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		IndividualP trial = (IndividualP) deme-&gt;at(0)-&gt;copy();</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: access individual data</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// get FloatingPoint genotype from individual</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		FloatingPointP fp = boost::static_pointer_cast&lt;FloatingPoint::FloatingPoint&gt; (trial-&gt;getGenotype(0));</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// or use ordinary pointers:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">//FloatingPoint::FloatingPoint* fp = static_cast&lt;FloatingPoint::FloatingPoint*&gt; (trial-&gt;getGenotype().get());</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: change individual data</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		fp-&gt;realValue[0] = 3.14;</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// HOW TO: replace an individual in deme</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// evaluate and compare with another individual</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		evaluate(trial);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(trial-&gt;fitness-&gt;isBetterThan(child-&gt;fitness))</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// replace first with second:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			replaceWith(child, trial);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// some other helper functions (see existing algorithms):</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// copy, replaceWith, removeFrom, isMember</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">};</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">typedef</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> boost::shared_ptr&lt;MyAlg&gt; MyAlgP;</SPAN></FONT></FONT></FONT></PRE><P>
+<SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">Step
+2: then, a</SPAN></SPAN> new algorithm can be added to ECF with
+'State::addAlgorithm(AlgorithmP)' function, invoked before
+'State::initialize' in your main() function:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">NewAlgorithmP alg = (NewAlgorithmP) new NewAlgorithm;
+state-&gt;addAlgorithm(alg);</PRE><P>
+<SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">Step
+3: finally, t</SPAN></SPAN><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal">he
+algorithm will only get used if specified in the configuration, e.g.:</SPAN></SPAN></P>
+<PRE CLASS="western" STYLE="background: #ccccff">&lt;Algorithm&gt;
+        &lt;MyAlg&gt;
+                &lt;!-- optional parameter --&gt;
+                &lt;Entry key=&quot;replace&quot;&gt;worst&lt;/Entry&gt;
+        &lt;/MyAlg&gt;
+&lt;/Algorithm&gt;</PRE><H3 CLASS="western">
+&nbsp;</H3>
+<H3 CLASS="western"><A NAME="operator"></A>3. Adding an operator</H3>
+<P>A new general purpose operator may be added with
+'State::addOperator(OperatorP)' function:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">MyOpP myOp = (MyOpP) new MyOp;
+state-&gt;addOperator(myOp);</PRE><P>
+Operator must inherit from the abstract <I>Operator</I> class (see
+'Operator.h'). The operator will be used only if its 'initialize'
+method returns TRUE (which is the default if not
+reimplemented).<BR>Currently every operator defined in this way is
+called <I>once each generation </I>(before the generation ends).
+Further development will allow operators to be called within the
+algorithm (i.e. before/after mutation, evaluation, crossover)</P>
+<P>An example: the following operator simply stops the evolution if
+the generation number is specified in the configuration file (e.g.
+with <FONT FACE="Courier New, monospace"><FONT SIZE=2>&lt;Entry
+key=&quot;my.stopgen&quot;&gt;10&lt;/Entry&gt;</FONT></FONT>):</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">class</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> MyOp : </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> Operator</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	uint myStopGen_;</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: register any parameters</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">void</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> registerParameters(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		state-&gt;getRegistry()-&gt;registerEntry(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;my.stopgen&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, (voidP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> uint(0)), ECF::UINT);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// optional: initialize (with parameter check)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> initialize(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// if parameter not defined in config, return false (inactive operator)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(!state-&gt;getRegistry()-&gt;isModified(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;my.stopgen&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">))</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">false</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// otherwise, read param. value and return true (active operator)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		voidP sptr = state-&gt;getRegistry()-&gt;getEntry(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;my.stopgen&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		myStopGen_ = *((uint*) sptr.get());</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// mandatory: actual operation</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> operate(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// read generation no, stop if needed</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(state-&gt;getGenerationNo() == myStopGen_)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			state-&gt;setTerminateCond();</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">};</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">typedef</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> boost::shared_ptr&lt;MyOp&gt; MyOpP;</SPAN></FONT></FONT></FONT></PRE><P>
+<BR><BR>
+</P>
+<P><B>TODO</B>: setInitMethod, addMutationOp, addCrossoverOp,
+addTerminationOp</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

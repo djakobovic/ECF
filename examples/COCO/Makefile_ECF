@@ -1,0 +1,32 @@
+
+CXX = g++
+WARN = -Wall
+CFLAGS = $(WARN)
+LDFLAGS = $(WARN) -lecf
+
+OBJS = FunctionMinEvalOp.o bbob/benchmarkshelper.o bbob/fgeneric.o bbob/benchmarks.o bbob/benchmarksnoisy.o bbob/benchmarksdeclare.o bbob/dirOK-linux.o
+
+BINOBJS = main.o
+
+TESTOBJS = exampleexperiment.o
+
+BINFILE = funcmin
+
+TESTFILE = ecf_experiment
+
+.PHONY = all clean
+
+all: $(BINFILE) $(TESTFILE)
+
+$(BINFILE): $(OBJS) $(BINOBJS)
+	$(CXX) $(OBJS) $(BINOBJS) $(LDFLAGS) -o $(BINFILE)
+
+$(TESTFILE): $(OBJS) $(TESTOBJS)
+	$(CXX) $(OBJS) $(TESTOBJS) $(LDFLAGS) -o $(TESTFILE)
+
+
+%.o: %.cpp FunctionMinEvalOp.h
+	$(CXX) $(CFLAGS) $< -c -o $@
+
+clean:
+	rm -f *~ $(OBJS) $(BINFILE) $(TESTFILE)

@@ -1,0 +1,74 @@
+// DIO ZA GP
+single
+
+// broj skupova
+sets		10
+
+// najveci broj poslova u skupovima
+max_jobs	100
+
+// brojevi poslova po skupovima
+jobs	100 100 100 100 100 100 100 100 100 100 
+
+// najdulje trajanje
+max_length	100
+
+// sequence dependent setups
+// vrijednost je prosjecni omjer trajanja postavljanja u odnosu na trajanje posla
+//setup	1
+
+// ogranicenja
+//constraints	./examples/GPScheduling/fitness_constraints.txt
+
+// datoteka sa trajanjima, sets x max_jobs
+duration	./examples/GPScheduling/fitness_duration.txt
+
+// datoteka sa deadline-ima, sets x max_jobs
+deadline	./examples/GPScheduling/fitness_deadline.txt
+
+// datoteka sa ukupnim trajanjima poslova
+SP		./examples/GPScheduling/fitness_SP.txt
+
+// datoteke sa tezinskim faktorima za kasnjenje
+weight_F	./examples/GPScheduling/fitness_weight.txt	// protjecanje
+weight_T	./examples/GPScheduling/fitness_weight.txt	// zakasnjelost
+weight_E	./examples/GPScheduling/fitness_weight.txt	// preuranjenost
+weight_N	./examples/GPScheduling/fitness_weight.txt	// prekoracenje
+
+// koja fitnes funkcija se gleda (Twt, Nwt, FTwt, ETwt...)
+fitness		Twt
+
+// aktivni terminali
+T_pt
+T_dd
+T_w
+//T_N
+T_Nr
+//T_SP
+T_SPr
+T_SL
+T_SD
+//T_AR
+//T_SC
+//T_LVL
+//T_STP
+//T_Sav
+
+// limited error fitness - hocemo li koristiti i koja je granicna vrijednost
+LEF 		0
+LEF_value 	1000000
+
+// editiranje?
+editing		0
+
+evaluation	0
+
+// koliko najboljih jedinki se gleda za evidenciju terminala
+bestsubset	100
+
+// DIO ZA KREIRANJE
+// parametri raspodjele za skupove - vektori duljine <sets>
+// vrijednosti R, T po skupovima
+// SETVAR1 i 2 i 3 i 4 i 5
+R.	.2 .4 .6 .8 1. .2 .4 .4 .6 .8 .2 .4 .8 .8 1. .2 .2 .4 .8 1. .4 .4 .4 .6 .8 .2 .4 .8 1. 1. .2 .4 .6 .6 .8 .2 .4 .4 .8 1. .2 .2 .4 .8 .8 .2 .2 .6 .8 1. .4 .4 .6 .8 1. .4 .4 .6 .6 .8 .2 .4 .6 .8 .8 .2 .2 .6 .8 1. .2 .2 .2 .4 .6 .2 .2 .4 .6 .8 .2 .4 .6 .8 .8 .2 .4 .4 .6 1. .2 .4 .6 .8 1. .2 .4 .4 .6 1. 
+T.	.4 .8 .6 .2 .4 .8 .6 .8 .2 .4 .2 .2 .4 .6 .4 .4 .8 .6 .4 .6 .4 .6 .8 .2 .2 .2 .6 .2 .4 .6 .8 .4 .6 .8 .4 .4 .6 .8 .8 .2 .2 .4 .8 .6 .8 .2 .6 .8 .8 .2 .4 .6 .8 .6 .2 .6 .8 .2 .8 .8 .2 .4 .8 .2 .8 .6 .8 .6 .4 .4 .2 .4 .6 .8 .2 .2 .8 .8 .4 .8 .2 .4 .8 .2 .8 .2 .4 .8 .4 .2 .2 .8 .2 .6 .2 .4 .4 .6 .2 .6 

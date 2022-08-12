@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B22AEA10-7FDF-4F25-8603-78B9AD7D2CD2}</ProjectGuid>
+    <RootNamespace>ECF_lib</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\boost\boost_1_57_0;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\boost\boost_1_57_0;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files\boost\boost_1_57_0;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\boost\boost_1_57_0;$(IncludePath)</IncludePath>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ECF</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ECF</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ECF</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ECF</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_65_1;C:\Program Files\boost\boost_1_64_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)ECF.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_57_0;C:\Program Files\boost\boost_1_64_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)ECF.lib</OutputFile>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_65_1;C:\Program Files\boost\boost_1_64_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)ECF.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_57_0;C:\Program Files\boost\boost_1_64_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)ECF.lib</OutputFile>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ECF\AlgArtificialBeeColony.h" />
+    <ClInclude Include="..\..\ECF\AlgClonalg.h" />
+    <ClInclude Include="..\..\ECF\AlgCuckooSearch.h" />
+    <ClInclude Include="..\..\ECF\AlgDifferentialEvolution.h" />
+    <ClInclude Include="..\..\ECF\AlgElimination.h" />
+    <ClInclude Include="..\..\ECF\AlgEvolutionStrategy.h" />
+    <ClInclude Include="..\..\ECF\AlgGeneticAnnealing.h" />
+    <ClInclude Include="..\..\ECF\AlgNSGA2.h" />
+    <ClInclude Include="..\..\ECF\AlgOptIA.h" />
+    <ClInclude Include="..\..\ECF\Algorithm.h" />
+    <ClInclude Include="..\..\ECF\AlgParticleSwarmOptimization.h" />
+    <ClInclude Include="..\..\ECF\AlgRandomSearch.h" />
+    <ClInclude Include="..\..\ECF\AlgRouletteWheel.h" />
+    <ClInclude Include="..\..\ECF\AlgSteadyStateTournament.h" />
+    <ClInclude Include="..\..\ECF\apgenotype\APGenotype.h" />
+    <ClInclude Include="..\..\ECF\apgenotype\PrimitiveSetAP.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsMasked.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsNonGeometric.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsRandomRespectful.h" />
+    <ClInclude Include="..\..\ECF\Communicator.h" />
+    <ClInclude Include="..\..\ECF\Context.h" />
+    <ClInclude Include="..\..\ECF\Crossover.h" />
+    <ClInclude Include="..\..\ECF\Deme.h" />
+    <ClInclude Include="..\..\ECF\ECF.h" />
+    <ClInclude Include="..\..\ECF\ECF_base.h" />
+    <ClInclude Include="..\..\ECF\ECF_derived.h" />
+    <ClInclude Include="..\..\ECF\ECF_macro.h" />
+    <ClInclude Include="..\..\ECF\EvaluateOp.h" />
+    <ClInclude Include="..\..\ECF\Fitness.h" />
+    <ClInclude Include="..\..\ECF\FitnessMax.h" />
+    <ClInclude Include="..\..\ECF\FitnessMin.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSimple.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSingle.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsAverage.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBga.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBlx.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlpha.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlphaBeta.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsDiscrete.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsFlat.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsHeuristic.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsLocal.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsRandom.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsSbx.h" />
+    <ClInclude Include="..\..\ECF\Genotype.h" />
+    <ClInclude Include="..\..\ECF\HallOfFame.h" />
+    <ClInclude Include="..\..\ECF\Individual.h" />
+    <ClInclude Include="..\..\ECF\Logger.h" />
+    <ClInclude Include="..\..\ECF\Migration.h" />
+    <ClInclude Include="..\..\ECF\MOFitness.h" />
+    <ClInclude Include="..\..\ECF\Mutation.h" />
+    <ClInclude Include="..\..\ECF\Operator.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsCOSA.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsCyclic.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsCyclic2.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsDPX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOBX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOPX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOX2.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsSPX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsULX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsUPMX.h" />
+    <ClInclude Include="..\..\ECF\Population.h" />
+    <ClInclude Include="..\..\ECF\Randomizer.h" />
+    <ClInclude Include="..\..\ECF\Registry.h" />
+    <ClInclude Include="..\..\ECF\SelBestOp.h" />
+    <ClInclude Include="..\..\ECF\SelectionOperator.h" />
+    <ClInclude Include="..\..\ECF\SelFitnessProportionalOp.h" />
+    <ClInclude Include="..\..\ECF\SelRandomOp.h" />
+    <ClInclude Include="..\..\ECF\SelWorstOp.h" />
+    <ClInclude Include="..\..\ECF\SimpleRandomizer.h" />
+    <ClInclude Include="..\..\ECF\StatCalc.h" />
+    <ClInclude Include="..\..\ECF\State.h" />
+    <ClInclude Include="..\..\ECF\TermFitnessValOp.h" />
+    <ClInclude Include="..\..\ECF\TermMaxEvalOp.h" />
+    <ClInclude Include="..\..\ECF\TermMaxGenOp.h" />
+    <ClInclude Include="..\..\ECF\TermMaxTimeOp.h" />
+    <ClInclude Include="..\..\ECF\TermStagnationOp.h" />
+    <ClInclude Include="..\..\ECF\xml\xmlParser.h" />
+    <ClInclude Include="..\..\ECF\binary\Binary.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsHalfUniform.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsOnePoint.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsReducedSurrogate.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsSegmented.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsShuffle.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsTwoPoint.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsUniform.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryMutMix.h" />
+    <ClInclude Include="..\..\ECF\binary\BinaryMutSimple.h" />
+    <ClInclude Include="..\..\ECF\bitstring\BitString.h" />
+    <ClInclude Include="..\..\ECF\bitstring\BitStringCrsOnePoint.h" />
+    <ClInclude Include="..\..\ECF\bitstring\BitStringCrsUniform.h" />
+    <ClInclude Include="..\..\ECF\bitstring\BitStringMutMix.h" />
+    <ClInclude Include="..\..\ECF\bitstring\BitStringMutSimple.h" />
+    <ClInclude Include="..\..\ECF\tree\Node.h" />
+    <ClInclude Include="..\..\ECF\tree\Primitive.h" />
+    <ClInclude Include="..\..\ECF\tree\PrimitiveSet.h" />
+    <ClInclude Include="..\..\ECF\tree\Terminal.h" />
+    <ClInclude Include="..\..\ECF\tree\Tree.h" />
+    <ClInclude Include="..\..\ECF\tree\Tree_c.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeCrxContextPreserved.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeCrxOnePoint.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeCrxSimple.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeCrxSizeFair.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeCrxUniform.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeMutGauss.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeMutHoist.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeMutNodeComplement.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeMutNodeReplace.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeMutPermutation.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeMutShrink.h" />
+    <ClInclude Include="..\..\ECF\tree\TreeMutSubtree.h" />
+    <ClInclude Include="..\..\ECF\tree\Add.h" />
+    <ClInclude Include="..\..\ECF\tree\Cos.h" />
+    <ClInclude Include="..\..\ECF\tree\Div.h" />
+    <ClInclude Include="..\..\ECF\tree\Max.h" />
+    <ClInclude Include="..\..\ECF\tree\Min.h" />
+    <ClInclude Include="..\..\ECF\tree\Mul.h" />
+    <ClInclude Include="..\..\ECF\tree\Neg.h" />
+    <ClInclude Include="..\..\ECF\tree\Pos.h" />
+    <ClInclude Include="..\..\ECF\tree\Sin.h" />
+    <ClInclude Include="..\..\ECF\tree\Sub.h" />
+    <ClInclude Include="..\..\ECF\permutation\Permutation.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsPBX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsPMX.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationMutIns.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationMutInv.h" />
+    <ClInclude Include="..\..\ECF\permutation\PermutationMutToggle.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPoint.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmetic.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsOnePoint.h" />
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointMutSimple.h" />
+    <ClInclude Include="..\..\ECF\xcs\AlgXCS.h" />
+    <ClInclude Include="..\..\ECF\xcs\Classifier.h" />
+    <ClInclude Include="..\..\ECF\xcs\ClassifierParams.h" />
+    <ClInclude Include="..\..\ECF\xcs\Environment.h" />
+    <ClInclude Include="..\..\ECF\xcs\XCSParams.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ECF\AlgArtificialBeeColony.cpp" />
+    <ClCompile Include="..\..\ECF\AlgClonalg.cpp" />
+    <ClCompile Include="..\..\ECF\AlgCuckooSearch.cpp" />
+    <ClCompile Include="..\..\ECF\AlgDifferentialEvolution.cpp" />
+    <ClCompile Include="..\..\ECF\AlgElimination.cpp" />
+    <ClCompile Include="..\..\ECF\AlgEvolutionStrategy.cpp" />
+    <ClCompile Include="..\..\ECF\AlgGeneticAnnealing.cpp" />
+    <ClCompile Include="..\..\ECF\AlgGenHookeJeeves.cpp" />
+    <ClCompile Include="..\..\ECF\AlgNSGA2.cpp" />
+    <ClCompile Include="..\..\ECF\AlgOptIA.cpp" />
+    <ClCompile Include="..\..\ECF\Algorithm.cpp" />
+    <ClCompile Include="..\..\ECF\AlgParticleSwarmOptimization.cpp" />
+    <ClCompile Include="..\..\ECF\AlgRandomSearch.cpp" />
+    <ClCompile Include="..\..\ECF\AlgRouletteWheel.cpp" />
+    <ClCompile Include="..\..\ECF\AlgSteadyStateTournament.cpp" />
+    <ClCompile Include="..\..\ECF\apgenotype\APGenotype.cpp" />
+    <ClCompile Include="..\..\ECF\apgenotype\PrimitiveSetAP.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsMasked.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsNonGeometric.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsRandomRespectful.cpp" />
+    <ClCompile Include="..\..\ECF\Crossover.cpp" />
+    <ClCompile Include="..\..\ECF\Deme.cpp" />
+    <ClCompile Include="..\..\ECF\FitnessMax.cpp" />
+    <ClCompile Include="..\..\ECF\FitnessMin.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSimple.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSingle.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsAverage.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBga.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBlx.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlpha.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlphaBeta.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsDiscrete.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsFlat.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsHeuristic.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsLocal.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsRandom.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsSbx.cpp" />
+    <ClCompile Include="..\..\ECF\Genotype.cpp" />
+    <ClCompile Include="..\..\ECF\HallOfFame.cpp" />
+    <ClCompile Include="..\..\ECF\Individual.cpp" />
+    <ClCompile Include="..\..\ECF\Logger.cpp" />
+    <ClCompile Include="..\..\ECF\Migration.cpp" />
+    <ClCompile Include="..\..\ECF\MOFitness.cpp" />
+    <ClCompile Include="..\..\ECF\Mutation.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsCOSA.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsCyclic.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsCyclic2.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsDPX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOBX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOPX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOX2.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsSPX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsULX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsUPMX.cpp" />
+    <ClCompile Include="..\..\ECF\Population.cpp" />
+    <ClCompile Include="..\..\ECF\Registry.cpp" />
+    <ClCompile Include="..\..\ECF\SelBestOp.cpp" />
+    <ClCompile Include="..\..\ECF\SelFitnessProportionalOp.cpp" />
+    <ClCompile Include="..\..\ECF\SelRandomOp.cpp" />
+    <ClCompile Include="..\..\ECF\SelWorstOp.cpp" />
+    <ClCompile Include="..\..\ECF\SimpleRandomizer.cpp" />
+    <ClCompile Include="..\..\ECF\StatCalc.cpp" />
+    <ClCompile Include="..\..\ECF\State.cpp" />
+    <ClCompile Include="..\..\ECF\TermFitnessValOp.cpp" />
+    <ClCompile Include="..\..\ECF\TermMaxEvalOp.cpp" />
+    <ClCompile Include="..\..\ECF\TermMaxGenOp.cpp" />
+    <ClCompile Include="..\..\ECF\TermMaxTimeOp.cpp" />
+    <ClCompile Include="..\..\ECF\TermStagnationOp.cpp" />
+    <ClCompile Include="..\..\ECF\xml\xmlParser.cpp" />
+    <ClCompile Include="..\..\ECF\binary\Binary.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsHalfUniform.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsOnePoint.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsReducedSurrogate.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsSegmented.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsShuffle.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsTwoPoint.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsUniform.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryMutMix.cpp" />
+    <ClCompile Include="..\..\ECF\binary\BinaryMutSimple.cpp" />
+    <ClCompile Include="..\..\ECF\bitstring\BitStringCrsOnePoint.cpp" />
+    <ClCompile Include="..\..\ECF\bitstring\BitStringCrsUniform.cpp" />
+    <ClCompile Include="..\..\ECF\bitstring\BitStringMutMix.cpp" />
+    <ClCompile Include="..\..\ECF\bitstring\BitStringMutSimple.cpp" />
+    <ClCompile Include="..\..\ECF\tree\Node.cpp" />
+    <ClCompile Include="..\..\ECF\tree\Primitive.cpp" />
+    <ClCompile Include="..\..\ECF\tree\PrimitiveSet.cpp" />
+    <ClCompile Include="..\..\ECF\tree\Tree.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeCrxContextPreserved.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeCrxOnePoint.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeCrxSimple.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeCrxSizeFair.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeCrxUniform.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeMutGauss.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeMutHoist.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeMutNodeComplement.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeMutNodeReplace.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeMutPermutation.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeMutShrink.cpp" />
+    <ClCompile Include="..\..\ECF\tree\TreeMutSubtree.cpp" />
+    <ClCompile Include="..\..\ECF\tree\Cos.cpp" />
+    <ClCompile Include="..\..\ECF\tree\Sin.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\Permutation.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsPBX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsPMX.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationMutIns.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationMutInv.cpp" />
+    <ClCompile Include="..\..\ECF\permutation\PermutationMutToggle.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPoint.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmetic.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsOnePoint.cpp" />
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointMutSimple.cpp" />
+    <ClCompile Include="..\..\ECF\xcs\AlgXCS.cpp" />
+    <ClCompile Include="..\..\ECF\xcs\Classifier.cpp" />
+    <ClCompile Include="..\..\ECF\xcs\Environment.cpp" />
+    <ClCompile Include="..\..\ECF\xcs\XCSParams.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

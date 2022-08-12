@@ -1,0 +1,39 @@
+<ECF>
+	<Algorithm>
+
+		<SolverSHC/>
+
+		<SolverEvolutionStrategy>
+			<Entry key="lambda">4</Entry> <!-- number of offspring created in each iteration (default: 4) -->
+			<Entry key="mu">1</Entry> <!-- the size of parent population (default: 1) -->
+			<Entry key="rho">1</Entry> <!-- number of parents used to create an offspring; may be 1 or 2 (default: 1) -->
+			<Entry key="selection">plus</Entry> <!-- selection scheme: "plus", uses both parents and offspring) or "comma", uses just offspring (default: plus) -->
+		</SolverEvolutionStrategy>
+
+		<SolverTournamentEA>
+			<Entry key="tsize">3</Entry> <!-- tournament size (individuals selected randomly, worst one eliminated) -->
+		</SolverTournamentEA>
+
+	</Algorithm>
+
+	<Genotype>
+		<BitString>
+			<Entry key="size">50</Entry>
+		</BitString>
+	</Genotype>
+
+	<Registry>
+		<Entry key="knapsack.infile">low-dimensional/f1_l-d_kp_10_269</Entry> 
+		<Entry key="randomizer.seed">0</Entry> 
+		<Entry key="population.size">100</Entry>
+		<Entry key="mutation.indprob">0.3</Entry> 
+		<Entry key="term.eval">50000</Entry> 
+		<Entry key="term.maxgen">50</Entry> 
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.frequency">10</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="batch.repeats">0</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
+	</Registry>
+</ECF>
+

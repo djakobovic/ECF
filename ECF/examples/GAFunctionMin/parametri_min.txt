@@ -1,0 +1,11 @@
+<ECF>
+	<Genotype>
+		<Binary>
+			<Entry key="lbound">-5</Entry>
+			<Entry key="ubound">5</Entry>
+			<Entry key="precision">1</Entry>
+			<Entry key="dimension">2</Entry>
+		</Binary>
+	</Genotype>
+</ECF>
+

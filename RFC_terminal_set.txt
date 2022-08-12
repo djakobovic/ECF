@@ -1,0 +1,33 @@
+Mali RFC po pitanju definiranja terminala (zavrsnih znakova) u Tree genotipu ECF-a (za genetsko programiranje).
+
+Terminali naime mogu biti sljedeci:
+
+- varijabla ugradjenog tipa (npr. X tipa double, A tipa bool); vrijednost varijable u doticnom trenutku zadaje korisnik prilikom evaluacije
+- konstanta ugradjenog tipa (npr. 1, 0, 3.14159); vrijednost konstante je nepromjenjiva (konstanta se doduse moze dobiti i definiranjem varijable cija ce se vrijednost definirati samo jedanput)
+- 'ephemereal random constant' ili ERC (npr. double u opsegu [-1, 1]); novi ERC sa jedinstvenom vrijednoscu se stvara prilikom stvaranja novog terminala te vrste, a kasnije se prenosi krizanjem ili mijenja mutacijom; nisu zajednicki svim jedinkama (kao konstante)
+- varijabla proizvoljnog tipa (npr. matrice ili nesto korisnikovo); korisnik tada definira i potrebne funkcijske operatore
+- ERC proizvoljnog tipa: korisnik mora naslijediti ERC razred
+
+
+Prijedlog nacina definiranja u conf. datoteci:
+
+X --> varijabla (double je default)
+INT a b BOOL z --> varijable odredjenog tipa
+DOUBLE 1 BOOL true --> konstante odredjenog tipa
+DOUBLE [-1,1] --> ERC u zadanom opsegu, moze se i mutirati (i izvan ovog opsega)
+DOUBLE [0 1 2] BOOL [true false] CHAR [a b c] --> ERC sa zadanim mogucim skupom vrijednosti (ali bez mogucnosti mutacije!)
+
+
+Opravdanje: ako dodje neki matematicar i napise npr
+
+<Entry key="terminalset">X Y 0 1</Entry>
+
+dobit ce intuitivni rezultat: dvije double varijable i dvije double konstante. A ako se napise
+
+<Entry key="terminalset">X Y INT [0 1] BOOL a [true false] DOUBLE [0,100]</Entry>
+
+dobit ce se svasta... ;)
+
+Otvorena pitanja:
+- kako oznaciti user-defined tip terminala?
+- kako zadati funkcije bez argumenata, npr. 'okreni_lijevo' u problemu mrava: u functionset ili terminalset? osobno bih u functionset, ali moralo bi ih se programski staviti u terminalset da idu kao zavrsni znakovi... ;)

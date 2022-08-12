@@ -1,0 +1,452 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MPI_Debug|Win32">
+      <Configuration>MPI_Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>ECF</ProjectName>
+    <ProjectGuid>{E3DE51CD-6DA8-40C4-8B1D-0CF8D034C7D3}</ProjectGuid>
+    <RootNamespace>projekt</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'">true</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\boost\boost_1_57_0;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'">C:\Program Files\boost\boost_1_57_0;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files\boost\boost_1_57_0;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>D:\Projekt\ECF_trunk;C:\Program Files (x86)\boost\boost_1_38;C:\Program Files\boost\boost_1_38;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Projekt\ECF_trunk;C:\Program Files (x86)\boost\boost_1_38;C:\Program Files\boost\boost_1_38;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>-DMPICH_IGNORE_CXX_SEEK %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>D:\Projekt\ECF_trunk;C:\Program Files (x86)\boost\boost_1_38;C:\Program Files\boost\boost_1_38;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_MPI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>cxxd.lib;mpi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\MPICH2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="AlgArtificialBeeColony.h" />
+    <ClInclude Include="AlgClonalg.h" />
+    <ClInclude Include="AlgCuckooSearch.h" />
+    <ClInclude Include="AlgDifferentialEvolution.h" />
+    <ClInclude Include="AlgElimination.h" />
+    <ClInclude Include="AlgEvolutionStrategy.h" />
+    <ClInclude Include="AlgGeneticAnnealing.h" />
+    <ClInclude Include="AlgGenHookeJeeves.h" />
+    <ClInclude Include="AlgNSGA2.h" />
+    <ClInclude Include="AlgOptIA.h" />
+    <ClInclude Include="Algorithm.h" />
+    <ClInclude Include="AlgParticleSwarmOptimization.h" />
+    <ClInclude Include="AlgRandomSearch.h" />
+    <ClInclude Include="AlgRouletteWheel.h" />
+    <ClInclude Include="AlgSteadyStateTournament.h" />
+    <ClInclude Include="apgenotype\APGenotype.h" />
+    <ClInclude Include="apgenotype\PrimitiveSetAP.h" />
+    <ClInclude Include="Communicator.h" />
+    <ClInclude Include="Context.h" />
+    <ClInclude Include="Crossover.h" />
+    <ClInclude Include="Deme.h" />
+    <ClInclude Include="ECF.h" />
+    <ClInclude Include="ECF_base.h" />
+    <ClInclude Include="ECF_derived.h" />
+    <ClInclude Include="ECF_macro.h" />
+    <ClInclude Include="EvaluateOp.h" />
+    <ClInclude Include="Fitness.h" />
+    <ClInclude Include="FitnessMax.h" />
+    <ClInclude Include="FitnessMin.h" />
+    <ClInclude Include="Genotype.h" />
+    <ClInclude Include="HallOfFame.h" />
+    <ClInclude Include="Individual.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Migration.h" />
+    <ClInclude Include="MOFitness.h" />
+    <ClInclude Include="Mutation.h" />
+    <ClInclude Include="Operator.h" />
+    <ClInclude Include="Population.h" />
+    <ClInclude Include="Randomizer.h" />
+    <ClInclude Include="RealValueGenotype.h" />
+    <ClInclude Include="Registry.h" />
+    <ClInclude Include="SelBestOp.h" />
+    <ClInclude Include="SelectionOperator.h" />
+    <ClInclude Include="SelFitnessProportionalOp.h" />
+    <ClInclude Include="SelRandomOp.h" />
+    <ClInclude Include="SelWorstOp.h" />
+    <ClInclude Include="SimpleRandomizer.h" />
+    <ClInclude Include="StatCalc.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="TermFitnessValOp.h" />
+    <ClInclude Include="TermMaxEvalOp.h" />
+    <ClInclude Include="TermMaxGenOp.h" />
+    <ClInclude Include="TermMaxTimeOp.h" />
+    <ClInclude Include="TermStagnationOp.h" />
+    <ClInclude Include="bitstring\BitString.h" />
+    <ClInclude Include="bitstring\BitStringCrsOnePoint.h" />
+    <ClInclude Include="bitstring\BitStringCrsUniform.h" />
+    <ClInclude Include="bitstring\BitStringMutMix.h" />
+    <ClInclude Include="bitstring\BitStringMutSimple.h" />
+    <ClInclude Include="xml\xmlParser.h" />
+    <ClInclude Include="examples\GAFunctionMin\FunctionMinEvalOp.h" />
+    <ClInclude Include="examples\GAonemax\OneMaxEvalOp.h" />
+    <ClInclude Include="examples\GPSymbReg\SymbRegEvalOp.h" />
+    <ClInclude Include="examples\GPSymbReg\zbr.h" />
+    <ClInclude Include="examples\GATSP\TSPEvalOp.h" />
+    <ClInclude Include="examples\GAApprox\ApproxEvalOp.h" />
+    <ClInclude Include="examples\GPScheduling\check.h" />
+    <ClInclude Include="examples\GPScheduling\matrice.h" />
+    <ClInclude Include="examples\GPScheduling\readpar.h" />
+    <ClInclude Include="examples\GPScheduling\SchedulingEvalOp.h" />
+    <ClInclude Include="examples\XCSmaze\MazeEnv.h" />
+    <ClInclude Include="examples\XCSmaze\SeqObjMazeEnv.h" />
+    <ClInclude Include="examples\XCSmaze\SingleObjMazeEnv.h" />
+    <ClInclude Include="examples\XCSmaze\ThreeObjMazeEnv.h" />
+    <ClInclude Include="examples\XCSmaze\TwoObjMazeEnv.h" />
+    <ClInclude Include="examples\XCSmux\MuxEvalOp.h" />
+    <ClInclude Include="tree\Node.h" />
+    <ClInclude Include="tree\PrimitiveSet.h" />
+    <ClInclude Include="tree\Tree.h" />
+    <ClInclude Include="tree\Tree_c.h" />
+    <ClInclude Include="tree\TreeCrxContextPreserved.h" />
+    <ClInclude Include="tree\TreeCrxOnePoint.h" />
+    <ClInclude Include="tree\TreeCrxSimple.h" />
+    <ClInclude Include="tree\TreeCrxSizeFair.h" />
+    <ClInclude Include="tree\TreeCrxUniform.h" />
+    <ClInclude Include="tree\TreeMutGauss.h" />
+    <ClInclude Include="tree\TreeMutHoist.h" />
+    <ClInclude Include="tree\TreeMutNodeComplement.h" />
+    <ClInclude Include="tree\TreeMutNodeReplace.h" />
+    <ClInclude Include="tree\TreeMutPermutation.h" />
+    <ClInclude Include="tree\TreeMutShrink.h" />
+    <ClInclude Include="tree\TreeMutSubtree.h" />
+    <ClInclude Include="tree\Add.h" />
+    <ClInclude Include="tree\Cos.h" />
+    <ClInclude Include="tree\Div.h" />
+    <ClInclude Include="tree\Max.h" />
+    <ClInclude Include="tree\Min.h" />
+    <ClInclude Include="tree\Mul.h" />
+    <ClInclude Include="tree\Neg.h" />
+    <ClInclude Include="tree\Pos.h" />
+    <ClInclude Include="tree\Primitive.h" />
+    <ClInclude Include="tree\Sin.h" />
+    <ClInclude Include="tree\Sub.h" />
+    <ClInclude Include="tree\Terminal.h" />
+    <ClInclude Include="binary\Binary.h" />
+    <ClInclude Include="binary\BinaryCrsHalfUniform.h" />
+    <ClInclude Include="binary\BinaryCrsMasked.h" />
+    <ClInclude Include="binary\BinaryCrsNonGeometric.h" />
+    <ClInclude Include="binary\BinaryCrsOnePoint.h" />
+    <ClInclude Include="binary\BinaryCrsRandomRespectful.h" />
+    <ClInclude Include="binary\BinaryCrsReducedSurrogate.h" />
+    <ClInclude Include="binary\BinaryCrsSegmented.h" />
+    <ClInclude Include="binary\BinaryCrsShuffle.h" />
+    <ClInclude Include="binary\BinaryCrsTwoPoint.h" />
+    <ClInclude Include="binary\BinaryCrsUniform.h" />
+    <ClInclude Include="binary\BinaryMutMix.h" />
+    <ClInclude Include="binary\BinaryMutSimple.h" />
+    <ClInclude Include="Permutation\Permutation.h" />
+    <ClInclude Include="permutation\PermutationCrsCOSA.h" />
+    <ClInclude Include="permutation\PermutationCrsCyclic.h" />
+    <ClInclude Include="permutation\PermutationCrsCyclic2.h" />
+    <ClInclude Include="permutation\PermutationCrsDPX.h" />
+    <ClInclude Include="permutation\PermutationCrsOBX.h" />
+    <ClInclude Include="permutation\PermutationCrsOPX.h" />
+    <ClInclude Include="Permutation\PermutationCrsOX.h" />
+    <ClInclude Include="permutation\PermutationCrsOX2.h" />
+    <ClInclude Include="Permutation\PermutationCrsPBX.h" />
+    <ClInclude Include="Permutation\PermutationCrsPMX.h" />
+    <ClInclude Include="permutation\PermutationCrsSPX.h" />
+    <ClInclude Include="permutation\PermutationCrsULX.h" />
+    <ClInclude Include="permutation\PermutationCrsUPMX.h" />
+    <ClInclude Include="Permutation\PermutationMutIns.h" />
+    <ClInclude Include="Permutation\PermutationMutInv.h" />
+    <ClInclude Include="Permutation\PermutationMutToggle.h" />
+    <ClInclude Include="floatingpoint\FloatingPoint.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsArithmetic.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsArithmeticSimple.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsArithmeticSingle.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsAverage.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsBga.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsBlx.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsBlxAlpha.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsBlxAlphaBeta.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsDiscrete.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsFlat.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsHeuristic.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsLocal.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsOnePoint.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsRandom.h" />
+    <ClInclude Include="floatingpoint\FloatingPointCrsSbx.h" />
+    <ClInclude Include="floatingpoint\FloatingPointMutSimple.h" />
+    <ClInclude Include="xcs\AlgXCS.h" />
+    <ClInclude Include="xcs\Classifier.h" />
+    <ClInclude Include="xcs\ClassifierParams.h" />
+    <ClInclude Include="xcs\Environment.h" />
+    <ClInclude Include="xcs\XCSParams.h" />
+    <ClInclude Include="cartesian\Add.h" />
+    <ClInclude Include="cartesian\And.h" />
+    <ClInclude Include="cartesian\Cartesian.h" />
+    <ClInclude Include="cartesian\Cartesian_c.h" />
+    <ClInclude Include="cartesian\CartesianCrsOnePoint.h" />
+    <ClInclude Include="cartesian\CartesianMutOnePoint.h" />
+    <ClInclude Include="cartesian\Cos.h" />
+    <ClInclude Include="cartesian\Div.h" />
+    <ClInclude Include="cartesian\Function.h" />
+    <ClInclude Include="cartesian\FunctionSet.h" />
+    <ClInclude Include="cartesian\Mul.h" />
+    <ClInclude Include="cartesian\Not.h" />
+    <ClInclude Include="cartesian\Or.h" />
+    <ClInclude Include="cartesian\Sin.h" />
+    <ClInclude Include="cartesian\Sub.h" />
+    <ClInclude Include="cartesian\Xnor.h" />
+    <ClInclude Include="cartesian\Xor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AlgCuckooSearch.cpp" />
+    <ClCompile Include="AlgNSGA2.cpp" />
+    <ClCompile Include="apgenotype\APGenotype.cpp" />
+    <ClCompile Include="apgenotype\PrimitiveSetAP.cpp" />
+    <ClCompile Include="bitstring\BitStringCrsOnePoint.cpp" />
+    <ClCompile Include="bitstring\BitStringCrsUniform.cpp" />
+    <ClCompile Include="bitstring\BitStringMutMix.cpp" />
+    <ClCompile Include="bitstring\BitStringMutSimple.cpp" />
+    <ClCompile Include="MOFitness.cpp" />
+    <ClCompile Include="xml\xmlParser.cpp" />
+    <ClCompile Include="examples\GPSymbReg\SymbRegEvalOp.cpp" />
+    <ClCompile Include="examples\GATSP\TSPEvalOp.cpp" />
+    <ClCompile Include="examples\GAApprox\ApproxEvalOp.cpp" />
+    <ClCompile Include="examples\GPScheduling\matrice.cpp" />
+    <ClCompile Include="examples\GPScheduling\readpar.cpp" />
+    <ClCompile Include="examples\GPScheduling\SchedulingEvalOp.cpp" />
+    <ClCompile Include="examples\XCSmaze\MazeEnv.cpp" />
+    <ClCompile Include="examples\CGPFeedForward\CGPEvalOp.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="tree\Node.cpp" />
+    <ClCompile Include="tree\PrimitiveSet.cpp" />
+    <ClCompile Include="tree\Tree.cpp" />
+    <ClCompile Include="tree\TreeCrxContextPreserved.cpp" />
+    <ClCompile Include="tree\TreeCrxOnePoint.cpp" />
+    <ClCompile Include="tree\TreeCrxSimple.cpp" />
+    <ClCompile Include="tree\TreeCrxSizeFair.cpp" />
+    <ClCompile Include="tree\TreeCrxUniform.cpp" />
+    <ClCompile Include="tree\TreeMutGauss.cpp" />
+    <ClCompile Include="tree\TreeMutHoist.cpp" />
+    <ClCompile Include="tree\TreeMutNodeComplement.cpp" />
+    <ClCompile Include="tree\TreeMutNodeReplace.cpp" />
+    <ClCompile Include="tree\TreeMutPermutation.cpp" />
+    <ClCompile Include="tree\TreeMutShrink.cpp" />
+    <ClCompile Include="tree\TreeMutSubtree.cpp" />
+    <ClCompile Include="tree\Cos.cpp" />
+    <ClCompile Include="tree\Primitive.cpp" />
+    <ClCompile Include="tree\Sin.cpp" />
+    <ClCompile Include="binary\Binary.cpp" />
+    <ClCompile Include="binary\BinaryCrsHalfUniform.cpp" />
+    <ClCompile Include="binary\BinaryCrsMasked.cpp" />
+    <ClCompile Include="binary\BinaryCrsNonGeometric.cpp" />
+    <ClCompile Include="binary\BinaryCrsOnePoint.cpp" />
+    <ClCompile Include="binary\BinaryCrsRandomRespectful.cpp" />
+    <ClCompile Include="binary\BinaryCrsReducedSurrogate.cpp" />
+    <ClCompile Include="binary\BinaryCrsSegmented.cpp" />
+    <ClCompile Include="binary\BinaryCrsShuffle.cpp" />
+    <ClCompile Include="binary\BinaryCrsTwoPoint.cpp" />
+    <ClCompile Include="binary\BinaryCrsUniform.cpp" />
+    <ClCompile Include="binary\BinaryMutMix.cpp" />
+    <ClCompile Include="binary\BinaryMutSimple.cpp" />
+    <ClCompile Include="AlgArtificialBeeColony.cpp" />
+    <ClCompile Include="AlgClonalg.cpp" />
+    <ClCompile Include="AlgDifferentialEvolution.cpp" />
+    <ClCompile Include="AlgElimination.cpp" />
+    <ClCompile Include="AlgEvolutionStrategy.cpp" />
+    <ClCompile Include="AlgGeneticAnnealing.cpp" />
+    <ClCompile Include="AlgGenHookeJeeves.cpp" />
+    <ClCompile Include="AlgOptIA.cpp" />
+    <ClCompile Include="Algorithm.cpp" />
+    <ClCompile Include="AlgParticleSwarmOptimization.cpp" />
+    <ClCompile Include="AlgRandomSearch.cpp" />
+    <ClCompile Include="AlgRouletteWheel.cpp" />
+    <ClCompile Include="AlgSteadyStateTournament.cpp" />
+    <ClCompile Include="Crossover.cpp" />
+    <ClCompile Include="Deme.cpp" />
+    <ClCompile Include="FitnessMax.cpp" />
+    <ClCompile Include="FitnessMin.cpp" />
+    <ClCompile Include="Genotype.cpp" />
+    <ClCompile Include="HallOfFame.cpp" />
+    <ClCompile Include="Individual.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Migration.cpp" />
+    <ClCompile Include="Mutation.cpp" />
+    <ClCompile Include="Population.cpp" />
+    <ClCompile Include="Registry.cpp" />
+    <ClCompile Include="SelBestOp.cpp" />
+    <ClCompile Include="SelFitnessProportionalOp.cpp" />
+    <ClCompile Include="SelRandomOp.cpp" />
+    <ClCompile Include="SelWorstOp.cpp" />
+    <ClCompile Include="SimpleRandomizer.cpp" />
+    <ClCompile Include="StatCalc.cpp" />
+    <ClCompile Include="State.cpp" />
+    <ClCompile Include="TermFitnessValOp.cpp" />
+    <ClCompile Include="TermMaxEvalOp.cpp" />
+    <ClCompile Include="TermMaxGenOp.cpp" />
+    <ClCompile Include="TermMaxTimeOp.cpp" />
+    <ClCompile Include="TermStagnationOp.cpp" />
+    <ClCompile Include="Permutation\Permutation.cpp" />
+    <ClCompile Include="permutation\PermutationCrsCOSA.cpp" />
+    <ClCompile Include="permutation\PermutationCrsCyclic.cpp" />
+    <ClCompile Include="permutation\PermutationCrsCyclic2.cpp" />
+    <ClCompile Include="permutation\PermutationCrsDPX.cpp" />
+    <ClCompile Include="permutation\PermutationCrsOBX.cpp" />
+    <ClCompile Include="permutation\PermutationCrsOPX.cpp" />
+    <ClCompile Include="Permutation\PermutationCrsOX.cpp" />
+    <ClCompile Include="permutation\PermutationCrsOX2.cpp" />
+    <ClCompile Include="Permutation\PermutationCrsPBX.cpp" />
+    <ClCompile Include="Permutation\PermutationCrsPMX.cpp" />
+    <ClCompile Include="permutation\PermutationCrsSPX.cpp" />
+    <ClCompile Include="permutation\PermutationCrsULX.cpp" />
+    <ClCompile Include="permutation\PermutationCrsUPMX.cpp" />
+    <ClCompile Include="Permutation\PermutationMutIns.cpp" />
+    <ClCompile Include="Permutation\PermutationMutInv.cpp" />
+    <ClCompile Include="Permutation\PermutationMutToggle.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPoint.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsArithmetic.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsArithmeticSimple.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsArithmeticSingle.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsAverage.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsBga.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsBlx.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsBlxAlpha.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsBlxAlphaBeta.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsDiscrete.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsFlat.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsHeuristic.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsLocal.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsOnePoint.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsRandom.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointCrsSbx.cpp" />
+    <ClCompile Include="floatingpoint\FloatingPointMutSimple.cpp" />
+    <ClCompile Include="xcs\AlgXCS.cpp" />
+    <ClCompile Include="xcs\Classifier.cpp" />
+    <ClCompile Include="xcs\Environment.cpp" />
+    <ClCompile Include="xcs\XCSParams.cpp" />
+    <ClCompile Include="cartesian\Cartesian.cpp" />
+    <ClCompile Include="cartesian\CartesianCrsOnePoint.cpp" />
+    <ClCompile Include="cartesian\CartesianMutOnePoint.cpp" />
+    <ClCompile Include="cartesian\FunctionSet.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

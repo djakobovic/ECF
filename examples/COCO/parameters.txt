@@ -1,0 +1,103 @@
+<ECF>
+	<Algorithm>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>
+			<!-- tournament size -->
+		</SteadyStateTournament>
+		<OptIA>
+			<Entry key="dup">5</Entry>
+			<Entry key="c">0.2</Entry>
+			<Entry key="tauB">100</Entry>
+		</OptIA>
+		<Clonalg>
+			<Entry key="n">100</Entry>
+			<Entry key="beta">1.0</Entry>
+			<Entry key="c">0.2</Entry>
+			<Entry key="d">0.0</Entry>
+			<Entry key="cloningVersion">proportional</Entry>
+			<Entry key="selectionScheme">CLONALG1</Entry>
+		</Clonalg>
+		<DifferentialEvolution>
+			<Entry key="F">1</Entry>
+			<!-- scaling constant -->
+			<Entry key="CR">0.9</Entry>
+			<!-- crossover rate -->
+		</DifferentialEvolution>
+		<ArtificialBeeColony>
+			<Entry key="elitism">1</Entry>
+			<!-- Elitism: the current best food source is preserved -->
+			<Entry key="limit">300</Entry>
+			<!-- Maximum number of cycles for each individual -->
+		</ArtificialBeeColony>
+		<RouletteWheel>
+			<Entry key="crxprob">0.7</Entry>
+			<!-- crossover rate -->
+			<Entry key="selpressure">10</Entry>
+			<!-- selection pressure: how much is the best individual 'better' than the worst -->
+		</RouletteWheel>
+		<GenHookeJeeves>
+			<Entry key="precision">0.000001</Entry>
+			<Entry key="delta">0.5</Entry>
+			<Entry key="localonly">0</Entry>
+		</GenHookeJeeves>
+		<ParticleSwarmOptimization>
+			<Entry key="weightType">0</Entry>
+			<!-- weight type update: 0 - constant, 1 - time dependant (based on max generations) -->
+			<Entry key="weight">0.8</Entry>
+			<!-- initial inertia weight (either constant or time dependant) -->
+			<Entry key="maxVelocity">100</Entry>
+			<!-- max particle velocity -->
+		</ParticleSwarmOptimization>
+		<Elimination>
+			<Entry key="gengap">0.6</Entry>
+			<!-- generation gap (percentage of population to be eliminated) -->
+			<Entry key="selpressure">10</Entry>
+			<!-- selection pressure: how much is the worst individual 'worse' than the best -->
+		</Elimination>
+		<GeneticAnnealing>
+			<Entry key="energybank">100</Entry>
+			<!-- total starting energy bank (fitness dependant) -->
+			<Entry key="coolingfactor">0.7</Entry>
+			<!-- simulated annealing cooling factor -->
+			<Entry key="elitism">0</Entry>
+			<!-- is the best individual preserved -->
+		</GeneticAnnealing>
+		<RandomSearch/>
+		<CMAES>
+			<Entry key="weightType">1</Entry>
+			<Entry key="type">0</Entry>
+			<Entry key="mu">3</Entry>
+		</CMAES>
+	</Algorithm>
+	<Genotype>
+		<FloatingPoint>
+			<Entry key="lbound">-5</Entry>
+			<Entry key="ubound">5</Entry>
+			<Entry key="dimension">10</Entry>
+		</FloatingPoint>
+	</Genotype>
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry>
+		<Entry key="coco.function">1</Entry>
+		<!-- sets the COCO objective function (default: 1) -->
+		<Entry key="coco.instance">1</Entry>
+		<!-- set instance no. for COCO function (default: 1) -->
+		<Entry key="coco.enableoutput">0</Entry>
+		<!-- enable COCO folder output (default: 0/no) -->
+		<Entry key="coco.folder">GA_SST</Entry>
+		<!-- sets the COCO output folder (default: none) -->
+		<Entry key="coco.algorithm">GA_SST</Entry>
+		<!-- set algorithm name for post processing (default: none) -->
+		<Entry key="coco.comments">?</Entry>
+		<!-- set algorithm description for post processing (default: none) -->
+		<Entry key="population.size">100</Entry>
+		<Entry key="mutation.indprob">0.3</Entry>
+		<Entry key="term.eval">100000</Entry>
+		<Entry key="term.maxgen">999999</Entry>
+		<Entry key="log.filename">log01.txt</Entry>
+		<Entry key="log.frequency">100</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="batch.repeats">0</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
+	</Registry>
+</ECF>

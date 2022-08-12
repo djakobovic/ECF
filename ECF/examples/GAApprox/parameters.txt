@@ -1,0 +1,57 @@
+<ECF>
+	<Algorithm>
+		<SteadyStateTournament>
+		</SteadyStateTournament>
+		<Elimination>
+			<Entry key="gengap">0.6</Entry>              <!-- generation gap (percentage of population to be eliminated) -->
+			<Entry key="selpressure">10</Entry>        <!-- selection pressure: how much is the worst individual 'worse' than the best -->
+		</Elimination>
+		<RandomSearch>
+		</RandomSearch>
+	</Algorithm>
+	<Genotype>
+		<Binary> <!-- a[0]=konstanta -->
+			<Entry key="lbound">-10</Entry>
+			<Entry key="ubound">70</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">1</Entry>
+		</Binary>
+		<Binary> <!-- a[1]=linearni èlan -->
+			<Entry key="lbound">-1</Entry>
+			<Entry key="ubound">10</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">1</Entry>
+		</Binary>
+		<Binary> <!-- a[3i-1]=amplituda, 12 komada -->
+			<Entry key="lbound">-70</Entry>
+			<Entry key="ubound">70</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">12</Entry>
+		</Binary>
+		<Binary> <!-- a[3i]=frekvencija, 12 komada -->
+			<Entry key="lbound">0</Entry>
+			<Entry key="ubound">2</Entry>
+			<Entry key="precision">5</Entry>
+			<Entry key="dimension">12</Entry>
+		</Binary>
+		<Binary> <!-- a[3i+1]=pomak, 12 komada -->
+			<Entry key="lbound">-10</Entry>
+			<Entry key="ubound">10</Entry>
+			<Entry key="precision">3</Entry>
+			<Entry key="dimension">12</Entry>
+		</Binary>
+	</Genotype>
+	<Registry>
+		<Entry key="iksovi">1  4  5  7  9 11 14 15 16 17 20 22 25 27 29  31 34 36 38 40</Entry>
+		<Entry key="ipsiloni">1 50 51 52 60 71 76 73 79 68 55 57 80 82 78 100 90 85 80 78</Entry>
+		<Entry key="mutation.genotypes">all</Entry> 
+		<Entry key="mutation.indprob">0.8</Entry>
+
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.frequency">1</Entry>
+		<Entry key="population.size">5</Entry>
+		<Entry key="term.maxgen">2</Entry> 
+<!--		<Entry key="term.stagnation">200</Entry>	-->
+	</Registry>
+</ECF>

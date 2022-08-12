@@ -1,0 +1,22 @@
+<ECF>
+	<Genotype>
+		<FloatingPoint>
+			<Entry key="lbound">-100</Entry>
+			<Entry key="ubound">100</Entry>
+			<Entry key="dimension">10</Entry>
+		</FloatingPoint>
+	</Genotype>
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry>
+		<Entry key="cec.function">8</Entry>
+		<Entry key="population.size">30</Entry>
+		<Entry key="mutation.indprob">0.3</Entry>
+		<Entry key="term.maxgen">15000</Entry>
+		<Entry key="term.stagnation">3000</Entry>
+		<Entry key="log.filename">log08.txt</Entry>
+		<Entry key="log.frequency">100</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="batch.repeats">0</Entry>
+		<Entry key="batch.statsfile">stats08.txt</Entry>
+	</Registry>
+</ECF>

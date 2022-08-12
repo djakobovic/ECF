@@ -1,0 +1,143 @@
+<ECF>
+	<Algorithm>
+		<GenHookeJeeves>
+			<Entry key="precision">0.000001</Entry>
+			<Entry key="delta">0.5</Entry>
+			<Entry key="localonly">0</Entry>
+		</GenHookeJeeves>
+		<ParticleSwarmOptimization>
+			<Entry key="weightType">1</Entry>
+			<Entry key="weight">0.9</Entry>
+			<Entry key="maxVelocity">20</Entry>
+		</ParticleSwarmOptimization>
+		<OptIA>
+			<Entry key="dup">5</Entry>
+			<Entry key="c">0.2</Entry>
+			<Entry key="tauB">100</Entry>
+		</OptIA>
+		<DifferentialEvolution>
+			<Entry key="F">0.5</Entry> <!-- scaling constant -->
+			<Entry key="CR">0.9</Entry> <!-- crossover rate -->
+			<Entry key="bounded">0</Entry> 
+		</DifferentialEvolution>
+		<Clonalg>
+			<Entry key="n">30</Entry>
+			<Entry key="beta">1.0</Entry>
+			<Entry key="c">0.2</Entry>
+			<Entry key="d">0.0</Entry>
+			<Entry key="cloningVersion">proportional</Entry>
+			<Entry key="selectionScheme">CLONALG1</Entry>
+		</Clonalg>
+		<ArtificialBeeColony>
+			<Entry key="limit">300</Entry>
+			<Entry key="elitism">1</Entry>
+		</ArtificialBeeColony>
+		<CuckooSearch>
+			<Entry key="pa">0.75</Entry>
+		</CuckooSearch>
+		<EvolutionStrategy>
+			<Entry key="lambda">8</Entry>
+			<Entry key="mu">1</Entry>
+			<Entry key="rho">1</Entry>
+			<Entry key="selection">plus</Entry>
+		</EvolutionStrategy>
+
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry> <!-- velicina turnira -->
+		</SteadyStateTournament>
+
+
+
+		<GeneticAnnealing>
+			<Entry key="energybank">100</Entry>        <!-- total starting energy bank (fitness dependant) -->
+			<Entry key="coolingfactor">0.7</Entry>     <!-- simulated annealing cooling factor -->
+			<Entry key="elitism">0</Entry>             <!-- is the best individual preserved -->
+		</GeneticAnnealing>
+		<Elimination>
+			<Entry key="gengap">0.6</Entry>            <!-- generation gap (percentage of population to be eliminated) -->
+			<Entry key="selpressure">10</Entry>        <!-- selection pressure: how much is the worst individual 'worse' than the best -->
+		</Elimination>
+		<RouletteWheel>
+			<Entry key="crxprob">0.6</Entry> 
+			<Entry key="selpressure">10</Entry> 
+		</RouletteWheel>
+
+		<MyAlg>
+		</MyAlg>
+		<RandomSearch>
+		</RandomSearch>
+	</Algorithm>
+
+	<Genotype>
+		<Binary>
+			<Entry key="lbound">-10</Entry>
+			<Entry key="ubound">10</Entry>
+			<Entry key="precision">5</Entry>
+			<Entry key="dimension">3</Entry>
+
+			<Entry key="crx.halfuniform">0</Entry>
+			<Entry key="crx.nongeometric">0</Entry>
+			<Entry key="crx.onepoint">0</Entry>
+			<Entry key="crx.randomrespectful">0</Entry>
+			<Entry key="crx.reducedsurrogate">0</Entry>
+			<Entry key="crx.segmented">1</Entry>
+			<Entry key="crx.shuffle">0</Entry>
+			<Entry key="crx.twopoint">0</Entry>
+			<Entry key="crx.uniform">0</Entry>
+
+			<Entry key="mut.simple">1</Entry>
+			<Entry key="mut.simple.bitprob">0.001</Entry>
+			<Entry key="mut.mix">1</Entry>		
+		</Binary>
+
+	</Genotype>
+
+		<FloatingPoint>
+			<Entry key="lbound">-1</Entry>
+			<Entry key="ubound">13.5</Entry>
+			<Entry key="dimension">5</Entry>
+			
+			<Entry key="crx.arithmetic">0</Entry>
+			<Entry key="crx.arithmeticsimple">0</Entry>
+			<Entry key="crx.arithmeticsingle">0</Entry>
+			<Entry key="crx.average">0</Entry>
+			<Entry key="crx.blxalpha">0</Entry>
+			<Entry key="crx.blxalphabeta">0</Entry>
+			<Entry key="crx.discrete">0</Entry>
+			<Entry key="crx.flat">0</Entry>
+			<Entry key="crx.heuristic">0</Entry>
+			<Entry key="crx.local">0</Entry>
+			<Entry key="crx.onepoint">0</Entry>
+
+			<Entry key="crx.sbx">0</Entry>
+			<Entry key="crx.bga">0</Entry>
+
+			<Entry key="mut.simple">0</Entry>
+		</FloatingPoint>
+
+
+
+
+
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry> <!-- 0 znaci uzmi time(NULL) -->
+		<Entry key="population.size">50</Entry>
+		<Entry key="population.demes">1</Entry>
+		<Entry key="mutation.indprob">0.5</Entry> <!-- vjerojatnost mutiranja jedinke; zajednicko za sve algoritme -->
+		<Entry key="term.eval">500000</Entry>
+		<Entry key="term.maxgen">500</Entry>
+		<Entry key="term.fitnessval">1e-15</Entry>
+		<Entry key="term.stagnation">10000</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.frequency">10</Entry>
+		<Entry key="log.filename">log.nesto.txt</Entry>
+		<Entry key="milestone.filename">out.brm.txt</Entry> --> <!-- u milestone se sprema citava populacija i svi parametri (ako je ovaj parametar naveden)
+<!--		<Entry key="milestone.interval">0</Entry> --> <!-- svakih koliko generacija se sprema milestone; 0 znaci samo na kraju evolucije -->
+		<Entry key="batch.repeats">0</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
+		<Entry key="batch.singlemilestone">0</Entry>
+	</Registry>
+
+
+</ECF>

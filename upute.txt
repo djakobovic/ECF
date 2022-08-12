@@ -1,0 +1,334 @@
+
+ECF - interne biljeske
+
+
+
+=============================================================
+PODATKOVNA STRUKTURA
+
+- Population je skup 'demes', Deme je skup jedinki, Individual je skup genotipa
+- 'skup' je zasada std::vector
+
+- Genotype je apstraktni razred kojega nasljeðuju: Tree, BitString itd.
+- class diagram je u "ECF.pdf"
+
+- trenutni odabir pointera: smart pointer "shared_ptr" iz Boost library (boost.org):
+
+Instalacija na http://www.boost.org/doc/libs/1_36_0/more/getting_started/index.html
+Neke ilustracije smart pointera:
+http://www.codeproject.com/KB/stl/boostsmartptr.aspx
+http://ootips.org/yonat/4dev/smart-pointers.html
+
+
+
+
+=============================================================
+RAZRED Fitness
+
+- osnovni apstraktni razred
+- svaki izvedeni razred mora definirati:
+1. usporedbu dobrote dvije jedinke (fja isBetterThan)
+2. iznos dobrote
+
+
+
+
+=============================================================
+EVALUACIJA JEDINKI - RAZRED EvaluateOp
+
+- EvaluateOp je osnovni apstraktni razred
+- za svaku primjenu definira se novi izvedeni razred (npr. OneMaxEvalOp)
+- svaki izvedeni razred mora implementirati fju evaluate(IndividualP)
+- funkcija _stvara_ i vraca pointer na novostvoreni Fitness objekt
+- unutar funkcije stvara se odredjena vrsta fitnesa: npr. FitnessMax (onaj tko definira funkciju dobrote mora znati kakav fitnes objekt mu treba!)
+
+
+
+
+=============================================================
+RAZRED SelectionOperator
+
+- Djeluje nad skupom jedinki (moze biti cijeli Deme ili neki podskup!)
+- Odabire samo JEDNU jedinku iz skupa.
+- opcionalno: metoda za ponavljanje izbora vise puta
+
+
+
+
+=============================================================
+RAZRED Algorithm
+
+- Kombinira operatore i tvori jednu iteraciju EC algoritma
+
+
+
+
+=============================================================
+RAZRED CrossoverOperator
+
+- djeluje nad 2 Genotype objekta i stvara jedan novi
+- ne djeluje nad jedinkama!
+
+
+
+
+=============================================================
+RAZRED State
+
+- postoji _samo jedan_ objekt ovoga razreda; stvara se u main-u
+- oznacava trenutno stanje algoritma
+- referenca na stanje je parametar u svim "bitnim" funkcijama
+- preko stanja se mogu dohvatiti parametri, logiranje, random generator, genotipi, populacija, algoritam...
+
+
+
+=============================================================
+Parametri
+
+- svi moguci parametri upisani su u primjeru konf. datoteke "parametri.txt"
+
+Komentari za XML fajl:
+
+- redoslijed odjeljaka je nebitan, jedino bi Registry trebao ici na kraju
+- svaki razred bi trebao znati 'procitati' svoj odjeljak! (naknadno ugraditi u pojedine razrede)
+- od SVIH odjeljaka jedino Genotype MORA biti definiran - sve ostalo moze po defaultu
+
+
+
+=============================================================
+Koristenje parametara unutar programa
+
+Parametrima rukuje razred Registry. Parametri se cuvaju u mapi (std::map, http://www.sgi.com/tech/stl/Map.html) gdje se kao kljuc koristi ime parametra, a vrijednost je void pointer na konkretni parametar (recimo objekt tipa int). Okvirna podatkovna struktura razreda Registry je:
+
+struct Param	// parametar je predstavljen strukturom
+{
+	voidP value;	// voidP je smart pointer tipa void (ECF.h)
+	bool modified;	// razni dodatni podaci
+};
+typedef boost::shared_ptr<Param>  ParamP;
+
+class Registry
+{
+std::map< std::string, ParamP > parametri;
+...
+};
+
+Razred Registry nudi sljedecu funkcionalnost:
+
+registerEntry(ime, vrijednost, [tip])
+	- dodavanje imena, vrijednosti i tipa parametra u mapu (definiranje parametra)
+	- tipovi su pobrojani u enum strukturi (UINT, DOUBLE, STRING...); default je UINT
+isRegistered(ime)
+	- postoji li parametar
+modifyEntry(ime, vrijednost)
+	- promijeni vrijednost parametra
+getEntry(ime)
+	- dohvati vrijednost parametra
+
+
+Kako se parametri definiraju i koriste:
+
+Svaki razred koji koristi parametre mora definirati funkciju registerParameters() u kojoj registrira svoje parametre i njihove default vrijednosti:
+
+registerParameters
+{
+	state->getRegistry()->registerEntry("parametar", pointer_na_vrijednost)
+}
+
+Ovu funkcija poziva se _prije_ citanja konfiguracijskog fajla - svi parametri koji se mogu procitati iz fajla prvo moraju biti registrirani. Tu funkciju za sve klase s parametrima pozivat ce razred State (u State::initialize).
+
+Nakon toga, prolazi se konf fajl i citaju se vrijednosti parametara iz XML-a u razredu Registry. Nakon prolaska kroz fajl, zovu se metode initialize() svih razreda s parametrima. Svaki razred u svojoj initialize() metodi tada dohvaca aktualne vrijednosti parametara (koje je korisnik definirao u konf fajlu):
+
+initialize
+{	...
+	pointer = state->getRegistry()->getEntry("parametar")
+	moj_parametar = *pointer
+}
+
+Ovaj postupak se direktno primjenjuje na sve razrede koji nemaju razlicite varijante, kao Population, Logger, Randomizer, State.
+
+Razredi koji imaju varijante - Algorithm i Genotype - mogu definirati razlicite parametre (ovisno o konkretnom algoritmu, konkretnom genotipu), pa je postupak malo drugaciji. Svi razredi tipa Algorithm i Genotype imaju definirano svoje ime u varijabli "name_" (postavlja se u konstruktoru). Oni takodjer registriraju svoje parametre, ali ime parametra definiraju kao <ime_razreda>.<parametar> npr. razred BitString registrira parametar "size" kao:
+
+registerEntry(name_ + ".size", pointer_na_vrijednost) // ime je "bitstring.size"
+
+Naime, ime svakog parametra mora biti jedinstveno (kljuc u mapi).
+
+Prilikom citanja konf fajla, parametri definirani unutar odjeljka <Algorithm> ili <Genotype> citaju se tako da im se ime odjeljka dodaje na pocetak, npr:
+<BitString>
+	<Entry key="size">20</Entry>	// procitat ce se "bitstring.size" - sto je razred BitString registrirao
+</BitString>
+
+Ako algoritam ili genotip koristi slozenije parametre - kao npr. genotip Binary - tada doticni razred mora definirati funkciju read() u kojoj ce se implementirati "citanje" razreda iz XML dijela datoteke. Funkcija read() ce se pozvati kad se dodje do odgovarajuceg dijela (npr. tag <Binary>) u konf fajlu.
+
+
+
+=============================================================
+RAZRED Operator
+
+- operatori se pozivaju nakon svake generacije
+- da bi se pozvali, moraju biti _aktivni_: aktivni su oni kojima uspije inicijalizacija
+- u inicijalizaciji operator provjerava je li korisnik u conf fajlu definirao potrebni parametar (Registry::isModified); ako nije, operator nije aktivan
+- ECF definira skup DEFAULT operatora koji su uvijek aktivni: npr. HallOfFame, StatCalc, barem jedan terminacijski operator (TermStagnationOp)
+
+
+
+=============================================================
+Termination Operator
+
+- podvrsta operatora: vodi se posebna evidencija jer barem jedan terminacijski operator mora biti aktivan:
+	- ako korisnik ne navede nista u konfiguraciji, aktivan je TermStagnationOp
+	- inace, ono sto definira korisnik
+
+
+
+=============================================================
+RAZRED Mutation
+
+- spremnik operatora mutacije
+- registrira parametre: vjerojatnost mutacije jedinke (mutation.indprob) i vjerojatnost mutacije gena - bita (mutation.geneprob)
+- ovaj razred provodi mutaciju nad skupom jedinki (kada i nad kojima, definira Algorithm)
+- prvo se koristi vjerojatnost mutacije bita, ako je konfigurirana 
+- inace se koristi vjerojatnost mutacije jedinke (ne mora biti navedena - koristi se default vrijednost)
+
+
+
+=============================================================
+RAZRED Genotype
+
+- genotipi koji ce se koristiti odabiru se u conf. fajlu ili dinamicki u main-u
+- u objektu State postoji po jedan objekt svakog koristenog genotipa
+	- ti objekti se _nikad_ ne inicijaliziraju
+- u inicijalizaciji sustava, provodi se probna inicijalizacija po jedne kopije svakog genotipa (ako barem jedna ne uspije, inicijalizacija se prekida) (vidi State::initialize)
+- genotipi koji zahtijevaju dodatne podatkovne strukture (npr. Tree zahtijeva skup funkcija i terminala) trebaju te dodatne strukture povezati sa primjerkom genotipa koji se cuva u State objektu
+	- nakon sto se prva kopija genotipa inicijalizira, ostali primjerci samo preuzimaju podatke iz originalnog objekta pohranjenog u State (vidi Tree::initialize)
+
+
+
+=============================================================
+RAZRED Tree
+
+Predlosci:
+- Zavrsni cvor stabla (varijabla, terminal) je template klasa TerminalT koja drzi podatak bilo kojeg tipa
+	- default je double (ako korisnik nista ne definira)
+- tip terminala se (zasada) definira ispred niza terminala, npr:
+
+	<Entry key="terminalset">INT a b c BOOL u1 u2 DOUBLE x y z</Entry>
+
+- neke funkcije (kod kojih ima smisla) su u obliku predloska: AddT, SubT, MulT, DivT primaju bilo kakve podatke
+	- uvjet: operatori +, -, * i / moraju biti definirani za doticni tip!
+- druge funkcije rade samo s odredjenim tipom (npr. AND, OR, NOT pretpostavljaju bool)
+- u 'obicnom' GP-u nema provjere tipa - to dolazi u 'strongly typed' GP-u
+
+
+
+
+=============================================================
+C++
+- http://www.parashift.com/c++-faq-lite/index.html
+- http://www.cplusplus.com/
+
+=============================================================
+PISANJE KODA
+
+- uglavnom po http://geosoft.no/development/cppstyle.html
+- neki primjeri varijabli:
+	nNodes	broj cvorova
+	iNode	indeks cvora (u polju)
+	vNodes	vektor cvorova
+	dValue	realna vrijednost
+	bTest	bool vrijednost
+	conditionIsTrue	bool, naravno
+	dFitness_	member varijabla
+
+
+
+=============================================================
+Visual Studio zabiljeske
+
+Podesavanje VS 2005 za ECF:
+
+- dodati boost include direktorij
+- za XMLNode: Project configuration - General - Character set: Not set
+- C/C++: Code Generation: Runtime Library: bez DLL opcije!
+
+
+
+Podesavanje VS 2003 za ECF:
+
+- dodati boost include direktorij
+- za XMLNode: Project configuration - General - Character set: Not set
+- C/C++ - Language - Enable RTTI: Yes
+
+
+=============================================================
+CLion zabiljeske
+
+- uz MinGW build, potrebni su i ovi DLL-ovi za pokretanje exe (iz MinGW/bin):
+libgcc_s_dw2-1.dll
+libstdc++-6.dll
+
+
+=============================================================
+CMake zabiljeske
+- kako pronaci svoj lib: http://www.limeoats.com/clion-and-cmake.html
+
+
+
+=============================================================
+MPICH kompajliranje
+
+- za kompajliranje MPI verzije treba definirati _MPI (#define)
+- u zajednickim datotekama MPI kod se odvaja sa #ifdef _MPI
+- posebne datoteke (npr. samo za MPI varijantu) se kompajliraju samo u posebnom MPI projektu 
+- nariktavanje u Visual Studiu:
+	- dodati MPI include direktorij: C:\Program Files\MPICH2\include
+	- Predprocessor Definitions: dodati "_MPI"
+	- Runtime Library: Multi-threaded Debug (/MTd) (ili bez Debug za Release konfiguraciju)
+	- Command line Additional options: -DMPICH_IGNORE_CXX_SEEK
+	- dodatni lib direktorij: C:\Program Files\MPICH2\lib
+	- dodatni libovi: cxxd.lib mpi.lib
+
+- takodjer i u korisnickim projektima (koji koriste MPI verziju ECF.lib) treba ukljuciti odgovarajuci Runtime Library!
+
+
+MPI na Linuxu:
+(Isabella)
+- export CXXFLAGS='-I/opt/mpich-1.2.7p1/intel/include' (MPI include direktorij - zinfandel)
+- export LDFLAGS='-L/opt/mpich-1.2.7p1/intel/lib' (MPI lib direktorij - zinfandel)
+- Communicator.h: #include <mpi2c++/mpi++.h> (zinfandel)
+
+- ./configure --with-mpi=<MPI direktorij>
+- eventualno staviti #include za mpi++.h u Communicator.h (ne znam zasto mu i to treba...)
+
+
+=============================================================
+ECF na Linuxu
+
+- za pripremu 'korisnickog' paketa: 'make clean' i 'make distclean' nakon kompajliranja!
+- dodati dinamicke fajlove:
+	configure
+	Makefile.in
+	ECF/Makefile.in
+	install-sh
+	missing
+	config.sub
+	config.guess
+	ltmain.sh
+	depcomp
+
+- za kompjaliranje korisnicnih projekata: u Makefile staviti path to libova (i boosta ako nije instaliran):
+CFLAGS = $(WARN) -I/home/user/ecf/include -I/home/djakobov/ecf/boost_1_53_0
+LDFLAGS = $(WARN) -lecf -L/home/user/ecf/lib
+
+- za pokretanje projekata: dodati libove u LD_LIBRARY_PATH:
+export LD_LIBRARY_PATH=/home/user/ecf/lib:$LD_LIBRARY_PATH
+
+- ako boost nije u pathu, jos i ovo za kompajliranje ECF-a:
+export CXXFLAGS='-I/home/djakobov/ecf/boost_1_53_0'
+
+
+=============================================================
+KOMENTARI
+
+- po DoxyGen standardu, http://www.stack.nl/~dimitri/doxygen/docblocks.html
+- TODO: JavaDoc ili Qt stil?

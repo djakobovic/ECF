@@ -1,0 +1,27 @@
+<ECF>
+	<Algorithm>
+		<SolverSHC/>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>
+		</SteadyStateTournament>
+	</Algorithm>
+	<Genotype>
+		<Permutation>
+			<Entry key="size">500</Entry>
+		</Permutation>
+	</Genotype>
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry>
+		<Entry key="population.size">100</Entry>
+		<Entry key="mutation.indprob">0.3</Entry>
+		<Entry key="term.stagnation">10000</Entry>
+		<Entry key="term.maxgen">1000</Entry>
+		<Entry key="term.eval">50000</Entry>
+		<Entry key="term.fitnessval">0</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="log.frequency">100</Entry>
+		<Entry key="batch.repeats">0</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
+	</Registry>
+</ECF>

@@ -1,0 +1,24 @@
+<ECF>
+	<Algorithm>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>
+		</SteadyStateTournament>
+	</Algorithm>
+	<Genotype>
+		<Cartesian>
+			<Entry key="type">uint</Entry>
+			<Entry key="numoutputs">1</Entry>
+			<Entry key="numinputconns">2</Entry>
+			<Entry key="numrows">8</Entry>
+			<Entry key="numcols">5</Entry>
+			<Entry key="levelsback">2</Entry>
+			<Entry key="functionset">NOT AND OR XOR XNOR</Entry>
+			<Entry key="numvariables">8</Entry>
+		</Cartesian>
+	</Genotype>
+	<Registry>
+		<Entry key="function">1</Entry>
+		<Entry key="population.size">50</Entry>
+		<Entry key="term.maxgen">5</Entry>
+	</Registry>
+</ECF>

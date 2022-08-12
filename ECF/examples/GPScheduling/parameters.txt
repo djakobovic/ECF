@@ -1,0 +1,33 @@
+<ECF>
+	<Algorithm>
+		<AlgSGenGPEA>
+			<Entry key="crxprob">0.5</Entry> 
+			<Entry key="selpressure">10</Entry> 
+			<Entry key="jobsize">5</Entry>
+		</AlgSGenGPEA>	
+
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry> <!-- velicina turnira -->
+		</SteadyStateTournament>
+	</Algorithm>
+
+	<Genotype>
+		<Tree>
+			<Entry key="maxdepth">3</Entry>
+			<Entry key="mindepth">1</Entry>
+			<Entry key="functionset">+ - / * pos</Entry>
+			<Entry key="terminalset">w pt dd SL Nr SPr STP Sav</Entry>
+		</Tree>
+	</Genotype>
+
+	<Registry>
+		<Entry key="population.size">5</Entry>
+		<Entry key="mutation.indprob">0.3</Entry> 
+		<Entry key="term.maxgen">10</Entry> <!-- max broj generacija -->
+		<Entry key="term.eval">10</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="test_cases">./examples/GPScheduling/fitness.txt</Entry>
+	</Registry>
+</ECF>
+

@@ -1,0 +1,179 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="keywords" content="evolutionary computation framework, evolutionary computation software, genetic algorithms, genetic programming, parallel evolutionary algorithms, C++">
+<title>ECF - Evolutionary Computation Framework</title>
+<link rel="stylesheet" href="bloc1011.css">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17544220-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+
+<div align="center">
+	<i><a href="http://gp.zemris.fer.hr">Evolutionary Computation Group @ FER</a></i><hr>
+	<table border="0" width="100%" id="table1">
+		<tr>
+			<td width="83"><img border="0" src="ecf.png" width="83" height="58"></td>
+			<td align="center" valign="bottom">
+			<h1 align="center">ECF - 
+Evolutionary Computation Framework</h1>
+			</td>
+		</tr>
+	</table>
+</div>
+<hr>
+<p>ECF is a C++ framework intended for application of any type of 
+<a href="http://en.wikipedia.org/wiki/Evolutionary_computation">evolutionary 
+computation</a>. Current features include:</p>
+<ul>
+	<li>parameterless: genotype (individual structure) is the only 
+	<a href="http://ecf.zemris.fer.hr/tutorial.html#bitstring">mandatory parameter</a></li>
+	<li><a href="http://ecf.zemris.fer.hr/algorithms.html">algorithms</a>: steady state tournament, generational roulette-wheel, 
+	elimination, particle swarm optimization (<a href="http://en.wikipedia.org/wiki/Particle_swarm_optimization">PSO</a>), 
+	differential evolution (<a href="http://en.wikipedia.org/wiki/Differential_evolution">DE</a>), 
+	genetic annealing, artificial bee colony (<a href="http://www.scholarpedia.org/article/Artificial_bee_colony_algorithm">ABC</a>), 
+	clonal selection (<a href="http://en.wikipedia.org/wiki/Clonal_Selection_Algorithm">CLONALG</a>), 
+	immune optimization (<a href="http://www.artificial-immune-systems.org/algorithms.shtml">optIA</a>), 
+	evolution strategy, random search</li>
+	<li><a href="http://en.wikipedia.org/wiki/Genetic_algorithm">genetic 
+	algorithm</a> genotypes 
+		(bitstring, binary encoded real values, floating point vectors, permutation vectors), 
+	<a href="http://en.wikipedia.org/wiki/Genetic_programming">genetic 
+	programming</a> genotype (tree), analytic programming </li>
+	<li>individuals may contain any genotypes in any number</li>
+	<li><a href="http://ecf.zemris.fer.hr/html/group__examples.html">many examples</a>: <a href="http://ecf.zemris.fer.hr/tutorial.html#tree">GP symbolic regression</a>,
+	<a href="http://ecf.zemris.fer.hr/html/group__ant.html">GP artificial ant</a>,
+	<a href="http://ecf.zemris.fer.hr/tutorial.html#binary">function 
+	optimization</a>,
+	<a href="http://ecf.zemris.fer.hr/tutorial.html#permutation">TSP</a>,
+	<a href="http://ecf.zemris.fer.hr/tutorial.html#bitstring">onemax</a>, <a href="http://ecf.zemris.fer.hr/html/group__cec.html">function optimization</a> from <i><a href="http://www.ntu.edu.sg/home/EPNSugan/index_files/CEC2014/CEC2014.htm">CEC Real-Parameter Numerical Optimization</a></i></li>
+	<li>parallel execution in many models (global paralel EA, distributed 
+	EA, hybrid parallel EA...) using
+	<a href="http://en.wikipedia.org/wiki/Message_Passing_Interface">MPI</a></li>
+	<li>configurable environment: changing algorithm, genotypes and parameters 
+		without recompilation</li>
+	<li><a href="http://ecf.zemris.fer.hr/parameters.html#milestone">checkpointing 
+	and population restoring</a>, various termination criteria, 
+	<a href="http://ecf.zemris.fer.hr/parameters.html#batch">repeated runs</a>, 
+	<a href="http://ecf.zemris.fer.hr/parameters.html#crsmut">crx and mutation operators selection</a> and usage rate, migration</li>
+</ul>
+<p><b><a href="features.txt">More detailed feature list</a></b></p>
+<h2>Download</h2>
+<ul>
+	<li>current package 
+		(<span lang="en-us">v </span><b>1.5, 2022/08/11</b>) is available at Sourceforge:
+		<a href="https://sourceforge.net/projects/ecfproject/files/ECF_1.5/ECF_1.5.zip/download">ECF_1.5.zip</a>,
+	<a href="https://sourceforge.net/projects/ecfproject/files/ECF_1.5/ECF_1.5.tar.gz/download">ECF_1.5.tar.gz</a> </li>
+	<li>the latest development version can be found at
+		<a href="svn://ecf.zemris.fer.hr/ecf/trunk">svn://ecf.zemris.fer.hr/ecf/trunk</a></li>
+	<li>latest SVN version can be downloaded and installed
+	<a href="ecf_install.sh">with this script</a> (thanks to Jernej Makovsek) 
+	tested on Ubuntu</li>
+</ul>
+<h2>Documentation</h2>
+<p>These files are also included in the package (./help directory).</p>
+<ul>
+	<li>&nbsp;<a href="install.html">Install</a>: installation and how to build 
+	the examples</li>
+	<li>&nbsp;<a href="tutorial.html">Tutorial</a>: how to use ECF (the quickest 
+	way in)</li>
+	<li>&nbsp;<a href="documentation.html">Documentation</a>: it's all in the 
+	details</li>
+	<li>&nbsp;Reference:
+	<a href="html/index.html">browse</a>, <a href="ECF_1.5_html.zip">download 
+	(zip)</a>&nbsp;(<a href="http://www.doxygen.org/">doxygen</a> produced)</li>
+	<li>&nbsp;<a href="faq.html">a short FAQ</a> (complement to the Tutorial)</li>
+</ul>
+<p><b>Integration with COCO benchmark:</b></p>
+<ul>
+	<li>example with <a href="http://coco.gforge.inria.fr/">COCO (BBoB) 
+	functions</a> now includes
+	<a href="http://ecf.zemris.fer.hr/html/group__coco.html">BBoB experiment</a> 
+	with any ECF algorithm, example results:</li>
+</ul>
+<p><a href="bbob/ecf_only/pprldmany_10D_noiselessall.pdf">
+<img border="0" src="bbob/ecf.jpg" width="479" height="360"></a>&nbsp;&nbsp;&nbsp;
+<a href="bbob/pprldmany_10D_noiselessall.pdf">
+<img border="0" src="bbob/bbob.jpg" width="479" height="359"></a></p>
+<h3>Support: </h3>
+<ul>
+	<li><a href="http://www.zemris.fer.hr/~yeti">Domagoj Jakobovi<span lang="hr">&#263;</span></a><span lang="hr"> (domagoj.jakobovic 
+	</span>@ 
+fer.hr)</li>
+	<li><a href="http://sourceforge.net/p/ecfproject/discussion/?source=navbar">
+	forum at Sourceforge</a></li>
+</ul>
+<h2>References</h2>
+<ul>
+	<li>Jakobovi&#263;, Domagoj; Golub, Marin; &#268;upi&#263;, Marko.<b>
+	<a class="smedjilink" target="_blank" href="http://link.springer.com/article/10.1007/s00500-013-1140-5">
+	Asynchronous and implicitly parallel evolutionary computation models</a></b>. 
+	// <i>Soft computing</i>. (2013)</li>
+	<li>Picek, Stjepan; Jakobovi&#263;, Domagoj; Golub, Marin.
+	<a class="smedjilink" target="_blank" href="http://bib.irb.hr/prikazi-rad?&rad=640221">
+	<b>Evolving Cryptographically Sound Boolean Functions</b></a> // <i>
+	Proceedings of the Genetic and Evolutionary Computation Conference 2013</i>.<br>
+	Amsterdam : ACM, 2013. 191-192</li>
+	<li>Picek, Stjepan; Jakobovi&#263;, Domagoj; Golub, Marin.
+	<a class="smedjilink" target="_blank" href="http://bib.irb.hr/prikazi-rad?&rad=640222">
+	<b>On the Recombination Operator in the Real-Coded Genetic Algorithms</b></a> 
+	// <i>Proceedings of the 2013 IEEE Congress on Evolutionary Computation</i>.<br>
+	2013. 3103-3110</li>
+	<li>Jakobovi&#263;, Domagoj; Marasovi&#263;, Kristina.<b> <a class="smedjilink" target="_blank" href="http://bib.irb.hr/prikazi-rad?&rad=579842">Evolving 
+	priority scheduling heuristics with genetic programming</a></b>. // <i>
+	Applied soft computing</i>. <b>12</b> (2012) , 9; 2781<b>-</b>2789</li>
+	<li>Picek, Stjepan; Golub, Marin; Jakobovi&#263;, Domagoj.
+	<a class="smedjilink" target="_blank" href="http://bib.irb.hr/prikazi-rad?&rad=584310">
+	<b>On the Analysis of Experimental Results in Evolutionary Computation</b></a> 
+	// <i>MIPRO 2012 International Convention</i>. Opatija, 2012. 1245-1250&nbsp;</li>
+	<li>Picek, Stjepan; Golub, Marin; Jakobovi&#263;, Domagoj.<b> <a class="smedjilink" target="_blank" href="http://bib.irb.hr/prikazi-rad?&rad=537238">Evaluation 
+	of Crossover Operator Performance in Genetic Algorithms with Binary 
+	Representation</a></b>. // <i>Lecture Notes in Computer Science</i>. <b>6840</b> 
+	(2011) ; 223<b>-</b>230</li>
+	<li>Brajer, Iva; Jakobovi&#263;, Domagoj.<b> <a class="smedjilink" target="_blank" href="http://bib.irb.hr/prikazi-rad?&rad=584307">Automated 
+	Design of Combinatorial Logic Circuits</a></b> // <i>MIPRO 2012 
+	International Convention</i>.Opatija, 2012. 964-969</li>
+	<li>Picek, Stjepan; Golub, Marin; Jakobovi&#263;, Domagoj.
+	<a class="smedjilink" target="_blank" href="http://bib.irb.hr/prikazi-rad?&rad=588565">
+	<b>Influence of the Crossover Operator in the Performance of the Hybrid 
+	Taguchi GA</b></a> // <i>Proceedings of the 2012 IEEE Congress on 
+	Evolutionary Computation</i> / Xiaodong Li (ur.).<br>
+	Brisbane, 2012. 1480-1487</li>
+</ul>
+<h2>Contributors</h2>
+<p>(Alphabetical order): Hrvoje Ban, Vinko Bedek, Igor Bespaljko, Iva Brajer, Luka Don<span lang="hr">&#273;ivi&#263;,
+</span>Luka Franov, <a href="http://www.frasbros.com">Zvonimir Fras</a>, 
+<a href="http://www.linkedin.com/in/dkomlen">Danko Komlen</a>, Ivan Kokan, Luka Krizan, Maja Legac, Tomislav Novak, 
+Lovro Pai&#263;-Antunovi&#263;, Stjepan Picek, Dražen Popovi&#263;, <a href="https://www.semanticscholar.org/author/%C3%81ngel-Ferreira-Santiago/3082522">Ángel Ferreira-Santiago</a>, <a href="https://github.com/dstank25">Domagoj 
+Stankovi&#263;</a>, Ivana Stoki&#263;, Mirjam <span lang="hr">Š</span>karica</p>
+<p>Project leader &amp; support contact: <a href="http://www.zemris.fer.hr/~yeti">Domagoj Jakobovi<span lang="hr">&#263;</span></a><span lang="hr"> (domagoj.jakobovic </span>@ 
+fer.hr)</p>
+<h2>Acknowledgements</h2>
+<p>ECF software uses the following components:</p>
+<ul>
+	<li>&nbsp;some features of <a href="http://www.boost.org/">boost C++ library</a></li>
+	<li>&nbsp;a simple but very useful
+	<a href="http://www.applied-mathematics.net/tools/xmlParser.html">XML parser</a></li>
+</ul>
+<p>Additionally, this project was inspired by
+<a href="http://beagle.gel.ulaval.ca/">OpenBEAGLE</a>, a comprehensive OO 
+evolutionary framework.</p>
+<p><i><b>Last update:</b></i>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d.%m.%Y" startspan -->10.08.2022<!--webbot bot="Timestamp" endspan i-checksum="12485" --></p>
+
+</body>
+
+</html>

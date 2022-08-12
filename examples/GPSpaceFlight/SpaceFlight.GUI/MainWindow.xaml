@@ -1,0 +1,55 @@
+﻿<Window x:Class="SpaceFlight.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:u="clr-namespace:SpaceFlight.GUI"
+        Title="Space Flight Simulator" SizeToContent="WidthAndHeight">
+  <Grid Margin="15">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Column="0">
+      <Button Name="LoadButton" Content="Load test case" Click="LoadButton_Click" Margin="0 0 0 5" Padding="10 5" />
+      <Button Name="SaveButton" Content="Save test case" Click="SaveButton_Click" IsEnabled="False" Margin="0 0 0 10" Padding="10 5" />
+
+      <GroupBox Margin="0 0 0 20" Padding="5">
+        <GroupBox.Header>Random test case</GroupBox.Header>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+
+          <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">Planets:</TextBlock>
+          <TextBox Name="RandomPlanets" Grid.Row="0" Grid.Column="1" Width="30" Margin="10 0 0 5" >5</TextBox>
+          <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Waypoints:</TextBlock>
+          <TextBox Name="RandomWaypoints" Grid.Row="1" Grid.Column="1" Width="30" Margin="10 0 0 5">10</TextBox>
+
+          <Button Name="RandomButton" Grid.Row="2" Grid.ColumnSpan="2" Content="Generate" Click="RandomButton_Click" Padding="10 5" />
+        </Grid>
+      </GroupBox>
+
+      <CheckBox Name="ManualFlight" Content="Manual flight" Click="ManualFlight_Click" Margin="0 0 0 5" />
+      <Button Name="LoadAI" Content="Load AI" Click="LoadAI_Click" Margin="0 0 0 20" Padding="10 5" />
+
+      <CheckBox Name="TraceMovement" Content="Trace movement" Click="TraceMovement_Click" Margin="0 0 0 10" />
+
+      <Button Name="StartButton" Content="Start" Click="StartButton_Click" IsEnabled="False" Margin="0 0 0 20" Padding="10" />
+      <Button Name="StopButton" Content="Stop" Click="StopButton_Click" Visibility="Collapsed" Margin="0 0 0 20" Padding="10" />
+
+      <TextBlock Name="Time" Margin="0 0 0 5" />
+      <TextBlock Name="Waypoints" />
+    </StackPanel>
+
+    <Border Grid.Column="1" BorderThickness="1" CornerRadius="10" BorderBrush="Black" Margin="20 0 0 0" MinWidth="500" MinHeight="500">
+      <u:SimulationView x:Name="View" />
+    </Border>
+  </Grid>
+</Window>

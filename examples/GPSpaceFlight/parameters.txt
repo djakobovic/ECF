@@ -1,0 +1,24 @@
+<ECF>
+  <Genotype>
+    <Tree>
+      <Entry key="initmindepth">1</Entry>
+      <Entry key="initmaxdepth">5</Entry>
+      <Entry key="mindepth">1</Entry>
+      <Entry key="maxdepth">5</Entry>
+      <Entry key="functionset">+ - * / iflt</Entry>
+      <Entry key="terminalset">td ta vm va npd npa [-10 10]</Entry>
+      <Entry key="crx.simple">1</Entry>
+      <Entry key="crx.simple.functionprob">0.9</Entry>
+      <Entry key="mut.subtree">0.25</Entry>
+      <Entry key="mut.gauss">0.5</Entry>
+      <Entry key="mut.shrink">0.25</Entry>
+    </Tree>
+  </Genotype>
+  <Registry>
+    <Entry key="testcases.dir">TestCases</Entry>
+    <Entry key="population.size">1000</Entry>
+    <Entry key="term.maxgen">25</Entry>
+    <Entry key="milestone.filename">milestone.txt</Entry>
+    <Entry key="milestone.interval">0</Entry>
+  </Registry>
+</ECF>

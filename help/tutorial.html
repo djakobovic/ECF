@@ -1,0 +1,576 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1250">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.1.2 (Windows)">
+	<META NAME="AUTHOR" CONTENT="Domagoj Jakobović">
+	<META NAME="CREATED" CONTENT="20090818;16351400">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGED" CONTENT="20141219;92248421000000">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobović">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		H2.western { font-family: "Arial", sans-serif; font-size: 16pt; font-style: italic }
+		H2.cjk { font-family: "SimSun" }
+		H2.ctl { font-family: "Mangal" }
+		H4.cjk { font-family: "SimSun" }
+		H4.ctl { font-family: "Mangal" }
+		PRE.cjk { font-family: "NSimSun", monospace }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="hr-HR" DIR="LTR">
+<P><A HREF="documentation.html"><IMG SRC="up.png" NAME="graphics1" ALIGN=BOTTOM WIDTH=30 HEIGHT=30 BORDER=0></A></P>
+<H1>2. Tutorial examples &ndash; by genotype</H1>
+<P>These examples are a short introduction to the use of ECF when
+solving a specific problem with a specific genotype (individual data
+structure).</P>
+<P>The examples also contain the commented use of <FONT FACE="Courier New">boost::shared_ptr</FONT>
+smart pointers (see e.g.
+<A HREF="http://www.codeproject.com/KB/stl/boostsmartptr.aspx">http://www.codeproject.com/KB/stl/boostsmartptr.aspx</A>)
+which are used in other ECF components; for instance, a
+<FONT FACE="Courier New">boost::dynamic_pointer_cast</FONT> construct
+may be used to check the Genotype type in the Individual.</P>
+<H4 CLASS="western"><FONT SIZE=4>1. </FONT><A HREF="#bitstring"><FONT SIZE=4>BitString
+genotype &ndash; OneMax example</FONT></A></H4>
+<H4 CLASS="western"><FONT SIZE=4>2. </FONT><A HREF="#flpoint"><FONT SIZE=4>FloatingPoint</FONT></A><A HREF="#binary">
+<FONT SIZE=4>genotype &ndash; Function minimization example</FONT></A></H4>
+<H4 CLASS="western"><FONT SIZE=4>3. </FONT><A HREF="#flpoint"><FONT SIZE=4>Binary
+genotype - alternative to FloatingPoint encoding</FONT></A></H4>
+<H4 CLASS="western"><FONT SIZE=4>4. </FONT><A HREF="#tree"><FONT SIZE=4>Tree
+genotype &ndash; Symbolic regression example</FONT></A></H4>
+<H4 CLASS="western"><FONT SIZE=4>5. </FONT><A HREF="#permutation"><FONT SIZE=4>Permutation
+genotype &ndash; Traveling Salesperson Problem</FONT></A></H4>
+<HR>
+<H2 CLASS="western"><A NAME="bitstring"></A>1. Genotype BitString &ndash;
+OneMax example</H2>
+<P><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">Suppose
+you want to maximize the number of ones in a vector of bits &ndash;
+which is a simple <A HREF="http://tracer.lcc.uma.es/problems/onemax/onemax.html">OneMax
+problem</A>. You would then use the BitString genotype, which offers
+no coding/decoding, just a storage of </SPAN></SPAN></SPAN><SPAN STYLE="font-variant: normal"><I><SPAN STYLE="font-weight: normal">n</SPAN></I></SPAN><SPAN STYLE="font-variant: normal">
+</SPAN><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">bits
+(and associated genetic operators). To implement the evaluation
+operator, you need to inherit from the </SPAN></SPAN></SPAN><SPAN STYLE="font-variant: normal"><I><SPAN STYLE="font-weight: normal">EvaluateOp</SPAN></I></SPAN><SPAN STYLE="font-variant: normal">
+</SPAN><SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">class:</SPAN></SPAN></SPAN></P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">class OneMaxEvalOp : public EvaluateOp
+{
+public:
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">FitnessP evaluate(IndividualP individual);</SPAN></SPAN>
+};</PRE><P STYLE="font-variant: normal; font-style: normal; font-weight: normal">
+and then implement the <I>evaluate</I> function:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// evaluate() receives a smart pointer to the individual to evaluate</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">FitnessP OneMaxEvalOp::evaluate(IndividualP individual)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// evaluation creates a new fitness object (using a smart pointer)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// in our case, we try to maximize the number of ones, so we use FitnessMax fitness (for maximization problems)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	FitnessP fitness (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> FitnessMax);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// Each individual is a vector of genotypes (defined in the configuration file).</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// We'll use BitString, and retrieve it as the first and only genotype</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	BitString::BitString* bitstr = (BitString::BitString*) individual-&gt;getGenotype(0).get(); </SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// don't need zero for the first one</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// (you can also use boost smart pointers:)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">//BitStringP bitstr = boost::static_pointer_cast&lt;BitString::BitString&gt; (individual-&gt;getGenotype(0));</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// count the ones; where are they?</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// BitString genotype contains a std::vector of bool's named 'bits'</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	uint ones = 0;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">for</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(uint i = 0; i&lt;bitstr-&gt;bits.size(); i++){</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(bitstr-&gt;bits[i] == </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">			ones++ ;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	fitness-&gt;setValue(ones);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// return the new fitness</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> fitness;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">}</SPAN></FONT></FONT></FONT></PRE><P STYLE="font-variant: normal; font-style: normal; font-weight: normal">
+Then, we reference the evaluation op. in main:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> main(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> argc, </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">char</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> **argv)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	StateP state (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> State);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;setEvalOp(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> OneMaxEvalOp);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;initialize(argc, argv);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;run();</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> 0;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">}</SPAN></FONT></FONT></FONT></PRE><P STYLE="font-variant: normal; font-style: normal; font-weight: normal">
+and finally, define the BitString genotype &ndash; with its one
+parameter, the number of bits &ndash; in a minimal configuration
+file:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">&lt;ECF&gt;
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Genotype&gt;</SPAN></SPAN>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;BitString&gt;</SPAN></SPAN>
+                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;size&quot;&gt;20&lt;/Entry&gt;</SPAN></SPAN>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/BitString&gt;</SPAN></SPAN>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/Genotype&gt;</SPAN></SPAN>
+&lt;/ECF&gt;</PRE><P>
+The program needs to be run with the name of the above configuration
+file as its command line argument, i.e. &quot;./<B>program
+parameters.txt</B>&quot;. 
+</P>
+<P>That's it. No other parameters needed (see section <A HREF="parameters.html">Using
+the parameters </A>to see the default parameter settings). And with a
+problem this simple, this will usually work fine. <A HREF="html/group__onemax.html">See
+this example</A> in the manual.</P>
+<P>&nbsp;</P>
+<HR>
+<H2 CLASS="western"><A NAME="binary"></A>2. FloatingPoint genotype &ndash;
+Function minimization example</H2>
+<P>Suppose you want to find the minimum of a multidimensional
+function, which is a common task of <A HREF="http://en.wikipedia.org/wiki/Optimization_(mathematics)">function
+minimization</A>. Say the function looks like this: 
+</P>
+<P><FONT FACE="Courier New"><SPAN LANG="en-GB">f(</SPAN></FONT><FONT FACE="Courier New"><SPAN LANG="en-GB"><U>x</U></SPAN></FONT><FONT FACE="Courier New"><SPAN LANG="en-GB">)
+= (x[1]-1)</SPAN></FONT><SUP><FONT FACE="Courier New"><SPAN LANG="en-GB">2</SPAN></FONT></SUP>
+<FONT FACE="Courier New"><SPAN LANG="en-GB">+ (x[2]-2)</SPAN></FONT><SUP><FONT FACE="Courier New"><SPAN LANG="en-GB">2</SPAN></FONT></SUP>
+<FONT FACE="Courier New"><SPAN LANG="en-GB">+ ... + (x[n]-n)</SPAN></FONT><SUP><FONT FACE="Courier New"><SPAN LANG="en-GB">2</SPAN></FONT></SUP>
+, where <FONT FACE="Courier New"><SPAN LANG="en-GB">n</SPAN></FONT>
+is a given parameter (function dimensionality) and <FONT FACE="Courier New"><SPAN LANG="en-GB">x[i]</SPAN></FONT>
+the <I>i</I>-th component of vector <FONT FACE="Courier New"><SPAN LANG="en-GB"><U>x</U></SPAN></FONT>.</P>
+<P>(<B>NOTE</B>: you can find additional common test functions
+provided with this example in the source code)</P>
+<P>You would then most often use the <I>FloatingPoint</I> genotype
+which is simply a vector of floating-point numbers (variables of type
+<I>double</I>; the alternative representation is binary in <A HREF="#flpoint">the
+next example</A>). <I>FloatingPoint</I> genotype offers these
+mandatory parameters:</P>
+<UL>
+	<LI><P><I>lbound</I> &ndash; lower bound of real valued variable
+	(e.g. -100),</P>
+	<LI><P><I>ubound</I> &ndash; upper bound (e.g. 100),</P>
+	<LI><P><I>dimension</I> &ndash; number of distinct variables
+	(function dimension) (e.g. 5).</P>
+</UL>
+<P>All of these must be defined for a valid genotype. If you need
+different boundaries for different variables, you can simply use more
+than one genotype, as shown in section <A HREF="parameters.html#multiple%20genotypes">Using
+the parameters</A>. To implement the evaluation operator, we will
+inherit from the <I>EvaluateOp</I> class:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">class FunctionMinEvalOp : public EvaluateOp
+{
+public:
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">FitnessP evaluate(IndividualP individual);</SPAN></SPAN>
+};</PRE><P STYLE="font-variant: normal; font-style: normal; font-weight: normal">
+and then implement the <I>evaluate</I> function:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">FitnessP evaluate(IndividualP individual)
+{
+<FONT COLOR="#008000">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// evaluation creates a new fitness object using a smart pointer</SPAN></SPAN></FONT>
+<FONT COLOR="#008000">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// in our case, we try to </SPAN></SPAN><SPAN STYLE="font-style: normal"><U><SPAN STYLE="font-weight: normal">minimize</SPAN></U></SPAN><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> the function value, so we use FitnessMin fitness (for minimization problems)</SPAN></SPAN></FONT>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">FitnessP fitness </SPAN></SPAN><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">(</SPAN></SPAN></FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">new</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> FitnessMin);</SPAN></SPAN></FONT>
+
+        <FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// we define FloatingPoint as the only genotype (in the configuration file)</SPAN></SPAN></FONT>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">FloatingPoint::FloatingPoint* gen = (FloatingPoint::FloatingPoint*) individual-&gt;getGenotype().get();</SPAN></SPAN>
+<FONT COLOR="#008000">        <SPAN LANG="hr-HR"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// (you can also use boost smart pointers:)</SPAN></SPAN></SPAN></FONT>
+<FONT COLOR="#008000">        <SPAN LANG="hr-HR"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">//FloatingPointP gen = boost::dynamic_pointer_cast&lt;FloatingPoint::FloatingPoint&gt; (individual-&gt;getGenotype());</SPAN></SPAN></SPAN></FONT>
+
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">double</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> realTemp, value = 0;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// we implement the fitness function 'as is', without any translation</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// the number of variables we read from the genotype itself (size of 'realValue' vactor)</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">for</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> (uint i = 0; i &lt; gen-&gt;realValue.size(); i++){</SPAN></SPAN></FONT>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">realTemp = pow((gen-&gt;realValue[i] - (i + 1)), 2.);</SPAN></SPAN>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">value += realTemp;</SPAN></SPAN>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">}</SPAN></SPAN>
+
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">fitness-&gt;setValue(value);</SPAN></SPAN>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">return</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> fitness;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000"><FONT SIZE=2>}</FONT></FONT></PRE><P STYLE="font-variant: normal; font-style: normal; font-weight: normal">
+Then, we reference the evaluation operator in main:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal">int main(int argc, char **argv)
+{
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">StateP state (</SPAN></SPAN><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">new</SPAN></SPAN></FONT><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> State);</SPAN></SPAN>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">state-&gt;setEvalOp(</SPAN></SPAN><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">new</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> FunctionMinEvalOp</SPAN></SPAN></FONT><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">);</SPAN></SPAN>
+
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">state-&gt;initialize(argc, argv);</SPAN></SPAN>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">state-&gt;run();</SPAN></SPAN>
+        <FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">return</SPAN></SPAN></FONT><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> 0;</SPAN></SPAN>
+}</PRE><P>
+<FONT COLOR="#000000"><FONT SIZE=3>and finally, define the
+<I>FloatingPoint</I> genotype and its parameters in a minimal
+configuration file:</FONT></FONT></P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal"><FONT COLOR="#000000">&lt;ECF&gt;</FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Genotype&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;FloatingPoint&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;lbound&quot;&gt;-50&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;ubound&quot;&gt;50&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;dimension&quot;&gt;3&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/FloatingPoint&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/Genotype&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">&lt;/ECF&gt;</FONT></PRE><P>
+The program can be run with the name of the above configuration file
+as its command line argument, i.e. &quot;./<B>program
+parameters.txt</B>&quot;. 
+</P>
+<P><FONT COLOR="#000000">This function has an arbitrary number of
+variables. Where this is not the case, then the </FONT><FONT COLOR="#000000"><I>dimension</I></FONT><FONT COLOR="#000000">
+parameter should be the same (or at least not less than) as
+implemented in the evaluation operator. <A HREF="html/group__fmin.html">See
+this example</A> in the manual.</FONT></P>
+<P>This example can be solved in ECF with many algorithms (all
+variants of GA, Differential evolution, PSO, GAn...) ; the
+configuration files with appropriate parameters are provided in the
+example folder.</P>
+<P>&nbsp;</P>
+<HR>
+<H2 CLASS="western"><A NAME="flpoint"></A>3. Binary genotype &ndash;
+alternative to FloatingPoint encoding</H2>
+<P>The <A HREF="#binary">previous example</A> of function
+minimization/maximization can also be solved using <I>Binary</I>
+genotype, which encodes real-valued numbers as a sequence of bits
+using binary encoding. Depending on the problem, this representation
+may exhibit better (or worse) convergence than floating point
+encoding, but the floating point is <I>much faster </I>in almost any
+configuration. Binary genotype uses equivalent parameters with
+addition of <I>precision</I>:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><I>lbound</I> &ndash; lower bound
+	of real valued variable (e.g. -100),</P>
+	<LI><P STYLE="margin-bottom: 0cm"><I>ubound</I> &ndash; upper bound
+	(e.g. 100),</P>
+	<LI><P STYLE="margin-bottom: 0cm"><I>dimension</I> &ndash; number of
+	distinct variables (function dimension) (e.g. 5),</P>
+	<LI><P><I>precision</I> &ndash; number of decimal places that are
+	taken into account (e.g. 3).</P>
+</UL>
+<P>All of these must be defined for a valid genotype. The only
+difference in the previous source code is that the following line in
+FunctionMinEvalOp::evaluate</P>
+<PRE CLASS="western" STYLE="margin-bottom: 0.5cm; background: #ccccff url('') repeat scroll; font-variant: normal">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">FloatingPoint::FloatingPoint* gen = (FloatingPoint::FloatingPoint*) individual-&gt;getGenotype().get();</SPAN></SPAN></PRE><P>
+should be replaced with</P>
+<PRE CLASS="western" STYLE="margin-bottom: 0.5cm; background: #ccccff url('') repeat scroll; font-variant: normal">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">Binary::Binary* gen = (Binary::Binary*) individual-&gt;getGenotype().get();</SPAN></SPAN></PRE><P>
+Minimal configuration file for Binary genotype would look like this
+(see &quot;<B>parameters_binary.txt</B>&quot; in this example's
+directory):</P>
+<PRE CLASS="western" STYLE="background: #ccccff url('') repeat scroll; font-variant: normal; font-style: normal; font-weight: normal"><FONT COLOR="#000000">&lt;ECF&gt;</FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Genotype&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Binary&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;lbound&quot;&gt;-10&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;ubound&quot;&gt;10&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;precision&quot;&gt;3&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;dimension&quot;&gt;3&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/Binary&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/Genotype&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">&lt;/ECF&gt;</FONT></PRE><P>
+&nbsp;</P>
+<HR>
+<H2 CLASS="western"><A NAME="tree"></A>4. Genotype Tree &ndash;
+Symbolic regression example</H2>
+<P>Suppose you want to discover the analytic form of an unknown
+function that matches some given data &ndash; this is a typical
+<A HREF="http://alphard.ethz.ch/gerber/approx/default.html"><I>symbolic
+regression</I></A> problem. This problem is commonly solved with
+genetic programming, using functional primitives and variables in a
+tree-like syntactic structure. In ECF you would use the genotype
+<I>Tree</I>, which can contain predefined or user defined functions
+and variables.</P>
+<P>Say we want to discover the function that will best represent the
+following data in range [-10, 10]:</P>
+<TABLE WIDTH=652 CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=90>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=47>
+	<COL WIDTH=46>
+	<TR VALIGN=TOP>
+		<TD WIDTH=90 HEIGHT=10 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>X values</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-10</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-8</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-6</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-4</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-2</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>0</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>2</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>4</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.11cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>6</P>
+		</TD>
+		<TD WIDTH=46 STYLE="border: 1px solid #000000; padding: 0.11cm">
+			<P>8</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=90 HEIGHT=10 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>Y values</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-9.456 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-8.989 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-5.721 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-3.243 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>-2.909 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>0.000 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>2.909 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>3.243 
+			</P>
+		</TD>
+		<TD WIDTH=47 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0cm">
+			<P>5.721 
+			</P>
+		</TD>
+		<TD WIDTH=46 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.11cm; padding-left: 0.11cm; padding-right: 0.11cm">
+			<P>8.989 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P>This data is actually generated with the function <FONT FACE="Courier New"><SPAN LANG="en-GB">y
+= x + sin(x)</SPAN></FONT>, and this is the target function that GP
+will try to evolve. How? Genotype Tree offers these parameters:</P>
+<UL>
+	<LI><P><I>functionset</I> &ndash; set of functions that can appear
+	in a tree,</P>
+	<LI><P><I>terminalset</I> &ndash; set of (independent) variables,</P>
+	<LI><P><I>mindepth</I> &ndash; minimal tree depth,</P>
+	<LI><P><I>maxdepth</I> &ndash; maximum tree depth,</P>
+	<LI><P><I>initmindepth </I>- initial minimal tree depth (optional:
+	if not stated, <I>mindepth</I> is used),</P>
+	<LI><P><I>initmaxdepth</I> &ndash; initial maximum tree depth
+	(optional: if not stated, <I>maxdepth</I> is used).</P>
+</UL>
+<P>When applied to this problem, we may the define the following
+elements: the variable is only one, and we may name it anyway we like
+(say X). The function set should be <I>sufficient</I> to describe the
+given data &ndash; for instance, we may include functions sin, cos,
++, -, * and /. The <I>mindepth </I>and <I>maxdepth </I>values may be
+1 and 5, so we get the following configuration file:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&lt;ECF&gt;</FONT></FONT></FONT>
+<FONT COLOR="#000000">        <FONT FACE="Courier New, monospace">&lt;Genotype&gt;</FONT></FONT>
+<FONT COLOR="#000000">                <FONT FACE="Courier New, monospace">&lt;Tree&gt;</FONT></FONT>
+<FONT COLOR="#000000">                        <FONT FACE="Courier New, monospace">&lt;Entry key=&quot;maxdepth&quot;&gt;5&lt;/Entry&gt;</FONT></FONT>
+<FONT COLOR="#000000">                        <FONT FACE="Courier New, monospace">&lt;Entry key=&quot;mindepth&quot;&gt;1&lt;/Entry&gt;</FONT></FONT>
+<FONT COLOR="#000000">                        <FONT FACE="Courier New, monospace">&lt;Entry key=&quot;functionset&quot;&gt;sin cos + - / *&lt;/Entry&gt;</FONT></FONT>
+<FONT COLOR="#000000">                        <FONT FACE="Courier New, monospace">&lt;Entry key=&quot;terminalset&quot;&gt;X&lt;/Entry&gt;</FONT></FONT>
+<FONT COLOR="#000000">                <FONT FACE="Courier New, monospace">&lt;/Tree&gt;</FONT></FONT>
+<FONT COLOR="#000000">        <FONT FACE="Courier New, monospace">&lt;/Genotype&gt;</FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&lt;/ECF&gt;</FONT></FONT></FONT></PRE><P>
+The evaluation operator should measure the difference between the
+given data (<FONT FACE="Courier New"><SPAN LANG="en-GB">y </SPAN></FONT>value)
+and the output of the actual evolved tree (function) for each given <FONT FACE="Courier New"><SPAN LANG="en-GB">x</SPAN></FONT>
+value. To do that, the evaluation operator should have the pairs of x
+and y values predefined or calculated beforehand (no need to
+calculate y values each time an individual is evaluated). This can be
+done in the <I>initialization</I> phase, before the evolution starts.
+So the evaluation operator is defined as:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal"><FONT COLOR="#0000ff">class</FONT><FONT COLOR="#000000"> SymbRegEvalOp : </FONT><FONT COLOR="#0000ff">public</FONT><FONT COLOR="#000000"> EvaluateOp</FONT>
+{
+<FONT COLOR="#0000ff">public</FONT><FONT COLOR="#000000">:</FONT>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">FitnessP evaluate(IndividualP individual);</SPAN></SPAN>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">bool</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> initialize(StateP); </SPAN></SPAN></FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// initialization of training data</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">std::vector&lt;</SPAN></SPAN></FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">double</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&gt; domain;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">std::vector&lt;</SPAN></SPAN></FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">double</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&gt; codomain;</SPAN></SPAN></FONT>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">uint nSamples;</SPAN></SPAN>
+};</PRE><P>
+(check section <A HREF="parameters.html">5.8 Using the parameters </A>to
+see how data points can also be loaded from the configuration file).
+The evaluator implementation may look like this:</P>
+<PRE CLASS="western" STYLE="background: #ccccff; font-variant: normal; font-style: normal; font-weight: normal"><FONT COLOR="#008000">// called only once, before the evolution &ndash; generates training data</FONT>
+<FONT COLOR="#0000ff">bool</FONT><FONT COLOR="#000000"> SymbRegEvalOp::initialize(StateP state)</FONT>
+{
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">nSamples = 10;</SPAN></SPAN>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">double</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> x = -10;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">for</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">(uint i = 0; i &lt; nSamples; i++) {</SPAN></SPAN></FONT>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">domain.push_back(x);</SPAN></SPAN>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">codomain.push_back(x + sin(x));</SPAN></SPAN>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">x += 2;</SPAN></SPAN>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">}</SPAN></SPAN>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">return</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> </SPAN></SPAN></FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">true</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">;</SPAN></SPAN></FONT>
+}
+
+FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
+{
+        <FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// we try to </SPAN></SPAN></FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><U><SPAN STYLE="font-weight: normal">minimize</SPAN></U></SPAN></FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> the function value, so we use FitnessMin fitness (for minimization problems)</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">FitnessP fitness (</SPAN></SPAN></FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">new</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> FitnessMin);</SPAN></SPAN></FONT>
+
+        <FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// get the genotype we defined in the configuration file</SPAN></SPAN></FONT>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"><SPAN STYLE="background: #ccccff">Tree::Tree* tree = (Tree::Tree*) individual-&gt;getGenotype().get();</SPAN></SPAN></SPAN>
+<FONT COLOR="#008000">        <SPAN LANG="hr-HR"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// (you can also use boost smart pointers:)</SPAN></SPAN></SPAN></FONT>
+<FONT COLOR="#008000">        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">//TreeP tree = boost::static_pointer_cast&lt;Tree::Tree&gt; (individual-&gt;getGenotype());</SPAN></SPAN></FONT>
+
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">double</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> value = 0;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">for</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">(uint i = 0; i &lt; nSamples; i++) {</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                </FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// for each test data instance, the x value (domain) must be set</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                </FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">tree-&gt;setTerminalValue(</SPAN></SPAN></FONT><FONT COLOR="#800000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&quot;X&quot;</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">, &amp;domain[i]);</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                </FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// get the y value of the current tree</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">double</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> result;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">tree-&gt;execute(&amp;result);</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                </FONT><FONT COLOR="#008000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">// add the difference</SPAN></SPAN></FONT>
+                <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">value += abs(codomain[i] - result);</SPAN></SPAN>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">}</SPAN></SPAN>
+        <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">fitness-&gt;setValue(value);</SPAN></SPAN>
+        
+<FONT COLOR="#000000">        </FONT><FONT COLOR="#0000ff"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">return</SPAN></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal"> fitness;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">}</FONT></PRE><P STYLE="font-variant: normal; font-style: normal; font-weight: normal">
+Then, we reference the evaluation op. in main:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> main(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> argc, </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">char</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> **argv)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	StateP state (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> State);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;setEvalOp(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> SymbRegEvalOp);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;initialize(argc, argv);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;run();</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> 0;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">}</SPAN></FONT></FONT></FONT></PRE><P>
+And the example may be run with the described configuration file,
+i.e. &quot;./<B>program parameters.txt</B>&quot;. <FONT COLOR="#000000"><A HREF="html/group__symbreg.html">See
+this example</A> in the manual.</FONT></P>
+<P><FONT COLOR="#ff0000"><B>NOTE</B></FONT>: For additional
+customization of Tree genotype (e.g. defining <B>ephemereal random
+constants</B>, adding <B>new functions</B>, adding <B>custom
+function/terminal types </B>etc.) see section <A HREF="gp.html">Customizing
+the Tree genotype</A>.</P>
+<P>&nbsp;</P>
+<HR>
+<H2 CLASS="western"><A NAME="permutation"></A>5. Genotype Permutation
+&ndash; Traveling Salesperson Problem</H2>
+<P>Suppose you want to solve what is commonly known as a <A HREF="http://en.wikipedia.org/wiki/Travelling_salesman_problem">Traveling
+Salesman Problem</A> (TSP), i.e. finding the shortest route to visit
+all 'cities' in a set where each 'city' must be visited once. The
+most common representation uses the <A HREF="http://www.obitko.com/tutorials/genetic-algorithms/tsp-example.php">permutation
+solution encoding </A>where each potential solution is a sequence of
+'city' indexes. In ECF, this is what the <I>Permutation </I>genotype
+is used for.</P>
+<P>A single most important genotype parameter is its size, usually
+corresponding to the number of 'cities', which we can define in a
+minimal configuration file (in the default ECF TSP example there are
+29 cities). We also define a separate problem description file which
+contains the distances between each two cities:</P>
+<PRE CLASS="western" STYLE="background: #ccccff url('') repeat scroll; font-variant: normal; font-style: normal; font-weight: normal"><FONT COLOR="#000000">&lt;ECF&gt;</FONT>
+<FONT COLOR="#000000"> <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Genotype&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000"> </FONT><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Permutation&gt;</SPAN></SPAN>
+<FONT COLOR="#000000"> </FONT><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;size&quot;&gt;29&lt;/Entry&gt;</SPAN></SPAN>
+<FONT COLOR="#000000"> </FONT><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/Permutation&gt;</SPAN></SPAN>
+<FONT COLOR="#000000"> <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/Genotype&gt;</SPAN></SPAN></FONT>
+
+<FONT COLOR="#000000">         <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Registry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">                 <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;Entry key=&quot;tsp.infile&quot;&gt;./bays29.tsp&lt;/Entry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">         <SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">&lt;/Registry&gt;</SPAN></SPAN></FONT>
+<FONT COLOR="#000000">&lt;/ECF&gt;</FONT></PRE><P>
+A permutation genotype of size <I>n</I> will contain a permutation of
+indexes 0,1, ... , <I>n - </I>1 which can be decoded into a
+corresponding sequence of 'cities'. The evaluation operator may be
+declared as follows, where the matrix <FONT FACE="Courier New"><FONT SIZE=2>weights</FONT></FONT>
+will represent all the distances between any two cities:</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">class</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> TSPEvalOp : </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> EvaluateOp </SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">private</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> dimension;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	vector&lt; vector&lt;</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&gt; &gt; weights;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">public</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">:</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">void</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> registerParameters(StateP);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> initialize(StateP);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	FitnessP evaluate(IndividualP individual);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">};</SPAN></FONT></FONT></FONT></PRE><P>
+The evaluation operator should either define the distances between
+cities or load them from a separate problem description file: 
+</P>
+<PRE CLASS="western" STYLE="background: #ccccff"><SPAN STYLE="font-variant: normal"><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">void</SPAN></SPAN></SPAN></FONT></FONT></FONT></SPAN><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> TSPEvalOp::registerParameters(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;getRegistry()-&gt;registerEntry(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;tsp.infile&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">, (voidP) (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> std::string), ECF::STRING);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">bool</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> TSPEvalOp::initialize(StateP state)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(!state-&gt;getRegistry()-&gt;isModified(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;tsp.infile&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">)) {</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		ECF_LOG_ERROR(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;Error: no input file defined for TSP! (parameter 'tsp.infile'&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">false</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	voidP sptr = state-&gt;getRegistry()-&gt;getEntry(</SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;tsp.infile&quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">); </SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// get parameter value</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	string filePath = *((std::string*) sptr.get()); </SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// convert from voidP to user defined type</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	ifstream iFile(filePath.c_str());</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">if</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(!iFile.is_open()) {</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		ECF_LOG_ERROR(state, </SPAN></FONT></FONT></FONT><FONT COLOR="#a31515"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">&quot;Error: can't open input file &quot;</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> + filePath);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">false</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// ...</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// not shown here: code that initializes weights from tsp.infile</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// ...</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">true</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">}</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">FitnessP TSPEvalOp::evaluate(IndividualP individual)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// minimize travel distance, so use FitnessMin</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	FitnessP fitness (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> FitnessMin);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// get Permutation genotype from the individual</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	Permutation::Permutation* perm = (Permutation::Permutation*) individual-&gt;getGenotype().get();</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// (you can also use boost smart pointers:)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">//PermutationP perm = boost::static_pointer_cast&lt;Permutation::Permutation&gt; (individual-&gt;getGenotype());</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// genotype Permutation keeps a vector of indexes named 'variables'</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> fitnessV = 0;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">for</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> i = 0; i &lt; perm-&gt;size - 1; i++) {</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		</SPAN></FONT></FONT></FONT><FONT COLOR="#008000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">// the length of each route is the sum of distances (weights) between each city in a route</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">		fitnessV += weights[perm-&gt;variables[i]][perm-&gt;variables[i+1]];</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	}</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	fitnessV += weights[perm-&gt;variables[0]][perm-&gt;variables[dimension-1]];</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	fitness-&gt;setValue(fitnessV);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> fitness;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">}</SPAN></FONT></FONT></FONT></PRE><P>
+<SPAN STYLE="font-variant: normal"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">Then,
+we reference the evaluation op. in main:</SPAN></SPAN></SPAN></P>
+<PRE CLASS="western" STYLE="background: #ccccff"><SPAN STYLE="font-variant: normal"><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">int</SPAN></SPAN></SPAN></FONT></FONT></FONT></SPAN><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> main(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">int</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> argc, </SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">char</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> **argv)</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">{</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	StateP state (</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> State);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;setEvalOp(</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">new</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> TSPEvalOp);</SPAN></FONT></FONT></FONT>
+
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;initialize(argc, argv);</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	state-&gt;run();</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">	</SPAN></FONT></FONT></FONT><FONT COLOR="#0000ff"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">return</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR"> 0;</SPAN></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Courier New, serif"><FONT SIZE=2><SPAN LANG="hr-HR">}</SPAN></FONT></FONT></FONT></PRE><P>
+And the example may be run with the described configuration file,
+i.e. &quot;./<B>program parameters.txt</B>&quot;. <FONT COLOR="#000000"><A HREF="html/group__tsp.html">See
+this example</A> in the manual.</FONT></P>
+</BODY>
+</HTML>

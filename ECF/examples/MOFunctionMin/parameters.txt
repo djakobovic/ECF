@@ -1,0 +1,29 @@
+<ECF>
+	<Algorithm>
+		<NSGA2/>
+	</Algorithm>
+
+	<Genotype>
+		<FloatingPoint>
+			<Entry key="lbound">-10</Entry>
+			<Entry key="ubound">10</Entry>
+			<Entry key="dimension">2</Entry>
+            
+            <Entry key="mut.simple">1</Entry>
+            <Entry key="crx.arithmetic">1</Entry>
+		</FloatingPoint>
+	</Genotype>
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry> 
+		<Entry key="population.size">50</Entry>
+		<Entry key="mutation.indprob">0.3</Entry>
+		<Entry key="term.maxgen">50</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="milestone.filename">out.txt</Entry> 
+		<Entry key="milestone.interval">0</Entry> 
+	</Registry>
+</ECF>
+
+

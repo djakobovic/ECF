@@ -1,0 +1,40 @@
+<ECF>
+	<Algorithm>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>
+		</SteadyStateTournament>
+		<RandomSearch/>
+	</Algorithm>
+	<Genotype>
+		<Permutation>
+			<Entry key="size">2</Entry>
+
+			<Entry key="crx.COSA">1</Entry>
+			<Entry key="crx.cyclic">0</Entry>
+			<Entry key="crx.cyclic2">1</Entry>
+			<Entry key="crx.OBX">0</Entry>
+			<Entry key="crx.OX">1</Entry>
+			<Entry key="crx.OX2">1</Entry>
+			<Entry key="crx.PBX">1</Entry>
+			<Entry key="crx.PMX">1</Entry>
+			<Entry key="crx.ULX">1</Entry>
+			<Entry key="crx.OPX">1</Entry>
+			<Entry key="crx.SPX">1</Entry>
+			<Entry key="crx.DPX">1</Entry>
+			<Entry key="crx.UPMX">1</Entry>
+		</Permutation>
+	</Genotype>
+	<Registry>
+		<Entry key="tsp.infile">bays29.tsp</Entry>
+		<Entry key="randomizer.seed">0</Entry>
+		<Entry key="population.size">100</Entry>
+		<Entry key="mutation.indprob">0.3</Entry>
+		<Entry key="term.eval">999999</Entry>
+		<Entry key="term.maxgen">9999</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="log.frequency">10</Entry>
+		<Entry key="batch.repeats">1</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
+	</Registry>
+</ECF>

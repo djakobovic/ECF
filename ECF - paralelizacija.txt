@@ -1,0 +1,236 @@
+
+ECF paralelizacija - zabiljeske
+
+
+Opcenito:
+
+Kontrola uvjeta zaustavljanja:
+	- uvjet zaustavljanja provjerava se samo na globalnom procesu 0
+	- proces 0 svake generacije salje kontrolnu poruku svim voditeljima (lokalnim procesima 0)
+	- algoritam voditelja po defaultu salje kontrolne poruke ostalim procesima u demu
+	- inace, algoritam moze naslijediti i implementirati neki drugi postupak javljanja (asinkroni algoritam mora!)
+
+
+Koherentnost populacije kod asinkronog algoritma:
+- uskladjivanje genotipa i fitnesa na kraju evolucije
+	1. fitness coherent - genotipi se uskladjuju po trenutnim fitnesima (default)
+	- za svaku jedinku se cuva:
+		* zadnji konzistentni par genotip-fitnes
+		* svi genotipi poslani na evaluaciju
+		* zastavica: konzistentna jedinka
+	- 
+
+	2. genotype coherent - zadrzavaju se trenutni genotipi, treba pricekati kraj evaluacije
+
+
+Pitanja:
+- kako rijesiti provedbu medjugeneracijskih operatora (uz raspodijeljenu populaciju)?
+	- za implicitnu paralelizaciju nije problem (populacija se ne dijeli)
+	- za eksplicitnu, ne znamo kako algoritam moze podijeliti populaciju!
+	- moguce rjesenje: ako eksplicitni algoritam nekako raspodijeljuje jedinke, mora ili reci frameworku gdje su pojedine jedinke (po procesima) ili ih sam sakupiti ili sam provesti zeljeni operator
+
+
+Pravila glede vise deme-ova (uz paralelni ili slijedni ECF):
+
+- slijedni ECF: samo slijedni algoritam, uz jedan ili vise demova
+
+- paralelni ECF:
+- ako je zadan jedan deme (default), svi procesi rade na njemu
+	- slijedni algoritam: ne preporuca se zadavati, ali u principu radi kao MPI proces
+	- paralelni alg: podjela jedinki definira se u algoritmu; default: svi na procesu 0
+- ako je zadano _vise_ deme-ova, procesi se dijele _jednoliko_ po demovima, na _svakom_ demu se vrti odabrani paralelni ili slijedni algoritam, a izmedju demova primjenjuju se migracijski operatori. uz zadani paralelni algoritam i vise deme-ova, dobijamo hijerarhijski paralelni EA
+	- slijedni algoritam: na svakom procesu stvara se jedan deme (mora biti jednak broj procesa i demova!)
+	- paralelni alg: svaki proces sa lokalnim indeksom 0 ima jedinke doticnog dema
+
+
+
+Implementacijski TODO:
+
++ MPI kompajliranje
++ klasa dohvatljiva preko State koja sardzi komunikacijske funkcije
++ funkcije za slanje i primanje skupa (vektora) jedinki
+
+- tri inacice primanja:
+	1. primanje novih jedinki (npr <vector> = recvIndividuals(<index>) ): nove jedinke se stvaraju i inicijaliziraju u funkciji koja prima poruku
+	2. primanje na mjesto postojecih jedinki u populaciji (npr. kad voditelj prima natrag evaluirane jedinke) (recimo recvDemeInd(<deme>, <index>) ): primljene jedinke se upisuju na mjesto postojecih - nije potrebno stvaranje novih jedinki i inicijalizacija
+	3. primanje na mjesto postojeceg vektora jedinki (npr. kad radnik dobiva jedinke za evaluaciju) - recimo recvReplaceIndividuals(<vektor>, <index>);
+
++ funkcije za slanje i primanje fitnes objekata
++ kontrolne funkcije tipa send_generation_done
+
+- grupiranje statistike!
++ logiranje od strane raspodijeljenih procesa
+- logiranje za kriterij zaustavljanja (medijan najboljih jedinki)
++ pohranjivanje populacije
++ popravljanje nepotpunih jedinki na kraju evolucije
++ srediti inicijalizaciju: redoslijed i iznimke
+
+
+
+1. Eksplicitna paralelizacija - koristenje paralelnog algoritma
+
+
+1.1 Low-level algoritam podrska
+
+
+- Algorithm::initialize zaduzen za:
+	- provjeru parametara i broja pokrenutih procesa
+	- definiranje uloga i brojnosti
+	- pocetnu raspodjelu jedinki po procesima
+
+
+Primjer 1: djelomicno asinkroni turnirski eliminacijski GPEA
+- parametri:
+	- S: broj jedinki koje se salju u jednoj poruci
+	- k: velicina turnira
+- uloge:
+	- MASTER: 1
+	- WORKER: svi ostali
+- raspodjela: sve jedinke na masteru
+
+MASTER:
+	while(generation not done) {
+		repeat(S) {
+			select k individuals (random);
+			worst = crossover(remaining 2);
+			mutate worst;
+		}
+		if(available workers) {
+			receive request or S individuals from WORKER;
+			send S individuals to WORKER;
+		}
+	}
+	while(all individuals not received) {
+		receive S individuals from WORKER;
+		send 0 individuals to WORKER;
+	}
+WORKER:
+	send request to MASTER;
+	receive individuals from MASTER;
+	while(individuals to evaluate) {
+		evaluate individuals;
+		send individuals to MASTER;
+		receive individuals from MASTER;
+	}
+
+
+Primjer 1a: asinkroni turnirski eliminacijski GPEA
+
+MASTER:
+	while(generation not done) {
+		repeat(S) {
+			select k individuals (random);
+			worst = crossover(remaining 2);
+			mutate worst;
+		}
+		receive S individuals from WORKER;
+		send S individuals to WORKER;
+	}
+WORKER: (isto kao Primjer 1)
+	send request to MASTER;
+	receive individuals from MASTER;
+	while(individuals to evaluate) {
+		evaluate individuals;
+		send individuals to MASTER;
+		receive individuals from MASTER;
+	}
+
+
+Primjer 2: sinkroni generacijski GPEA
+- parametri:
+	- S: broj jedinki koje se salju u jednoj poruci
+	- p_c: crx rate
+	- mutation rate
+	- selection pressure
+- uloge:
+	- MASTER: 1
+	- WORKER: svi ostali
+- raspodjela: sve jedinke na masteru
+
+MASTER:
+	select N individuals (fitness proportional);
+	copy selected indivuduals;
+	replace population with selected;
+	select p_c * N individuals (random);
+	crossover selected;
+	perform mutation;
+	pool = individuals to evaluate;
+	while(pool not empty) {
+		receive request or S individuals from WORKER;
+		send S individuals to WORKER;
+	}
+	while(all individuals not received) {
+		receive S individuals from WORKER;
+		send 0 individuals to WORKER;
+	}
+WORKER:
+	send request to MASTER;
+	receive individuals from MASTER;
+	while(individuals to evaluate) {
+		evaluate individuals;
+		send individuals to MASTER;
+		receive individuals from MASTER;
+	}
+
+
+
+1.2 (TODO) High-level algoritam opis
+
+Primjer: GPGA
+- uloge:
+	- MASTER: 1
+	- WORKER: svi ostali
+- raspodjela: sve jedinke na masteru
+
+select k individuals;
+worst = crossover(remaining 2);
+mutate worst;
+paralel(WORKERS) {
+	evaluate worst;
+}
+
+
+
+2. Implicitna paralelizacija - uz koristenje slijednog algoritma
+
+Razine paralelizacije:
+- trivial: svaki proces vrti isti algoritam sa svojom populacijom i svojim rezultatima
+- deme: migracija izmedju otoka (uvjet: mora biti definirano vise deme-ova!)
+	- ovo je zapravo distributed GA
+- evaluation: samo racunanje fitnesa je na vise procesa
+- operators: krizanje i mutacija na vise procesa
+- algorithm: cijeli algoritam se vrti na svakom procesu
+
+Pravila (uz zadani slijedni algoritam):
+- ako je zadan jedan deme, onda su dozvoljene razine paralelizacije trivial, evaluation, operators, algorithm
+- ako je zadano vise demova, moguce su sve razine
+- _nema_ sinkronizacije unutar jedne generacije!
+
+
+TODO:
+- paralelni podsustav mora presretati pozive za evaluaciju i genetske operatore
+- migracijski operatori s parametrima + default vrijednosti
+- migracijski operatori trebaju raditi i za jedan i za vise procesa
+- mozda automatski load balancing - dinamicko odredjivanje broja jedinki koje se salju radnicima
+
+
+Razina trivial:
+- svi parametri se kopiraju za svaki proces - svaki proces vrti isti algoritam (kao da smo pokrenuli vise puta)
+- svaki proces dobiva svoju oznaku za spremanje rezultata
+
+Razina deme:
+- svaki proces vrti svoj deme 
+	- (uvjet: uz zadani slijedni algoritam broj procesa mora biti jednak broju demova!)
+	- uz zadani paralelni algoritam, procesi se dijele jednoliko po demovima
+- svako malo (ovisno o parametrima) procesi razmjenjuju svoje jedinke (algoritam toga nije svjestan!)
+- parametri definiraju: topologiju razmjene, frekvenciju, broj jedinki, strategiju zamjene itd.
+
+Razina evaluation:
+- paralelni podsustav se 'aktivira' svaki put kada slijedni algoritam poziva evaluaciju (i samo tada!)
+- jedinka (ili vise njih) se stavlja u pool za ocjenjivanje
+- ukoliko ima pristiglih ocjena jedinki, postavljaju se pristigle vrijednosti (samo ako se doticna jedinka nije u medjuvremenu promijenila utjecajem algoritma! inace se ocjena odbacuje)
+
+Razina algorithm:
+- nekako mi se cini da je to moguce samo za eliminacijske varijante algoritma
+	- podproblem: kako automatski odrediti je li neki algoritam eliminacijski? tesko... npr. ne smije biti 'replace' funkcija, dozvoljene su samo izmjene postojecih jedinki. 
+- pitanje: kako izvesti podjelu i komunikaciju po procesima?

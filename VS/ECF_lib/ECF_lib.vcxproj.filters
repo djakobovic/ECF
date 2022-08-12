@@ -1,0 +1,804 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{128565e4-0e8a-4f85-9617-db2de7b6c9ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{cb4a4cd2-b2d1-4cce-a144-3bee80721378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{5183509d-69da-4c46-a889-8e907e9b2549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Binary">
+      <UniqueIdentifier>{51629485-1e08-4c4c-9e99-1008595b3109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BitString">
+      <UniqueIdentifier>{058bf37b-47c2-44d4-9ed5-4f5f5e36f0fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tree">
+      <UniqueIdentifier>{6b4a1ebf-b8a6-409b-ba6b-2ca3a120677c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tree\Primitives">
+      <UniqueIdentifier>{4f7c6a95-3bdc-435a-b77b-921a9de90c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Permutation">
+      <UniqueIdentifier>{abf4e96f-f366-41f6-8e69-544421bcb8a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FloatingPoint">
+      <UniqueIdentifier>{ef70e0fb-b326-48a1-aaf6-cb6fecf92485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XCS">
+      <UniqueIdentifier>{f228baf6-41d2-476a-825e-225de61f469c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="APGenotype">
+      <UniqueIdentifier>{65de8c9a-7608-4eb1-a533-60785a6fa24c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ECF\AlgDifferentialEvolution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgElimination.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgGeneticAnnealing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Algorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgParticleSwarmOptimization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgRandomSearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgRouletteWheel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgSteadyStateTournament.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Communicator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Crossover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Deme.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\ECF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\ECF_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\ECF_derived.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\ECF_macro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\EvaluateOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Fitness.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\FitnessMax.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\FitnessMin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Genotype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\HallOfFame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Individual.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Migration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Mutation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Operator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Population.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Randomizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\Registry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\SelBestOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\SelectionOperator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\SelFitnessProportionalOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\SelRandomOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\SelWorstOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\SimpleRandomizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\StatCalc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\TermFitnessValOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\TermMaxEvalOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\TermMaxGenOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\TermMaxTimeOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\TermStagnationOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\xml\xmlParser.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\Binary.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsHalfUniform.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsOnePoint.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsReducedSurrogate.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsSegmented.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsShuffle.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsTwoPoint.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsUniform.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryMutMix.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryMutSimple.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\bitstring\BitString.h">
+      <Filter>BitString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\bitstring\BitStringCrsOnePoint.h">
+      <Filter>BitString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\bitstring\BitStringCrsUniform.h">
+      <Filter>BitString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\bitstring\BitStringMutMix.h">
+      <Filter>BitString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\bitstring\BitStringMutSimple.h">
+      <Filter>BitString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Node.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Primitive.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\PrimitiveSet.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Terminal.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Tree.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Tree_c.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeCrxContextPreserved.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeCrxOnePoint.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeCrxSimple.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeCrxSizeFair.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeCrxUniform.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeMutGauss.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeMutHoist.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeMutNodeComplement.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeMutNodeReplace.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeMutPermutation.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeMutShrink.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\TreeMutSubtree.h">
+      <Filter>Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Add.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Cos.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Div.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Max.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Min.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Mul.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Neg.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Pos.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Sin.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Sub.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\Permutation.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsPBX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsPMX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationMutIns.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationMutInv.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationMutToggle.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPoint.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmetic.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsOnePoint.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointMutSimple.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\xcs\AlgXCS.h">
+      <Filter>XCS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\xcs\Classifier.h">
+      <Filter>XCS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\xcs\ClassifierParams.h">
+      <Filter>XCS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\xcs\Environment.h">
+      <Filter>XCS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\xcs\XCSParams.h">
+      <Filter>XCS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSimple.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSingle.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsAverage.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBga.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBlx.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlpha.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlphaBeta.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsDiscrete.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsFlat.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsHeuristic.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsLocal.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsRandom.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsSbx.h">
+      <Filter>FloatingPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsMasked.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsNonGeometric.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\binary\BinaryCrsRandomRespectful.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsCOSA.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsCyclic.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsCyclic2.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOBX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOX2.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsULX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsDPX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsOPX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsSPX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\permutation\PermutationCrsUPMX.h">
+      <Filter>Permutation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgArtificialBeeColony.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgClonalg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgOptIA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgEvolutionStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgNSGA2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\MOFitness.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\AlgCuckooSearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\apgenotype\APGenotype.h">
+      <Filter>APGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\apgenotype\PrimitiveSetAP.h">
+      <Filter>APGenotype</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ECF\AlgDifferentialEvolution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgElimination.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgGeneticAnnealing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgGenHookeJeeves.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Algorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgParticleSwarmOptimization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgRandomSearch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgRouletteWheel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgSteadyStateTournament.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Crossover.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Deme.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\FitnessMax.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\FitnessMin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Genotype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\HallOfFame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Individual.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Migration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Mutation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Population.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\Registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\SelBestOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\SelFitnessProportionalOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\SelRandomOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\SelWorstOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\SimpleRandomizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\StatCalc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\TermFitnessValOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\TermMaxEvalOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\TermMaxGenOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\TermMaxTimeOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\TermStagnationOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\xml\xmlParser.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\Binary.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsHalfUniform.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsOnePoint.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsReducedSurrogate.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsSegmented.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsShuffle.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsTwoPoint.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsUniform.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryMutMix.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryMutSimple.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\bitstring\BitStringCrsOnePoint.cpp">
+      <Filter>BitString</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\bitstring\BitStringCrsUniform.cpp">
+      <Filter>BitString</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\bitstring\BitStringMutMix.cpp">
+      <Filter>BitString</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\bitstring\BitStringMutSimple.cpp">
+      <Filter>BitString</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\Node.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\Primitive.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\PrimitiveSet.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\Tree.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeCrxContextPreserved.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeCrxOnePoint.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeCrxSimple.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeCrxSizeFair.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeCrxUniform.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeMutGauss.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeMutHoist.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeMutNodeComplement.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeMutNodeReplace.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeMutPermutation.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeMutShrink.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\TreeMutSubtree.cpp">
+      <Filter>Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\Cos.cpp">
+      <Filter>Tree\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\tree\Sin.cpp">
+      <Filter>Tree\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\Permutation.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsPBX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsPMX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationMutIns.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationMutInv.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationMutToggle.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPoint.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmetic.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsOnePoint.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointMutSimple.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\xcs\AlgXCS.cpp">
+      <Filter>XCS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\xcs\Classifier.cpp">
+      <Filter>XCS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\xcs\Environment.cpp">
+      <Filter>XCS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\xcs\XCSParams.cpp">
+      <Filter>XCS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSimple.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsArithmeticSingle.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsAverage.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBga.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBlx.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlpha.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsBlxAlphaBeta.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsDiscrete.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsFlat.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsHeuristic.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsLocal.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsRandom.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsSbx.cpp">
+      <Filter>FloatingPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsMasked.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsNonGeometric.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\binary\BinaryCrsRandomRespectful.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsCOSA.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsCyclic.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsCyclic2.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOBX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOX2.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsULX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsDPX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsOPX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsSPX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\permutation\PermutationCrsUPMX.cpp">
+      <Filter>Permutation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgArtificialBeeColony.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgClonalg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgOptIA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgEvolutionStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgNSGA2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\MOFitness.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\AlgCuckooSearch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\apgenotype\APGenotype.cpp">
+      <Filter>APGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\apgenotype\PrimitiveSetAP.cpp">
+      <Filter>APGenotype</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

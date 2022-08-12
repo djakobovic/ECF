@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html">
+	<TITLE>ECF Algorithms</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META NAME="CHANGED" CONTENT="20110511;15464400">
+	<META NAME="CHANGEDBY" CONTENT="Domagoj Jakobovic">
+	<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+	<STYLE TYPE="text/css">
+	<!--
+		H4.cjk { font-family: "SimSun" }
+		PRE.cjk { font-family: "NSimSun", monospace }
+		H2.western { font-family: "Albany", sans-serif; font-size: 16pt; font-style: italic }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<p><a href="documentation.html">
+<img border="0" src="up.png" width="30" height="30"></a></p>
+<H1>3. ECF Algorithms</H1>
+<p>ECF contains a number of algorithms, which may be used by default of further 
+parametrized. Current algorithms are listed below. For instructions of how to 
+add an algorithm, see the section <a href="components.html">Adding components to 
+ECF</a>.</p>
+<p>The algorithm to be used is stated in the &lt;Algorithm&gt; block in the 
+<a href="parameters.html#configuration">configuration file</a>. The default algorithm, if not stated in the configuration, 
+is <i>SteadyStateTournament</i> (see below).</p>
+<ol>
+	<li><font size="4"><a href="#sst">SteadyStateTournament</a></font></li>
+	<li><font size="4"><a href="#rw">RouletteWheel</a></font></li>
+	<li><font size="4"><a href="#clonalg">Clonal Selection Algorithm (CLONALG)</a></font></li>
+	<li><font size="4"><a href="#optia">Immune Algorithm (optIA)</a></font></li>
+	<li><font size="4"><a href="#es">Evolution Strategy</a></font></li>
+	<li><font size="4"><a href="#pso">ParticleSwarmOptimization</a></font></li>
+	<li><font size="4"><a href="#de">DifferentialEvolution</a></font></li>
+	<li><font size="4"><a href="#eli">Elimination</a></font></li>
+	<li><font size="4"><a href="#gan">GeneticAnnealing</a></font></li>
+	<li><font size="4"><a href="#abc">Artificial Bee Colony</a></font></li>
+	<li><font size="4"><a href="#acs">Cuckoo Search</a></font></li>
+	<li><font size="4"><a href="#rand">Random Search</a></font></li>
+</ol>
+<p>&nbsp;</p>
+<H2 CLASS="western"><a name="sst"></a>1. SteadyStateTournament</H2>
+<p>This algorithm is Genotype independent, which means it can be used with any 
+Genotype class. The algorithm performs a steady-state algorithm with tournament 
+elimination selection:</p>
+<p><font face="Courier New">single generation {<br>
+&nbsp;repeat(deme size times) {<br>
+&nbsp; randomly add &lt;nTournament_&gt; individuals to the tournament;<br>
+&nbsp; select the worst one in the tournament;<br>
+&nbsp; randomly select two parents from remaining ones in the tournament;<br>
+&nbsp; replace the worst with crossover child;<br>
+&nbsp; perform mutation on child;<br>
+&nbsp;}<br>
+}</font></p>
+<p>This is the default algorithm, if the user does not state one. Parameters and 
+usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+        &lt;SteadyStateTournament&gt;
+                &lt;Entry key=&quot;tsize&quot;&gt;3&lt;/Entry&gt;              &lt;!-- tournament size --&gt;
+        &lt;/SteadyStateTournament&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="rw"></a>2. RouletteWheel</H2>
+<p>This algorithm is Genotype independent, which means it can be used with any 
+Genotype class. The algorithm implements a classical simple genetic algorithm 
+(SGA) with roulette-wheel (fitness proportional) generational selection 
+operator:</p>
+<p><font face="Courier New">single generation {<br>
+&nbsp;select individuals to form the new generation (fitness proportional 
+selection operator);<br>
+&nbsp;create new generation (make copies);<br>
+&nbsp;noCrx = (deme size) * &lt;crxRate_&gt; / 2;<br>
+&nbsp;repeat(&lt;noCrx&gt; times) {<br>
+&nbsp; randomly select two parents;<br>
+&nbsp; perform crossover, _replace_ parents with their children;<br>
+&nbsp;}<br>
+&nbsp;perform mutation on new generation;<br>
+}</font></p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+        &lt;RouletteWheel&gt;
+                &lt;Entry key=&quot;crxprob&quot;&gt;0.5&lt;/Entry&gt;          &lt;!-- crossover rate --&gt;
+                &lt;Entry key=&quot;selpressure&quot;&gt;10&lt;/Entry&gt;       &lt;!-- selection pressure: how much the best individual is 'better' than the worst --&gt;
+        &lt;/RouletteWheel&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="clonalg"></a>3. Clonal Selection Algorithm 
+(CLONALG)</H2>
+<p>This algorithm is Genotype <i>dependent</i> and can currently be used only 
+with a single FloatingPoint genotype (of any dimension). For algorithm description, see 
+e.g. 
+<a href="http://en.wikipedia.org/wiki/Clonal_Selection_Algorithm">
+http://en.wikipedia.org/wiki/Clonal_Selection_Algorithm</a>.</p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;Clonalg&gt;
+		&lt;Entry key=&quot;beta&quot;&gt;1&lt;/Entry&gt;                         &lt;!-- number of clones (percentage) for every antibody (default: 1.0) --&gt;
+		&lt;Entry key=&quot;c&quot;&gt;0.2&lt;/Entry&gt;                          &lt;!-- mutation rate (default: 0.2) --&gt;
+		&lt;Entry key=&quot;cloningVersion&quot;&gt;proportional&lt;/Entry&gt;    &lt;!-- cloning version, static or proportional (default: proportional) --&gt;
+		&lt;Entry key=&quot;d&quot;&gt;0&lt;/Entry&gt;                            &lt;!-- fraction of population regenerated every generation (default: 0) --&gt;
+		&lt;Entry key=&quot;n&quot;&gt;100&lt;/Entry&gt;                          &lt;!-- number of antibodies cloned every generation (default: 100) --&gt;
+		&lt;Entry key=&quot;selectionScheme&quot;&gt;CLONALG1&lt;/Entry&gt;       &lt;!-- which selection scheme to use, CLONALG1 or CLONALG2 (default: CLONALG1) --&gt;
+	&lt;/Clonalg&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="optia"></a>4. Immune Algorithm (optIA)</H2>
+<p>This algorithm is Genotype <i>dependent</i> and can currently be used only 
+with a single FloatingPoint genotype (of any dimension). For algorithm description, see 
+e.g. 
+<a href="http://www.artificial-immune-systems.org/algorithms.shtml">
+http://www.artificial-immune-systems.org/algorithms.shtml</a>.</p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;OptIA&gt;
+		&lt;Entry key=&quot;c&quot;&gt;0.2&lt;/Entry&gt;                          &lt;!-- mutation rate (default: 0.2) --&gt;
+		&lt;Entry key=&quot;dup&quot;&gt;5&lt;/Entry&gt;                          &lt;!-- number of clones for each individual in clone population (default: 5) --&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;0&lt;/Entry&gt;                      &lt;!-- use elitism (default: 0) --&gt;
+		&lt;Entry key=&quot;tauB&quot;&gt;100&lt;/Entry&gt;                       &lt;!-- maximum number of generations to keep an individual without improvement (default: 100) --&gt;
+	&lt;/OptIA&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="es"></a>5. Evolution Strategy</H2>
+<p>This algorithm is Genotype independent, which means it can be used with any 
+Genotype class. The algorithm implements a (mu/rho +/, lambda) - Evolution 
+Strategy (ES). The algorithm parameters are:</p>
+<ul>
+	<li><i>mu</i>: the size of the parent population</li>
+	<li><i>lambda</i>: number of offspring created in each iteration</li>
+	<li><i>rho</i>: number of parents used to create an offspring; 1: mutation 
+	is used, 2: crossover</li>
+	<li><i>selection</i>: may be &quot;plus&quot;, which uses both parents and offspring 
+	or &quot;comma&quot;, which uses just the offspring pool</li>
+</ul>
+<p>Since the ECF defines &quot;population.size&quot; independently of the algorithm, this 
+implementation actually runs multiple ES parent populations; the <i>
+population.size</i> must therefore be a multiple of parent pool size (<i>mu</i>). 
+For instance, if <i>mu</i> = 5 and <i>population.size</i> = 30, then 6 ES 
+subpopulations will be executed (no migration).</p>
+<p>The algorithm flow:</p>
+<p><font face="Courier New">single generation {<br>
+&nbsp;repeat(for every subpopulation) {<br>
+&nbsp;&nbsp;&nbsp; add mu individuals to the parent pool;<br>
+&nbsp;&nbsp;&nbsp; create lambda offspring using random rho parents for each;<br>
+&nbsp;&nbsp;&nbsp; if comma selection <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; create new parent pool with mu best 
+from offspring pool;<br>
+&nbsp;&nbsp;&nbsp; else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; create new parent pool with mu best 
+from offspring and parents pool;<br>
+&nbsp;}<br>
+}</font></p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;EvolutionStrategy&gt;
+		&lt;Entry key=&quot;lambda&quot;&gt;4&lt;/Entry&gt;                        &lt;!-- number of offspring created in each iteration (default: 4) --&gt;
+		&lt;Entry key=&quot;mu&quot;&gt;1&lt;/Entry&gt;                            &lt;!-- the size of parent population (default: 1) --&gt;
+		&lt;Entry key=&quot;rho&quot;&gt;1&lt;/Entry&gt;                           &lt;!-- number of parents used to create an offspring; may be 1 or 2 (default: 1) --&gt;
+		&lt;Entry key=&quot;selection&quot;&gt;plus&lt;/Entry&gt;                  &lt;!-- selection scheme: &quot;plus&quot;, uses both parents and offspring) or &quot;comma&quot;, uses just offspring (default: plus) --&gt;
+	&lt;/EvolutionStrategy&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="pso"></a>6. ParticleSwarmOptimization</H2>
+<p>This algorithm is Genotype <i>dependent</i> and can currently be used only 
+with a single FloatingPoint genotype (of any dimension). For algorithm description, see 
+e.g. <a href="http://en.wikipedia.org/wiki/Particle_swarm_optimization">
+http://en.wikipedia.org/wiki/Particle_swarm_optimization</a>.</p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;ParticleSwarmOptimization&gt;
+		&lt;Entry key=&quot;weightType&quot;&gt;0&lt;/Entry&gt;         &lt;!-- weight type update: 0 - constant, 1 - time dependant (based on max generations) --&gt;
+		&lt;Entry key=&quot;weight&quot;&gt;0.8&lt;/Entry&gt;           &lt;!-- initial inertia weight (either constant or time dependant) --&gt;
+		&lt;Entry key=&quot;maxVelocity&quot;&gt;100&lt;/Entry&gt;      &lt;!-- max particle velocity --&gt;
+	&lt;/ParticleSwarmOptimization&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="de"></a>7. DifferentialEvolution</H2>
+<p>This algorithm is Genotype <i>dependent</i> and can currently be used only 
+with a single FloatingPoint genotype (of any dimension). For algorithm description, see 
+e.g. <a href="http://en.wikipedia.org/wiki/Differential_evolution">
+http://en.wikipedia.org/wiki/Differential_evolution</a>.</p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;DifferentialEvolution&gt;
+		&lt;Entry key=&quot;F&quot;&gt;1&lt;/Entry&gt;                  &lt;!-- scaling constant --&gt;
+		&lt;Entry key=&quot;CR&quot;&gt;0.9&lt;/Entry&gt;               &lt;!-- crossover rate --&gt;
+	&lt;/DifferentialEvolution&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="eli"></a>8. Elimination</H2>
+<p>This algorithm is Genotype independent, which means it can be used with any 
+Genotype class. The algorithm implements an elimination algorithm with inverse 
+fitness proportional elimination operator:</p>
+<p><font face="Courier New">single generation {<br>
+&nbsp;eliminate (genGap * deme_size) individuals from current generation 
+(inverse fitness proportional selection operator);<br>
+&nbsp;create new individuals with crossover (random selection);<br>
+&nbsp;perform mutation on new generation;<br>
+}</font></p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;Elimination&gt;
+		&lt;Entry key=&quot;gengap&quot;&gt;0.6&lt;/Entry&gt;           &lt;!-- generation gap (percentage of population to be eliminated) --&gt;
+		&lt;Entry key=&quot;selpressure&quot;&gt;10&lt;/Entry&gt;       &lt;!-- selection pressure: how much is the worst individual 'worse' than the best --&gt;
+	&lt;/Elimination&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="gan"></a>9. GeneticAnnealing</H2>
+<p>This algorithm is Genotype independent, which means it can be used with any 
+Genotype class. However, it is currently implemented <b>only for minimization 
+problems</b>, as the original (see
+<a href="http://drdobbs.com/architecture-and-design/184409333?pgno=10">
+http://drdobbs.com/architecture-and-design/184409333?pgno=10</a>).</p>
+<p><font face="Courier New">single generation {<br>
+&nbsp;energy_bank = 0;<br>
+&nbsp;for each individual {<br>
+&nbsp; mutant = mutate(individual);<br>
+&nbsp; if fitness(mutant) &lt; fitness(individual) + threshold(individual) {<br>
+&nbsp;&nbsp; diff = fitness(individual) + threshold(individual) - 
+fitness(mutant);<br>
+&nbsp;&nbsp; energy_bank += diff;<br>
+&nbsp;&nbsp; replace individual with mutant;<br>
+&nbsp; }<br>
+&nbsp;energy_diff = energy_bank * C / N;<br>
+&nbsp;for each individual {<br>
+&nbsp; threshold(individual) += energy_diff;<br>
+&nbsp;}<br>
+}</font></p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;GeneticAnnealing&gt;
+		&lt;Entry key=&quot;energybank&quot;&gt;100&lt;/Entry&gt;        &lt;!-- total starting energy bank (fitness dependant) --&gt;
+		&lt;Entry key=&quot;coolingfactor&quot;&gt;0.7&lt;/Entry&gt;     &lt;!-- simulated annealing cooling factor --&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;0&lt;/Entry&gt;             &lt;!-- is the best individual preserved --&gt;
+	&lt;/GeneticAnnealing&gt;
+&lt;/Algorithm&gt;</font></pre>
+<H2 CLASS="western"><a name="abc"></a>10. ArtificialBeeColony</H2>
+<p>This algorithm is Genotype <i>dependent</i> and can currently be used only 
+with a single FloatingPoint genotype (of any dimension). For algorithm description, see 
+e.g. 
+<a href="http://www.scholarpedia.org/article/Artificial_bee_colony_algorithm">
+http://www.scholarpedia.org/article/Artificial_bee_colony_algorithm</a>.</p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;ArtificialBeeColony&gt;
+		&lt;Entry key=&quot;limit&quot;&gt;300&lt;/Entry&gt;             &lt;!-- Maximum number of cycles for each individual (default: 300) --&gt;
+		&lt;Entry key=&quot;elitism&quot;&gt;1&lt;/Entry&gt;             &lt;!-- Elitism: the current best food source is preserved (default: 1) --&gt;
+	&lt;/ArtificialBeeColony&gt;
+&lt;/Algorithm&gt;</font></pre>
+
+
+<H2 CLASS="western"><a name="acs"></a>11. Cuckoo Search</H2>
+<p>This algorithm is Genotype <i>dependent</i> and can currently be used only 
+with a single FloatingPoint genotype (of any dimension). For algorithm description, see 
+e.g. 
+<a href="http://en.wikipedia.org/wiki/Cuckoo_search">
+http://en.wikipedia.org/wiki/Cuckoo_search</a>.</p>
+<p><font face="Courier New">single generation {<br>
+&nbsp;generate new solutions via Levy flights (adding constants multiplied with normal distribution random numbers and difference between current solution and best solution);<br>
+&nbsp;'pa' amount of new generated solutions are replaced with new solutions, related to the difference in solutions;<br>
+}</font></p>
+<p>Parameters and usage in configuration file:</p>
+<pre STYLE="background: #ccccff url('')"><font color="#000000">&lt;Algorithm&gt;
+	&lt;CuckooSearch&gt;
+		&lt;Entry key=&quot;pa&quot;&gt;0.75&lt;/Entry&gt;             &lt;!-- Maximum number of cycles for each individual (default: 300) --&gt;
+	&lt;/CuckooSearch&gt;
+&lt;/Algorithm&gt;</font></pre>
+
+
+<H2 CLASS="western"><a name="rand"></a>12. RandomSearch</H2>
+<p>This is an example of a random search algorithm, which is genotype 
+independent (can be used with any Genotype class).</p>
+<p><font face="Courier New">single generation {<br>
+&nbsp;reinitialize all individuals;<br>
+&nbsp;evaluate all individuals;<br>
+}</font></p>
+<p>This algorithm uses no parameters.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</BODY>
+</HTML>

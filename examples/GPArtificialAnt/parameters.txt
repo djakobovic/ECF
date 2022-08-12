@@ -1,0 +1,21 @@
+<ECF>
+	<Genotype>
+		<Tree>
+			<Entry key="maxdepth">4</Entry>
+			<Entry key="mindepth">1</Entry>
+			<Entry key="functionset">p2 p3 ifa</Entry>
+			<Entry key="terminalset">left right move</Entry>
+		</Tree>
+	</Genotype>
+
+	<Registry>
+		<Entry key="learning_trails">learning_trails.txt</Entry>
+		<Entry key="test_trails">test_trails.txt</Entry>
+		<Entry key="population.size">500</Entry>
+		<Entry key="term.maxgen">50</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">log.txt</Entry>
+	</Registry>
+
+</ECF>
+

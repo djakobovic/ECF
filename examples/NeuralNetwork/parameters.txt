@@ -1,0 +1,48 @@
+<ECF>
+	<Algorithm>
+		<Backpropagation>
+			<Entry key="learningRate">0.04</Entry>
+		</Backpropagation>
+		<EvolutionStrategy>
+			<Entry key="lambda">4</Entry>
+			<Entry key="mu">1</Entry>
+			<Entry key="rho">1</Entry>
+			<Entry key="selection">plus</Entry>
+		</EvolutionStrategy>
+		<GenHookeJeeves>
+			<Entry key="precision">0.0001</Entry>
+			<Entry key="delta">0.5</Entry>
+			<Entry key="localonly">0</Entry>
+		</GenHookeJeeves>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>
+		</SteadyStateTournament>
+	</Algorithm>
+	<Genotype>
+		<NeuralNetwork>
+			<Entry key="structure">2 3 2 1</Entry>
+			<Entry key="activations">sig sig lin</Entry>
+			<Entry key="lbound">-1</Entry>
+			<Entry key="ubound">1</Entry>
+			<Entry key="dataFile">Testing/data(x2+y2)</Entry>
+			<Entry key="errorFunc">MSE</Entry>
+			<Entry key="mut.gauss">0</Entry>
+			<Entry key="mut.gaussall">0</Entry>
+			<Entry key="mut.neuron">0</Entry>
+			<Entry key="mut.neuronN">0</Entry>
+			<Entry key="mut.scaleneuron">0</Entry>
+			<Entry key="mut.simple">0</Entry>
+		</NeuralNetwork>
+	</Genotype>
+
+	<Registry>
+		<Entry key="population.size">100</Entry>
+		<Entry key="mutation.indprob">0.5</Entry>
+		<Entry key="term.fitnessval">0.000005</Entry>
+		<Entry key="term.maxtime">10</Entry>
+		<Entry key="term.maxgen">500000</Entry>
+		<Entry key="log.frequency">10</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.filename">Testing/log.txt</Entry>
+	</Registry>
+</ECF>

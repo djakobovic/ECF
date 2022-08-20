@@ -159,12 +159,12 @@ typedef boost::shared_ptr<MyAlg> MyAlgP;
 
 
 // 1. primjer: GA OneMax problem
-/*
+
 #include "examples/GAonemax/OneMaxEvalOp.h"
 int main(int argc, char **argv)
 {
 	argc = 2;	// hard coded za lakse isprobavanje :)
-	argv[1] = "./examples/GAOneMax/parametri.txt";
+	//argv[1] = "./examples/GAOneMax/parametri.txt";
 
 	StateP state (new State);
 
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-*/
+
 
 
 #include <boost/property_tree/ptree.hpp>
@@ -335,7 +335,7 @@ public:
 
 
 // 3. primjer: GP simbolicka regresija
-
+/*
 #include "examples/GPSymbReg/SymbRegEvalOp.h"
 #include "examples/GPSymbReg/zbr.h"
 int main(int argc, char **argv)
@@ -394,7 +394,7 @@ tree->addTerminal(myTerm);
 
 	return 0;
 }
-
+*/
 
 
 //4. primjer: GA problem trgovackog putnika, 29 gradova

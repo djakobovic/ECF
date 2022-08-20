@@ -66,6 +66,9 @@
     <Filter Include="APGenotype">
       <UniqueIdentifier>{c545757d-450d-4df8-bae4-589a5e4597bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IntGenotype">
+      <UniqueIdentifier>{8475b15a-72f2-47ca-8c9a-280b4f86151c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlgArtificialBeeColony.h">
@@ -587,6 +590,21 @@
     <ClInclude Include="apgenotype\PrimitiveSetAP.h">
       <Filter>APGenotype</Filter>
     </ClInclude>
+    <ClInclude Include="intgenotype\IntGenotype.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="intgenotype\IntGenotypeCrxAverage.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="intgenotype\IntGenotypeCrxOp.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="intgenotype\IntGenotypeCrxTwoPoint.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="intgenotype\IntGenotypeMutOp.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bitstring\BitStringCrsOnePoint.cpp">
@@ -975,6 +993,21 @@
     </ClCompile>
     <ClCompile Include="apgenotype\PrimitiveSetAP.cpp">
       <Filter>APGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="intgenotype\IntGenotype.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="intgenotype\IntGenotypeCrxAverage.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="intgenotype\IntGenotypeCrxOp.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="intgenotype\IntGenotypeCrxTwoPoint.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="intgenotype\IntGenotypeMutOp.cpp">
+      <Filter>IntGenotype</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

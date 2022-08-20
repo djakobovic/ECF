@@ -99,7 +99,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_65_1;C:\Program Files\boost\boost_1_64_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
@@ -209,6 +209,11 @@
     <ClInclude Include="..\..\ECF\Genotype.h" />
     <ClInclude Include="..\..\ECF\HallOfFame.h" />
     <ClInclude Include="..\..\ECF\Individual.h" />
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotype.h" />
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeCrxAverage.h" />
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeCrxOp.h" />
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeCrxTwoPoint.h" />
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeMutOp.h" />
     <ClInclude Include="..\..\ECF\Logger.h" />
     <ClInclude Include="..\..\ECF\Migration.h" />
     <ClInclude Include="..\..\ECF\MOFitness.h" />
@@ -342,6 +347,11 @@
     <ClCompile Include="..\..\ECF\Genotype.cpp" />
     <ClCompile Include="..\..\ECF\HallOfFame.cpp" />
     <ClCompile Include="..\..\ECF\Individual.cpp" />
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotype.cpp" />
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeCrxAverage.cpp" />
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeCrxOp.cpp" />
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeCrxTwoPoint.cpp" />
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeMutOp.cpp" />
     <ClCompile Include="..\..\ECF\Logger.cpp" />
     <ClCompile Include="..\..\ECF\Migration.cpp" />
     <ClCompile Include="..\..\ECF\MOFitness.cpp" />

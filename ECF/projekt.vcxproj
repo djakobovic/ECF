@@ -80,7 +80,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>D:\Projekt\ECF_trunk;C:\Program Files (x86)\boost\boost_1_38;C:\Program Files\boost\boost_1_38;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -120,7 +120,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>D:\Projekt\ECF_trunk;C:\Program Files (x86)\boost\boost_1_38;C:\Program Files\boost\boost_1_38;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_MPI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
@@ -170,6 +170,11 @@
     <ClInclude Include="Genotype.h" />
     <ClInclude Include="HallOfFame.h" />
     <ClInclude Include="Individual.h" />
+    <ClInclude Include="intgenotype\IntGenotype.h" />
+    <ClInclude Include="intgenotype\IntGenotypeCrxAverage.h" />
+    <ClInclude Include="intgenotype\IntGenotypeCrxOp.h" />
+    <ClInclude Include="intgenotype\IntGenotypeCrxTwoPoint.h" />
+    <ClInclude Include="intgenotype\IntGenotypeMutOp.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Migration.h" />
     <ClInclude Include="MOFitness.h" />
@@ -321,6 +326,11 @@
     <ClCompile Include="bitstring\BitStringCrsUniform.cpp" />
     <ClCompile Include="bitstring\BitStringMutMix.cpp" />
     <ClCompile Include="bitstring\BitStringMutSimple.cpp" />
+    <ClCompile Include="intgenotype\IntGenotype.cpp" />
+    <ClCompile Include="intgenotype\IntGenotypeCrxAverage.cpp" />
+    <ClCompile Include="intgenotype\IntGenotypeCrxOp.cpp" />
+    <ClCompile Include="intgenotype\IntGenotypeCrxTwoPoint.cpp" />
+    <ClCompile Include="intgenotype\IntGenotypeMutOp.cpp" />
     <ClCompile Include="MOFitness.cpp" />
     <ClCompile Include="xml\xmlParser.cpp" />
     <ClCompile Include="examples\GPSymbReg\SymbRegEvalOp.cpp" />

@@ -34,6 +34,9 @@
     <Filter Include="APGenotype">
       <UniqueIdentifier>{65de8c9a-7608-4eb1-a533-60785a6fa24c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IntGenotype">
+      <UniqueIdentifier>{cb24ff90-1d6f-4325-8c50-8b4061c6c47d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ECF\AlgDifferentialEvolution.h">
@@ -450,6 +453,21 @@
     <ClInclude Include="..\..\ECF\apgenotype\PrimitiveSetAP.h">
       <Filter>APGenotype</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotype.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeCrxAverage.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeCrxOp.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeCrxTwoPoint.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeMutOp.h">
+      <Filter>IntGenotype</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ECF\AlgDifferentialEvolution.cpp">
@@ -799,6 +817,21 @@
     </ClCompile>
     <ClCompile Include="..\..\ECF\apgenotype\PrimitiveSetAP.cpp">
       <Filter>APGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotype.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeCrxAverage.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeCrxOp.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeCrxTwoPoint.cpp">
+      <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeMutOp.cpp">
+      <Filter>IntGenotype</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

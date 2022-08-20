@@ -71,6 +71,7 @@ const std::string ECF_VERSION = "1.5";
 #include "permutation/Permutation.h"
 #include "floatingpoint/FloatingPoint.h"
 #include "apgenotype/APGenotype.h"
+#include "intgenotype/IntGenotype.h"
 //#include "cartesian/Cartesian.h"
 
 #endif // ECF_h

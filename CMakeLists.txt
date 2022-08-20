@@ -19,6 +19,16 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 set(SOURCE_FILES
+    ECF/intgenotype/IntGenotype.cpp
+    ECF/intgenotype/IntGenotype.h
+    ECF/intgenotype/IntGenotypeCrxAverage.cpp
+    ECF/intgenotype/IntGenotypeCrxAverage.h
+    ECF/intgenotype/IntGenotypeCrxOp.cpp
+    ECF/intgenotype/IntGenotypeCrxOp.h
+    ECF/intgenotype/IntGenotypeCrxTwoPoint.cpp
+    ECF/intgenotype/IntGenotypeCrxTwoPoint.h
+    ECF/intgenotype/IntGenotypeMutOp.cpp
+    ECF/intgenotype/IntGenotypeMutOp.h
     ECF/apgenotype/APGenotype.h
     ECF/apgenotype/APGenotype.cpp
     ECF/apgenotype/PrimitiveSetAP.h

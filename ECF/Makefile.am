@@ -5,6 +5,7 @@ pkginclude_floatingpointdir = $(includedir)/ECF/floatingpoint
 pkginclude_bitstringdir = $(includedir)/ECF/bitstring
 pkginclude_permutationdir = $(includedir)/ECF/permutation
 pkginclude_apgenotypedir = $(includedir)/ECF/apgenotype
+pkginclude_intgenotypedir = $(includedir)/ECF/intgenotype
 pkginclude_xmldir = $(includedir)/ECF/xml
 pkginclude_xcsdir = $(includedir)/ECF/xcs
 
@@ -142,6 +143,11 @@ pkginclude_permutation_HEADERS = permutation/Permutation.h \
 	permutation/PermutationMutToggle.h
 pkginclude_apgenotype_HEADERS = apgenotype/APGenotype.h \
 	apgenotype/PrimitiveSetAP.h
+pkginclude_intgenotype_HEADERS = intgenotype/IntGenotype.h \
+	intgenotype/IntGenotypeCrxAverage.h \
+	intgenotype/IntGenotypeCrxOp.h \
+	intgenotype/IntGenotypeCrxTwoPoint.h \
+	intgenotype/IntGenotypeMutOp.h
 pkginclude_xml_HEADERS = xml/xmlParser.h
 pkginclude_xcs_HEADERS = xcs/AlgXCS.h \
 	xcs/Classifier.h \
@@ -269,10 +275,15 @@ libecf_la_SOURCES += Algorithm.cpp \
 	permutation/PermutationMutToggle.cpp \
 	apgenotype/APGenotype.cpp \
 	apgenotype/PrimitiveSetAP.cpp \
+	intgenotype/IntGenotype.cpp \
+	intgenotype/IntGenotypeCrxAverage.cpp \
+	intgenotype/IntGenotypeCrxOp.cpp \
+	intgenotype/IntGenotypeCrxTwoPoint.cpp \
+	intgenotype/IntGenotypeMutOp.cpp \
 	xml/xmlParser.cpp \
 	xcs/AlgXCS.cpp \
 	xcs/Classifier.cpp \
 	xcs/Environment.cpp \
 	xcs/XCSParams.cpp
 
-libecf_la_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/binary -I$(top_srcdir)/floatingpoint -I$(top_srcdir)/bitstring -I$(top_srcdir)/tree -I$(top_srcdir)/permutation -I$(top_srcdir)/apgenotype -I$(top_srcdir)/xml -I$(top_srcdir)/xcs
+libecf_la_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/binary -I$(top_srcdir)/floatingpoint -I$(top_srcdir)/bitstring -I$(top_srcdir)/tree -I$(top_srcdir)/permutation -I$(top_srcdir)/apgenotype -I$(top_srcdir)/intgenotype -I$(top_srcdir)/xml -I$(top_srcdir)/xcs

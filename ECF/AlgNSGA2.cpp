@@ -326,7 +326,7 @@ bool AlgNSGA2::advanceGeneration(StateP state, DemeP deme)
 
 	uint i = 0;
 	uint size = 0;
-	while (size + fronts->at(i).size() <= N) {
+	while (i < fronts->size() && size + fronts->at(i).size() <= N) {
 		crowdedDistanceEst(state, &(fronts->at(i)));
 		for (uint j = 0; j<fronts->at(i).size(); j++) {
 			deme->push_back(fronts->at(i).at(j));

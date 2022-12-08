@@ -21,6 +21,7 @@
 #include "AlgEvolutionStrategy.h"
 #include "AlgNSGA2.h"
 #include "AlgCuckooSearch.h"
+#include "gep/AlgGEP.h"
 #include "xcs/AlgXCS.h"
 #include "FitnessMin.h"
 #include "FitnessMax.h"

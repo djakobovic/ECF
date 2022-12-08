@@ -1,0 +1,49 @@
+<ECF>
+	<Algorithm>   
+		<GEP>
+			<Entry key="crxprob">0.7</Entry>
+			<Entry key="selpressure">10</Entry>
+			<Entry key="inv.prob">0.15</Entry>
+			<Entry key="erc.inv.prob">0.15</Entry>
+			<Entry key="trans.is.prob">0.15</Entry>
+			<Entry key="trans.ris.prob">0.15</Entry>
+			<Entry key="trans.gene.prob">0.15</Entry>
+			<Entry key="trans.erc.prob">0.15</Entry>
+			<Entry key="trans.max.length">3</Entry>
+			<Entry key="inv.max.length">3</Entry>
+		</GEP>
+		<SteadyStateTournament>
+			<Entry key="tsize">3</Entry>
+		</SteadyStateTournament>
+	</Algorithm>
+
+	<Genotype>
+		<GEPChromosome>
+			<Entry key="headlength">3</Entry>
+			<Entry key="genes">2</Entry>
+			<Entry key="functionset">sin + * - /</Entry>
+			<Entry key="terminalset">X Y 1</Entry>
+			<Entry key="linkingfunctions">+ * / - sin</Entry>
+			<Entry key="linklength">1</Entry>
+			<Entry key="crx.onepoint">0.3</Entry>
+			<Entry key="crx.twopoint">0.4</Entry>
+			<Entry key="crx.gene">0.3</Entry>
+			<Entry key="mut.simple">0.5</Entry>
+			<Entry key="mut.gauss">0.5</Entry>
+		</GEPChromosome>
+	</Genotype>
+
+	<Registry>
+		<Entry key="randomizer.seed">0</Entry>
+		<Entry key="population.size">50</Entry>
+		<Entry key="population.demes">1</Entry>
+		<Entry key="mutation.indprob">0.5</Entry>
+		<Entry key="term.eval">5000</Entry>
+		<Entry key="term.fitnessval">0.00001</Entry>
+		<Entry key="log.level">3</Entry>
+		<Entry key="log.frequency">10</Entry>
+	</Registry>
+	<Entry key="batch.repeats">1</Entry>
+	<Entry key="batch.statsfile">DGEP_F4.csv</Entry>
+</ECF>
+

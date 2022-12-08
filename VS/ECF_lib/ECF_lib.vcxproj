@@ -207,6 +207,13 @@
     <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsRandom.h" />
     <ClInclude Include="..\..\ECF\floatingpoint\FloatingPointCrsSbx.h" />
     <ClInclude Include="..\..\ECF\Genotype.h" />
+    <ClInclude Include="..\..\ECF\gep\AlgGEP.h" />
+    <ClInclude Include="..\..\ECF\gep\GEPChromosome.h" />
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeCrsGene.h" />
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeCrsOnePoint.h" />
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeCrsTwoPoint.h" />
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeMutGauss.h" />
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeMutOp.h" />
     <ClInclude Include="..\..\ECF\HallOfFame.h" />
     <ClInclude Include="..\..\ECF\Individual.h" />
     <ClInclude Include="..\..\ECF\intgenotype\IntGenotype.h" />
@@ -345,6 +352,13 @@
     <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsRandom.cpp" />
     <ClCompile Include="..\..\ECF\floatingpoint\FloatingPointCrsSbx.cpp" />
     <ClCompile Include="..\..\ECF\Genotype.cpp" />
+    <ClCompile Include="..\..\ECF\gep\AlgGEP.cpp" />
+    <ClCompile Include="..\..\ECF\gep\GEPChromosome.cpp" />
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeCrsGene.cpp" />
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeCrsOnePoint.cpp" />
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeCrsTwoPoint.cpp" />
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeMutGauss.cpp" />
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeMutOp.cpp" />
     <ClCompile Include="..\..\ECF\HallOfFame.cpp" />
     <ClCompile Include="..\..\ECF\Individual.cpp" />
     <ClCompile Include="..\..\ECF\intgenotype\IntGenotype.cpp" />

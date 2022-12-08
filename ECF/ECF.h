@@ -56,7 +56,7 @@
 
 typedef boost::shared_ptr<void>  voidP;
 
-const std::string ECF_VERSION = "1.5";
+const std::string ECF_VERSION = "1.5.1";
 
 // base:
 #include "ECF_base.h"
@@ -72,6 +72,7 @@ const std::string ECF_VERSION = "1.5";
 #include "floatingpoint/FloatingPoint.h"
 #include "apgenotype/APGenotype.h"
 #include "intgenotype/IntGenotype.h"
+#include "gep/GEPChromosome.h"
 //#include "cartesian/Cartesian.h"
 
 #endif // ECF_h

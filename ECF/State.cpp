@@ -61,6 +61,8 @@ State::State()
 	this->mAlgorithms_[alg->getName()] = alg;
 	alg = static_cast<AlgorithmP> (new CuckooSearch);
 	this->mAlgorithms_[alg->getName()] = alg;
+	alg = static_cast<AlgorithmP> (new AlgGEP);
+	this->mAlgorithms_[alg->getName()] = alg;
 
 #ifdef _MPI
 	// paralel algorithms
@@ -86,6 +88,8 @@ State::State()
 	gen = static_cast<GenotypeP> (new Tree::APGenotype);
 	this->mGenotypes_[gen->getName()] = gen;
 	gen = static_cast<GenotypeP> (new IntGenotype::IntGenotype);
+	this->mGenotypes_[gen->getName()] = gen;
+	gen = static_cast<GenotypeP> (new GEP::GEPChromosome);
 	this->mGenotypes_[gen->getName()] = gen;
 	//	gen = static_cast<GenotypeP> (new cart::Cartesian);
 //	this->mGenotypes_[gen->getName()] = gen;

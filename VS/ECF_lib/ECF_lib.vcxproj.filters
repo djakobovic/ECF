@@ -37,6 +37,9 @@
     <Filter Include="IntGenotype">
       <UniqueIdentifier>{cb24ff90-1d6f-4325-8c50-8b4061c6c47d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GEP">
+      <UniqueIdentifier>{37c8b96e-8687-4461-9bba-d3001a792eb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ECF\AlgDifferentialEvolution.h">
@@ -468,6 +471,27 @@
     <ClInclude Include="..\..\ECF\intgenotype\IntGenotypeMutOp.h">
       <Filter>IntGenotype</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ECF\gep\AlgGEP.h">
+      <Filter>GEP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\gep\GEPChromosome.h">
+      <Filter>GEP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeCrsGene.h">
+      <Filter>GEP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeCrsOnePoint.h">
+      <Filter>GEP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeCrsTwoPoint.h">
+      <Filter>GEP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeMutGauss.h">
+      <Filter>GEP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\gep\GEPChromosomeMutOp.h">
+      <Filter>GEP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ECF\AlgDifferentialEvolution.cpp">
@@ -832,6 +856,27 @@
     </ClCompile>
     <ClCompile Include="..\..\ECF\intgenotype\IntGenotypeMutOp.cpp">
       <Filter>IntGenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\gep\AlgGEP.cpp">
+      <Filter>GEP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\gep\GEPChromosome.cpp">
+      <Filter>GEP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeCrsGene.cpp">
+      <Filter>GEP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeCrsOnePoint.cpp">
+      <Filter>GEP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeCrsTwoPoint.cpp">
+      <Filter>GEP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeMutGauss.cpp">
+      <Filter>GEP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\gep\GEPChromosomeMutOp.cpp">
+      <Filter>GEP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,0 +1,19 @@
+# ECF - Evolutionary Computation Framework
+
+ECF is a C++ framework intended for application of any type of evolutionary computation. More info is available at: http://ecf.zemris.fer.hr/
+
+## Documentation
+
+Documentation is available at https://ecf.readthedocs.io/
+
+## Installation
+
+Detailed instructions on how to build ECF on Windows or Unix/Linux are covered at https://ecf.readthedocs.io/install.html or on project web page. The provided 'INSTALL' file deals only with generic installation issues with  GNU automake tools.
+
+## Support
+
+For all questions and comments, contact Domagoj Jakobovic <domagoj.jakobovic@fer.hr>
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

@@ -1,7 +1,8 @@
 #ifndef TreeMutGauss_h
 #define TreeMutGauss_h
 
-#include "boost/random/lagged_fibonacci.hpp"
+//#include "boost/random/lagged_fibonacci.hpp"
+#include <random>
 
 
 namespace Tree
@@ -20,8 +21,9 @@ public:
 	void registerParameters(StateP);
 
 protected:
-	boost::lagged_fibonacci607 engine_;
+	//boost::lagged_fibonacci607 engine_;
+	std::mt19937 engine_;
 };
-typedef boost::shared_ptr<TreeMutGauss> TreeMutGaussP;
+typedef std::shared_ptr<TreeMutGauss> TreeMutGaussP;
 }
 #endif // TreeMutGauss_h

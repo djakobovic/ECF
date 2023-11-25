@@ -13,7 +13,7 @@ public:
 	bool initialize(StateP);
 	IndividualP select(const std::vector<IndividualP>&);
 };
-typedef boost::shared_ptr<SelWorstOp> SelWorstOpP;
+typedef std::shared_ptr<SelWorstOp> SelWorstOpP;
 
 #endif // SelWorstOp_h
 

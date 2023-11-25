@@ -40,6 +40,6 @@ public:
 	{	return true;	}
 
 };
-typedef boost::shared_ptr<RealValueGenotype>  RealValueGenotypeP;
+typedef std::shared_ptr<RealValueGenotype>  RealValueGenotypeP;
 
 #endif

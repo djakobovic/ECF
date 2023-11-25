@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<FloatingPointCrsRandom> FloatingPointCrsRandomP;
+typedef std::shared_ptr<FloatingPointCrsRandom> FloatingPointCrsRandomP;
 }
 #endif /* FLOATINGPOINTCRSRANDOM_H_ */
 

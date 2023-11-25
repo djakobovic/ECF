@@ -134,6 +134,6 @@ public:
 	}
 
 };
-typedef boost::shared_ptr<ClassifierParams> ClassifierParamsP;
+typedef std::shared_ptr<ClassifierParams> ClassifierParamsP;
 
 #endif 

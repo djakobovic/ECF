@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BitStringCrsUniform> BitStrCrsUniformP;
+typedef std::shared_ptr<BitStringCrsUniform> BitStrCrsUniformP;
 }
 #endif // BitStringUniformCrs_h
 

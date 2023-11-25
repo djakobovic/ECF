@@ -49,7 +49,7 @@ bool ArtificialBeeColony::initialize(StateP state)
 	// algorithm accepts a single FloatingPoint or Binary genotype 
 	// or a genotype derived from the abstract RealValueGenotype class
 	GenotypeP activeGenotype = state->getGenotypes()[0];
-	RealValueGenotypeP rv = boost::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
+	RealValueGenotypeP rv = std::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
 	if(!rv) {
 		ECF_LOG_ERROR(state, "Error: ABC algorithm accepts only a RealValueGenotype derived genotype! (FloatingPoint or Binary)");
 		throw ("");
@@ -216,7 +216,7 @@ bool ArtificialBeeColony::scoutBeesPhase(StateP state, DemeP deme)
 			continue;
 
 		// get food source's trial variable
-		FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (food->getGenotype(1));
+		FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (food->getGenotype(1));
 		double &trial = flp->realValue[0];
 
 		// remember the source if its trial exceeded limit 
@@ -228,10 +228,10 @@ bool ArtificialBeeColony::scoutBeesPhase(StateP state, DemeP deme)
 
 	// if there is a  food source that exceeded the limit, replace it with a random one
 	if (unimproved != NULL){
-		FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (unimproved->getGenotype(1));
+		FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (unimproved->getGenotype(1));
 		double &trial = flp->realValue[0];
 		trial = 0;
-		flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (unimproved->getGenotype(0));
+		flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (unimproved->getGenotype(0));
 		flp->initialize(state);
 		evaluate(unimproved);
 	}
@@ -251,11 +251,11 @@ bool ArtificialBeeColony::createNewFoodSource(IndividualP food, StateP state, De
 	// potential new food source
 	IndividualP newFood = copy(food);
 
-	FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (food->getGenotype(0));
+	FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (food->getGenotype(0));
 	std::vector< double > &foodVars = flp->realValue;
-	flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (neighbour->getGenotype(0));
+	flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (neighbour->getGenotype(0));
 	std::vector< double > &neighbourVars = flp->realValue;
-	flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (newFood->getGenotype(0));
+	flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (newFood->getGenotype(0));
 	std::vector< double > &newFoodVars = flp->realValue;
 
 
@@ -271,7 +271,7 @@ bool ArtificialBeeColony::createNewFoodSource(IndividualP food, StateP state, De
 	newFoodVars[param] = value;
 	evaluate(newFood);
 
-	flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (food->getGenotype(1));
+	flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (food->getGenotype(1));
 	double &foodTrial = flp->realValue[0];
 
 	//	d)	if the fitness value of the new food source is better than that of the original source,

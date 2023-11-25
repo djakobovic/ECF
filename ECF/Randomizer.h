@@ -2,7 +2,7 @@
 #define Randomizer_h
 
 class State;
-typedef boost::shared_ptr<State> StateP;
+typedef std::shared_ptr<State> StateP;
 
 /**
  * \ingroup evol main
@@ -30,7 +30,7 @@ public:
 	{	return true;	}
 };
 
-typedef boost::shared_ptr<Randomizer> RandomizerP;
+typedef std::shared_ptr<Randomizer> RandomizerP;
 
 #endif
 

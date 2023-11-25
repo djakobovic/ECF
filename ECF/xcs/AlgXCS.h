@@ -63,7 +63,7 @@ private:
 	void actionSetSubsumption(std::vector<ClassifierP> *actionSet, DemeP deme, StateP state);
 	void removeFromPopSet(ClassifierP cl, DemeP deme);
 };
-typedef boost::shared_ptr<XCS> XCSP;
+typedef std::shared_ptr<XCS> XCSP;
 
 #endif
 

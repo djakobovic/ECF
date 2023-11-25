@@ -13,6 +13,6 @@
 		bool initialize(StateP);
 		void registerParameters(StateP);
 	};
-	typedef boost::shared_ptr<MutScale> MutGaussAllP;
+	typedef std::shared_ptr<MutScale> MutGaussAllP;
 //}
 #endif /* MUTSCALE_H_ */

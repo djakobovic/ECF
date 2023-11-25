@@ -16,6 +16,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<CrsNeuronUniform> CrsNeuronUniformP;
+typedef std::shared_ptr<CrsNeuronUniform> CrsNeuronUniformP;
 // }
 #endif /* CRSNEURONUNIFORM_H_ */

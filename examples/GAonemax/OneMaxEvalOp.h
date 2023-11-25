@@ -26,7 +26,7 @@ class OneMaxEvalOp : public EvaluateOp
 public:
 	FitnessP evaluate(IndividualP individual);
 };
-typedef boost::shared_ptr<OneMaxEvalOp> OneMaxEvalOpP;
+typedef std::shared_ptr<OneMaxEvalOp> OneMaxEvalOpP;
 
 
 #endif // OneMaxEvalOp_h

@@ -47,6 +47,6 @@ public:
 	bool checkState(const StateP state) { return true; };
 
 };
-typedef boost::shared_ptr<Environment> EnvironmentP;
+typedef std::shared_ptr<Environment> EnvironmentP;
 
 #endif

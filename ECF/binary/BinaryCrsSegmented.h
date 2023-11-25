@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsSegmented> BinaryCrsSegmentedP;
+typedef std::shared_ptr<BinaryCrsSegmented> BinaryCrsSegmentedP;
 }
 
 #endif /* BINARYSEGMENTEDCRS_H_ */

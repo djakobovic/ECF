@@ -8,7 +8,7 @@ namespace Tree
 {
 
 class Node;
-typedef boost::shared_ptr<Node> NodeP;
+typedef std::shared_ptr<Node> NodeP;
 
 /**
  * \ingroup genotypes tree
@@ -29,7 +29,7 @@ public:
 	uint depth_;      ///< depth of this node
 	PrimitiveP primitive_;    ///< pointer to the Primitive belonging to this node
 };
-typedef boost::shared_ptr<Node> NodeP;
+typedef std::shared_ptr<Node> NodeP;
 }
 
 #endif

@@ -18,6 +18,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<PermutationCrsCyclic> PermutationCrsCyclicP;
+typedef std::shared_ptr<PermutationCrsCyclic> PermutationCrsCyclicP;
 }
 #endif //PERMUTATIONCRSCYCLIC_H

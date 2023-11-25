@@ -44,6 +44,6 @@ protected:
 	SelBestOpP selBestOp;
 
 };
-typedef boost::shared_ptr<RouletteWheel> RouletteWheelP;
+typedef std::shared_ptr<RouletteWheel> RouletteWheelP;
 
 #endif // Roulette_Wheel_h

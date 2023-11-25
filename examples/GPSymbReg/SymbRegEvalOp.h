@@ -33,6 +33,6 @@ public:
 	std::vector<double> codomain;
 	uint nSamples;
 };
-typedef boost::shared_ptr<SymbRegEvalOp> SymbRegEvalOpP;
+typedef std::shared_ptr<SymbRegEvalOp> SymbRegEvalOpP;
 
 #endif // SymbRegEvalOp_h

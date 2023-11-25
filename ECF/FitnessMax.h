@@ -18,6 +18,6 @@ public:
 	void write(XMLNode&);
 	FitnessMax* copy();
 };
-typedef boost::shared_ptr<FitnessMax> FitnessMaxP;
+typedef std::shared_ptr<FitnessMax> FitnessMaxP;
 
 #endif // FitnessMax_h

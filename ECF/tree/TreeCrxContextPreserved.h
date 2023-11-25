@@ -18,6 +18,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeCrxContextPreserved> TreeCrxContextPreservedP;
+typedef std::shared_ptr<TreeCrxContextPreserved> TreeCrxContextPreservedP;
 }
 #endif // TreeCrxContextPreserved_h

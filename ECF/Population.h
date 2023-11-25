@@ -39,7 +39,7 @@ public:
 	StatCalcP getStats()                          //! get population stats
 	{	return stats_;	}
 };
-typedef boost::shared_ptr<Population> PopulationP;
+typedef std::shared_ptr<Population> PopulationP;
 
 #endif // Population_h
 

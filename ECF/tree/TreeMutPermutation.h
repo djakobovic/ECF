@@ -16,6 +16,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeMutPermutation> TreeMutPermutationP;
+typedef std::shared_ptr<TreeMutPermutation> TreeMutPermutationP;
 }
 #endif // TreeMutPermutation_h

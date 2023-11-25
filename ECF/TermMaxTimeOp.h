@@ -14,6 +14,6 @@ public:
 protected:
 	uint maxTime_;
 };
-typedef boost::shared_ptr<TermMaxTimeOp> TermMaxTimeOpP;
+typedef std::shared_ptr<TermMaxTimeOp> TermMaxTimeOpP;
 
 #endif // TermMaxTimeOp_H

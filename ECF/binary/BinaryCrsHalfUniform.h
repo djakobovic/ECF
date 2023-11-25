@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsHalfUniform> BinaryCrsHalfUniformP;
+typedef std::shared_ptr<BinaryCrsHalfUniform> BinaryCrsHalfUniformP;
 }
 
 #endif /* BINARYHALFUNIFORMCRS_H_ */

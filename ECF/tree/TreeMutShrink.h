@@ -16,6 +16,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeMutShrink> TreeMutShrinkP;
+typedef std::shared_ptr<TreeMutShrink> TreeMutShrinkP;
 }
 #endif // TreeMutShrink_h

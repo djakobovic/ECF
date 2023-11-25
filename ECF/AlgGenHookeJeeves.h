@@ -26,7 +26,7 @@ protected:
 	bool areGenotypesAdded_;
 	SelectionOperatorP selFitPropOp_, selBestOp_, selRandomOp_;
 };
-typedef boost::shared_ptr<GenHookeJeeves> GenHookeJeevesP;
+typedef std::shared_ptr<GenHookeJeeves> GenHookeJeevesP;
 
 #endif // AlgGenHookeJeeves_h
 

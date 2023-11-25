@@ -50,13 +50,11 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include <boost/smart_ptr.hpp>
-#include <boost/foreach.hpp>
 #include "xml/xmlParser.h"
 
-typedef boost::shared_ptr<void>  voidP;
+typedef std::shared_ptr<void>  voidP;
 
-const std::string ECF_VERSION = "1.5.1";
+const std::string ECF_VERSION = "1.6";
 
 // base:
 #include "ECF_base.h"

@@ -32,6 +32,6 @@ public:
 	virtual ~Migration()
 	{	}
 };
-typedef boost::shared_ptr<Migration> MigrationP;
+typedef std::shared_ptr<Migration> MigrationP;
 
 #endif	// Migration_h

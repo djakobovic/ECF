@@ -135,5 +135,5 @@ public:
 
 }
 
-typedef boost::shared_ptr<Tree::APGenotype> APGenotypeP;
+typedef std::shared_ptr<Tree::APGenotype> APGenotypeP;
 #endif

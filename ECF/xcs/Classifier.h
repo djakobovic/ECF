@@ -10,7 +10,7 @@
 #include <set>
 
 class Classifier;
-typedef boost::shared_ptr<Classifier> ClassifierP;
+typedef std::shared_ptr<Classifier> ClassifierP;
 
 /**
 * \ingroup xcs

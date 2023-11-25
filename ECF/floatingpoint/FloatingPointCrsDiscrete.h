@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<FloatingPointCrsDiscrete> FloatingPointCrsDiscreteP;
+typedef std::shared_ptr<FloatingPointCrsDiscrete> FloatingPointCrsDiscreteP;
 }
 #endif /* FLOATINGPOINTCRSDISCRETE_H_ */
 

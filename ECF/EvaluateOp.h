@@ -35,7 +35,7 @@ public:
 	virtual ~EvaluateOp()
 	{	}
 };
-typedef boost::shared_ptr<EvaluateOp> EvaluateOpP;
+typedef std::shared_ptr<EvaluateOp> EvaluateOpP;
 
 #endif // EvaluateOp_h
 

@@ -17,7 +17,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsNonGeometric> BinaryCrsNonGeometricP;
+typedef std::shared_ptr<BinaryCrsNonGeometric> BinaryCrsNonGeometricP;
 }
 
 #endif /* BINARYCRSNONGEOMETRIC_H_ */

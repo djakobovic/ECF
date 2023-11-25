@@ -34,6 +34,6 @@ protected:
 	SelectionOperatorP selBestOp;
 };
 
-typedef boost::shared_ptr<CuckooSearch> CuckooSearchP;
+typedef std::shared_ptr<CuckooSearch> CuckooSearchP;
 
 #endif

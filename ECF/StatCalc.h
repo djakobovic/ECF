@@ -86,6 +86,6 @@ public:
 	{	return highest_;	}
 
 };
-typedef boost::shared_ptr<StatCalc> StatCalcP;
+typedef std::shared_ptr<StatCalc> StatCalcP;
 
 #endif /* STATCALC_H_ */

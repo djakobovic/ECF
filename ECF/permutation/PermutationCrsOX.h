@@ -16,6 +16,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<PermutationCrsOX> PermutationCrsOXP;
+typedef std::shared_ptr<PermutationCrsOX> PermutationCrsOXP;
 }
 #endif //PERMUTATIONCRSPMX_H

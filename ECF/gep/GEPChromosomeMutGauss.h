@@ -3,8 +3,8 @@
 #include "../ECF_base.h"
 #include <time.h>
 #include "GEPChromosome.h"
-#include "boost/random/normal_distribution.hpp"
-#include "boost/random/lagged_fibonacci.hpp"
+//#include "boost/random/lagged_fibonacci.hpp"
+#include <random>
 
 namespace GEP{
 	/**
@@ -19,8 +19,9 @@ namespace GEP{
 		bool initialize(StateP state);
 		bool mutate(GenotypeP gene);
 	protected:
-		boost::lagged_fibonacci607 engine_;
+		//boost::lagged_fibonacci607 engine_;
+		std::mt19937 engine_;
 	};
 }
-typedef boost::shared_ptr<GEP::GEPChromosomeMutGauss> GEPChromosomeMutGaussP;
+typedef std::shared_ptr<GEP::GEPChromosomeMutGauss> GEPChromosomeMutGaussP;
 #endif // GEPChromosomeMutGauss_h

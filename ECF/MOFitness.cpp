@@ -4,7 +4,7 @@
 
 bool MOFitness::isBetterThan(FitnessP other)
 {
-	MOFitnessP p = boost::static_pointer_cast<MOFitness> (other);
+	MOFitnessP p = std::static_pointer_cast<MOFitness> (other);
 	uint objCount = (uint) p->size();
 
 	for (uint i = 0; i<objCount; i++) {

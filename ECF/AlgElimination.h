@@ -37,6 +37,6 @@ protected:
 	SelRandomOpP selRandomOp;
 	SelBestOpP selBestOp;
 };
-typedef boost::shared_ptr<Elimination> EliminationP;
+typedef std::shared_ptr<Elimination> EliminationP;
 
 #endif // Elimination_h

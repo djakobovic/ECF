@@ -15,6 +15,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<PermutationMutIns> PermutationMutInsP;
+typedef std::shared_ptr<PermutationMutIns> PermutationMutInsP;
 }
 #endif /* PERMUTATIONMUTINS_H_ */

@@ -40,6 +40,6 @@ public:
 	bool initialize(StateP);
 	FitnessP evaluate(IndividualP individual);
 };
-typedef boost::shared_ptr<TSPEvalOp> TSPEvalOpP;
+typedef std::shared_ptr<TSPEvalOp> TSPEvalOpP;
 
 #endif /* TSPEVALOP_H_ */

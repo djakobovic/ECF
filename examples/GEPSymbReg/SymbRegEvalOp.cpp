@@ -70,7 +70,7 @@ FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
 	FitnessP fitness(new FitnessMin);
 
 	// get genotype
-	GEPChromosomeP gep = boost::static_pointer_cast<GEP::GEPChromosome> (individual->getGenotype());
+	GEPChromosomeP gep = std::static_pointer_cast<GEP::GEPChromosome> (individual->getGenotype());
 	// The system is multigenic. We iterate over every gene, transform it to a tree, execute it and link it with the results of its fellow genes
 	// The user specifies the linking function programatically or in the parameters
 

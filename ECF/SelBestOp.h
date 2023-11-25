@@ -13,7 +13,7 @@ public:
 	IndividualP select(const std::vector<IndividualP>&);
 };
 
-typedef boost::shared_ptr<SelBestOp> SelBestOpP;
+typedef std::shared_ptr<SelBestOp> SelBestOpP;
 
 #endif /* SELBESTOP_H_ */
 

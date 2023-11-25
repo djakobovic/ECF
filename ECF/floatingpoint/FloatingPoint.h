@@ -95,5 +95,5 @@ public:
 };
 }
 
-typedef boost::shared_ptr<FloatingPoint::FloatingPoint> FloatingPointP;
+typedef std::shared_ptr<FloatingPoint::FloatingPoint> FloatingPointP;
 #endif

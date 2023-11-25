@@ -5,13 +5,13 @@
 
 // forward declarations of genotype operators
 class CrossoverOp;
-typedef boost::shared_ptr<CrossoverOp> CrossoverOpP;
+typedef std::shared_ptr<CrossoverOp> CrossoverOpP;
 class MutationOp;
-typedef boost::shared_ptr<MutationOp> MutationOpP;
+typedef std::shared_ptr<MutationOp> MutationOpP;
 
 // forward declaration of State class
 class State;
-typedef boost::shared_ptr<State> StateP;
+typedef std::shared_ptr<State> StateP;
 
 /**
  * \ingroup evol population
@@ -109,7 +109,7 @@ protected:
 	std::string name_;	//!< genotype's name
 	uint genotypeId_;	//!< this genotype's unique index in individual structure
 };
-typedef boost::shared_ptr<Genotype>  GenotypeP;
+typedef std::shared_ptr<Genotype>  GenotypeP;
 
 #endif // Genotype_h
 

@@ -90,5 +90,5 @@ public:
 };
 }
 
-typedef boost::shared_ptr<Permutation::Permutation> PermutationP;
+typedef std::shared_ptr<Permutation::Permutation> PermutationP;
 #endif

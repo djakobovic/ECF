@@ -42,7 +42,7 @@ bool DifferentialEvolution::initialize(StateP state)
 	// algorithm accepts a single FloatingPoint or Binary genotype 
 	// or a genotype derived from the abstract RealValueGenotype class
 	GenotypeP activeGenotype = state->getGenotypes()[0];
-	RealValueGenotypeP rv = boost::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
+	RealValueGenotypeP rv = std::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
 	if(!rv) {
 		ECF_LOG_ERROR(state, "Error: Differential evolution algorithm accepts only a RealValueGenotype derived genotype! (FloatingPoint or Binary)");
 		throw ("");

@@ -41,7 +41,7 @@ public:
 
 	uint cid;	//!< coherence index, used in asynchronous parallel algoritmhs
 };
-typedef boost::shared_ptr<Individual> IndividualP;
+typedef std::shared_ptr<Individual> IndividualP;
 
 #endif // Individual_h
 

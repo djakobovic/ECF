@@ -14,6 +14,6 @@ public:
 protected:
 	uint termStagnation_;
 };
-typedef boost::shared_ptr<TermStagnationOp> TermStagnationOpP;
+typedef std::shared_ptr<TermStagnationOp> TermStagnationOpP;
 
 #endif // TermStagnationOp_H

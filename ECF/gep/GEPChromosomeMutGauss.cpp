@@ -10,7 +10,12 @@ namespace GEP{
 	{
 		voidP sptr = myGenotype_->getParameterValue(state, "mut.gauss");
 		probability_ = *((double*)sptr.get());
-		engine_.seed((uint)time(NULL));
+
+		std::random_device rd;
+		std::mt19937 rng(rd());
+		engine_ = rng;
+		//rd.seed((uint)time(NULL));
+
 		return true;
 	}
 
@@ -31,8 +36,10 @@ namespace GEP{
 			std::string oldName = chr->at(iPoint)->primitive_->getName();
 
 			// generate Gauss noise offset and add it
-			boost::normal_distribution<double> N(0, 1);
-			double offset = N.operator () < boost::lagged_fibonacci607 > (engine_);
+			std::normal_distribution<double> N(0, 1);
+			//double offset = N.operator () < boost::lagged_fibonacci607 > (engine_);
+			//double offset = N.operator () < std::mt19937 > (engine_);
+			double offset = N(engine_);
 			double newValue = oldValue + offset;
 
 			// change double ERC value and name

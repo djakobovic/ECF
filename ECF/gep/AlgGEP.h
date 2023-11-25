@@ -62,6 +62,6 @@ protected:
 	SelBestOpP selBestOp;
 	SelFitnessProportionalOpP selFitPropOp;
 };
-typedef boost::shared_ptr<AlgGEP> AlgGEPP;
+typedef std::shared_ptr<AlgGEP> AlgGEPP;
 
 #endif // AlgGEP_h

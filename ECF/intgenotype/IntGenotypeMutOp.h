@@ -13,6 +13,6 @@ namespace IntGenotype
 	public:
 		bool mutate(GenotypeP gene);
 	};
-	typedef boost::shared_ptr<IntGenotypeMutOp> IntGenotypeMutOpP;
+	typedef std::shared_ptr<IntGenotypeMutOp> IntGenotypeMutOpP;
 
 }

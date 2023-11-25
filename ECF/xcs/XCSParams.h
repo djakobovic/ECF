@@ -50,6 +50,6 @@ public:
 	XMLNode getXMLNode();
 
 };
-typedef boost::shared_ptr<XCSParams> XCSParamsP;
+typedef std::shared_ptr<XCSParams> XCSParamsP;
 
 #endif

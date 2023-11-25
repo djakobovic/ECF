@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsMasked> BinaryCrsMaskedP;
+typedef std::shared_ptr<BinaryCrsMasked> BinaryCrsMaskedP;
 }
 
 #endif /* BINARYMASKEDCRS_H_ */

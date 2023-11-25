@@ -2,7 +2,7 @@
 #include "ECF_macro.h"
 #include "AlgOptIA.h"
 #include <cmath>
-
+#include <algorithm>
 
 
 OptIA::OptIA()
@@ -61,7 +61,7 @@ bool OptIA::initialize(StateP state)
 	// algorithm accepts a single FloatingPoint or Binary genotype 
 	// or a genotype derived from the abstract RealValueGenotype class
 	GenotypeP activeGenotype = state->getGenotypes()[0];
-	RealValueGenotypeP rv = boost::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
+	RealValueGenotypeP rv = std::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
 	if(!rv) {
 		ECF_LOG_ERROR(state, "Error: opt-IA accepts only a RealValueGenotype derived genotype! (FloatingPoint or Binary)");
 		throw ("");
@@ -137,7 +137,7 @@ bool OptIA::hypermutationPhase(StateP state, DemeP deme, std::vector<IndividualP
 	for( uint i = 0; i < clones.size(); i++ ){ // for each antibody in vector clones
 		IndividualP antibody = clones.at(i);
 		
-		FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (antibody->getGenotype(0));
+		FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (antibody->getGenotype(0));
 	    std::vector< double > &antibodyVars = flp->realValue;
 		
 		k = 1 + i/(dup+1);
@@ -164,7 +164,7 @@ bool OptIA::hypermutationPhase(StateP state, DemeP deme, std::vector<IndividualP
 
 		// if the clone is better than its parent, reset clone's age
 		if(antibody-> fitness->isBetterThan(parentFitness)){					
-			flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (antibody->getGenotype(1));
+			flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (antibody->getGenotype(1));
 			double &age = flp->realValue[0];
 			age = 0;
 		} 
@@ -184,7 +184,7 @@ bool OptIA::agingPhase(StateP state, DemeP deme,  std::vector<IndividualP> &clon
 		IndividualP antibody = clones.at(i);
 
 		//age each antibody
-		FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (antibody->getGenotype(1));
+		FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (antibody->getGenotype(1));
 		double &age = flp->realValue[0];
 		age += 1;
 		
@@ -222,7 +222,7 @@ bool OptIA::birthPhase(StateP state, DemeP deme, std::vector<IndividualP> &clone
 	if (birthNumber == 0) return true;
 
 	IndividualP newAntibody = copy(deme->at(0));
-	FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (newAntibody->getGenotype(0));
+	FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (newAntibody->getGenotype(0));
 
 	for (uint i = 0; i<birthNumber; i++){
 		//create a random antibody
@@ -230,7 +230,7 @@ bool OptIA::birthPhase(StateP state, DemeP deme, std::vector<IndividualP> &clone
 		evaluate(newAntibody);
 	
 		//reset its age
-		flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (newAntibody->getGenotype(1));
+		flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (newAntibody->getGenotype(1));
 		double &age = flp->realValue[0];
 		age = 0;
 

@@ -44,7 +44,7 @@ protected:
 	bool bounded_;	//!< constrained or not
 	double lbound_, ubound_;
 };
-typedef boost::shared_ptr<ParticleSwarmOptimization> ParticleSwarmOptimizationP;
+typedef std::shared_ptr<ParticleSwarmOptimization> ParticleSwarmOptimizationP;
 
 #endif // Particle_Swarm_Optimization_h
 

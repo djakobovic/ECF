@@ -20,7 +20,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryMutSimple> BinaryMutSimpleP;
+typedef std::shared_ptr<BinaryMutSimple> BinaryMutSimpleP;
 }
 
 #endif /* BINARYMUTSIMPLE_H_ */

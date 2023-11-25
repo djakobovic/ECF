@@ -17,7 +17,7 @@ public:
 	void registerParameters(StateP);
 
 };
-typedef boost::shared_ptr<FloatingPointCrsBga> FloatingPointCrsBgaP;
+typedef std::shared_ptr<FloatingPointCrsBga> FloatingPointCrsBgaP;
 }
 #endif /* FLOATINGPOINTCRSBGA_H_ */
 

@@ -44,6 +44,6 @@ public:
 	virtual ~Operator()
 	{	}
 };
-typedef boost::shared_ptr<Operator> OperatorP;
+typedef std::shared_ptr<Operator> OperatorP;
 
 #endif // Operator_h

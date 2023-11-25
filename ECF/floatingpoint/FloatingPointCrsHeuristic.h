@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<FloatingPointCrsHeuristic> FloatingPointCrsHeuristicP;
+typedef std::shared_ptr<FloatingPointCrsHeuristic> FloatingPointCrsHeuristicP;
 }
 #endif /* FLOATINGPOINTCRSHEURISTIC_H_ */
 

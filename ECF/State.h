@@ -2,9 +2,9 @@
 #define State_h
 
 class Algorithm;
-typedef boost::shared_ptr<Algorithm> AlgorithmP;
+typedef std::shared_ptr<Algorithm> AlgorithmP;
 class State;
-typedef boost::shared_ptr<State> StateP;
+typedef std::shared_ptr<State> StateP;
 
 #include "Population.h"
 #include "Randomizer.h"
@@ -18,7 +18,6 @@ typedef boost::shared_ptr<State> StateP;
 #include "Context.h"
 
 #include <map>
-#include "boost/enable_shared_from_this.hpp"
 
 // XML configuration nodes
 #define NODE_REGISTRY   "Registry"
@@ -35,7 +34,7 @@ typedef boost::shared_ptr<State> StateP;
  * State class handles user communication, component repository and evolution process. 
  * State is also the entry point for access to system parameters and functionality.
  */
-class State : public boost::enable_shared_from_this<State>
+class State : public std::enable_shared_from_this<State>
 {
 private:
 	// system components
@@ -216,7 +215,7 @@ public:
 	bool addOperator(OperatorP op);
 
 };
-typedef boost::shared_ptr<State> StateP;
+typedef std::shared_ptr<State> StateP;
 
 #endif // State_h
 

@@ -51,7 +51,7 @@ public:
 	bool replacePopulation(StateP state, DemeP deme, std::vector<IndividualP> &clones);
 
 };
-typedef boost::shared_ptr<OptIA> OptIAP;
+typedef std::shared_ptr<OptIA> OptIAP;
 
 
 #endif // OptIA_h

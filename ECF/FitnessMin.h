@@ -17,7 +17,7 @@ public:
 	void write(XMLNode&);
 	FitnessMin* copy();
 };
-typedef boost::shared_ptr<FitnessMin> FitnessMinP;
+typedef std::shared_ptr<FitnessMin> FitnessMinP;
 
 #endif /* FITNESSMIN_H_ */
 

@@ -20,6 +20,6 @@ private:
 	double learningRate_;
 	
 };
-typedef boost::shared_ptr<Backpropagation> BackpropagationP;
+typedef std::shared_ptr<Backpropagation> BackpropagationP;
 
 #endif // Evolution_Strategy_h

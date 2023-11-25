@@ -33,7 +33,7 @@ public:
 	virtual IndividualP select(const std::vector<IndividualP>&) = 0;
 
 };
-typedef boost::shared_ptr<SelectionOperator> SelectionOperatorP;
+typedef std::shared_ptr<SelectionOperator> SelectionOperatorP;
 
 #endif // SelectionOperator_h
 

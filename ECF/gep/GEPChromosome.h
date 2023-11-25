@@ -69,5 +69,5 @@ namespace GEP{
 		void setTerminalValue(std::string name, void* value);
 	};
 }
-typedef boost::shared_ptr<GEP::GEPChromosome> GEPChromosomeP;
+typedef std::shared_ptr<GEP::GEPChromosome> GEPChromosomeP;
 #endif // GEPChromosome_h

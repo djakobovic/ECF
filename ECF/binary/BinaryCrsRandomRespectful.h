@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsRandomRespectful> BinaryCrsRandomRespectfulP;
+typedef std::shared_ptr<BinaryCrsRandomRespectful> BinaryCrsRandomRespectfulP;
 }
 
 #endif /* BINARYRANDOMRESPECTFULCRS_H_ */

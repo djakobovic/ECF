@@ -17,6 +17,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeMutNodeReplace> TreeMutNodeReplaceP;
+typedef std::shared_ptr<TreeMutNodeReplace> TreeMutNodeReplaceP;
 }
 #endif // TreeMutNodeReplace_h

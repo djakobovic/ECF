@@ -9,6 +9,7 @@
 #include "time.h"
 #include "../Logger.h"
 #include <string>
+#include <cassert>
 //
 //#undef XCS_STEP_DEBUG
 //#undef XCS_DEBUG
@@ -75,7 +76,7 @@ bool XCS::initialize(StateP state)
 	params->initF_ = clParams->F_;
 
 	//Environment initialization
-	environment = boost::dynamic_pointer_cast<Environment> (evalOp_);
+	environment = std::dynamic_pointer_cast<Environment> (evalOp_);
 	
 	if (!environment->checkState(state)) {
 		throw ("");
@@ -139,7 +140,7 @@ bool XCS::advanceGeneration(StateP state, DemeP deme) {
 
 #ifdef XCS_DEBUG
 		std::cout << "Input value: ";
-		Classifier::printBitString(boost::dynamic_pointer_cast<BitString::BitString> (input));
+		Classifier::printBitString(std::dynamic_pointer_cast<BitString::BitString> (input));
 		std::cout << std::endl;
 #endif
 		//Generate match set [M]

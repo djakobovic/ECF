@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryMutMix> BinaryMutMixP;
+typedef std::shared_ptr<BinaryMutMix> BinaryMutMixP;
 }
 
 #endif /* BINARYMUT_H_ */

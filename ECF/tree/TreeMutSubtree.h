@@ -17,6 +17,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeMutSubtree> TreeMutSubtreeP;
+typedef std::shared_ptr<TreeMutSubtree> TreeMutSubtreeP;
 }
 #endif // TreeMutSubtree_h

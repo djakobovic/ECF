@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<FloatingPointCrsArithmeticSingle> FloatingPointCrsArithmeticSingleP;
+typedef std::shared_ptr<FloatingPointCrsArithmeticSingle> FloatingPointCrsArithmeticSingleP;
 }
 #endif /* FLOATINGPOINTCRSARITHMETICSINGLE_H_ */
 

@@ -14,6 +14,6 @@ public:
 protected:
 	uint nGenerations_;
 };
-typedef boost::shared_ptr<TermMaxGenOp> TermMaxGenOpP;
+typedef std::shared_ptr<TermMaxGenOp> TermMaxGenOpP;
 
 #endif // TermMaxGenOp_H

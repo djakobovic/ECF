@@ -46,7 +46,7 @@ bool ParticleSwarmOptimization::initialize(StateP state)
 	if(m_weightType == TIME_VARIANT) {
 		if(state->getRegistry()->isModified("term.maxgen")) {
 			// read maxgen parameter
-			m_maxIter = *(boost::static_pointer_cast<int>( state->getRegistry()->getEntry("term.maxgen") ));
+			m_maxIter = *(std::static_pointer_cast<int>( state->getRegistry()->getEntry("term.maxgen") ));
 		}
 		else {
 			ECF_LOG_ERROR(state, "Error: term.maxgen has to be specified in order to use time variant inertia eight in PSO algorithm");
@@ -57,7 +57,7 @@ bool ParticleSwarmOptimization::initialize(StateP state)
 	// algorithm accepts a single FloatingPoint or Binary genotype 
 	// or a genotype derived from the abstract RealValueGenotype class
 	GenotypeP activeGenotype = state->getGenotypes()[0];
-	RealValueGenotypeP rv = boost::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
+	RealValueGenotypeP rv = std::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
 	if(!rv || state->getGenotypes().size() > 1) {
 		ECF_LOG_ERROR(state, "Error: PSO algorithm accepts only a RealValueGenotype derived genotype! (FloatingPoint or Binary)");
 		throw ("");
@@ -123,14 +123,14 @@ bool ParticleSwarmOptimization::advanceGeneration(StateP state, DemeP deme)
 		IndividualP particle = deme->at(i);
 
 		// the whole point of this section is to compare fitness and pbest
-		FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(3));
+		FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(3));
 		double &particlePbestFitness = flp->realValue[0];
 		double fitness = particle->fitness->getValue();
 
-		flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(0));
+		flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(0));
 		std::vector< double > &positions = flp->realValue;
 
-		flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(2));
+		flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(2));
 		std::vector< double > &pbestx = flp->realValue;
 
 		// set particle pbestx-es
@@ -151,13 +151,13 @@ bool ParticleSwarmOptimization::advanceGeneration(StateP state, DemeP deme)
 
 		IndividualP bestParticle = selBestOp->select( *deme );
 
-		FloatingPointP flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(0));
+		FloatingPointP flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(0));
 		std::vector< double > &positions = flp->realValue;
 
-		flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(1));
+		flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(1));
 		std::vector< double > &velocities = flp->realValue;
 
-		flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(2));
+		flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (particle->getGenotype(2));
 		std::vector< double > &pbestx = flp->realValue;
 
 
@@ -177,7 +177,7 @@ bool ParticleSwarmOptimization::advanceGeneration(StateP state, DemeP deme)
 			break;
 		}
 		// calculate particle velocity according to the velocity equation (1)
-		flp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (bestParticle->getGenotype(2));
+		flp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (bestParticle->getGenotype(2));
 		std::vector< double > &bestParticlesPbestx = flp->realValue;
 		for( uint j = 0; j < velocities.size(); j++ ) {
 			double velocity;

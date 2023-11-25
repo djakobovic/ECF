@@ -17,7 +17,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsShuffle> BinaryCrsShuffleP;
+typedef std::shared_ptr<BinaryCrsShuffle> BinaryCrsShuffleP;
 }
 
 #endif /* BINARYCRSSHUFFLE_H_ */

@@ -33,7 +33,7 @@ protected:
 	bool elitism_;
 
 };
-typedef boost::shared_ptr<GeneticAnnealing> GeneticAnnealingP;
+typedef std::shared_ptr<GeneticAnnealing> GeneticAnnealingP;
 
 #endif // Genetic_Annealing_h
 

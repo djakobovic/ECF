@@ -2,9 +2,6 @@
 #define Registry_h
 
 #include <map>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/foreach.hpp>
-namespace pt = boost::property_tree;
 
 
 #define NODE_ENTRY    "Entry"
@@ -33,7 +30,7 @@ struct Param
 };
 
 }
-typedef boost::shared_ptr<ECF::Param> ParamP;
+typedef std::shared_ptr<ECF::Param> ParamP;
 
 
 /**
@@ -59,7 +56,7 @@ public:
 	void dumpEntries(XMLNode&);
 	void write(XMLNode&);
 };
-typedef boost::shared_ptr<Registry> RegistryP;
+typedef std::shared_ptr<Registry> RegistryP;
 
 #endif 
 

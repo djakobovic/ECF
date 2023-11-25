@@ -96,6 +96,6 @@ public:
 	void moveAhead();
 
 };
-typedef boost::shared_ptr<AntEvalOp> AntEvalOpP;
+typedef std::shared_ptr<AntEvalOp> AntEvalOpP;
 
 #endif

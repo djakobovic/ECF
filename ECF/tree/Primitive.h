@@ -24,7 +24,7 @@ enum terminal_type
 { Double, Int, Bool, Char, String };
 
 class Primitive;
-typedef boost::shared_ptr<Primitive> PrimitiveP;
+typedef std::shared_ptr<Primitive> PrimitiveP;
 
 /**
  * \ingroup tree genotypes primitives
@@ -66,7 +66,7 @@ protected:
 };
 
 }
-typedef boost::shared_ptr<Primitives::Primitive> PrimitiveP;
+typedef std::shared_ptr<Primitives::Primitive> PrimitiveP;
 }
 
 #endif 

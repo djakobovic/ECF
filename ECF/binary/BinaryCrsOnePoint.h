@@ -17,7 +17,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsOnePoint> BinaryCrsOnePointP;
+typedef std::shared_ptr<BinaryCrsOnePoint> BinaryCrsOnePointP;
 }
 
 #endif /* BINARYCRSONEPOINT_H_ */

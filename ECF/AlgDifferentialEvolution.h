@@ -26,7 +26,7 @@ protected:
 	SelectionOperatorP selRandomOp;
 	std::vector<IndividualP> donor_vector;	//!< vector of donor solutions (individuals)
 };
-typedef boost::shared_ptr<DifferentialEvolution> DifferentialEvolutionP;
+typedef std::shared_ptr<DifferentialEvolution> DifferentialEvolutionP;
 
 #endif // Differential Evolution 
 

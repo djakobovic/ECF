@@ -17,6 +17,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<MutNeuronN> MutNeuronNP;
+typedef std::shared_ptr<MutNeuronN> MutNeuronNP;
 // }
 #endif /* MUTNEURONN_H_ */

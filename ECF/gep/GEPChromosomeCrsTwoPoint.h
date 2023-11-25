@@ -18,6 +18,6 @@ namespace GEP
 		void registerParameters(StateP);
 		bool mate(GenotypeP gen1, GenotypeP gen2, GenotypeP child);
 	};
-	typedef boost::shared_ptr<GEPChromosomeCrsTwoPoint> GEPChromosomeCrsTwoPointP;
+	typedef std::shared_ptr<GEPChromosomeCrsTwoPoint> GEPChromosomeCrsTwoPointP;
 }
 #endif // GEPChromosomeCrsTwoPoint_h

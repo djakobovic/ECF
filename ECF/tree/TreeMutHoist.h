@@ -16,6 +16,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeMutHoist> TreeMutHoistP;
+typedef std::shared_ptr<TreeMutHoist> TreeMutHoistP;
 }
 #endif // TreeMutHoist_h

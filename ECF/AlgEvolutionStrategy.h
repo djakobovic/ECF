@@ -57,7 +57,7 @@ protected:
 	{	return first->fitness->isBetterThan(second->fitness);	}
 
 };
-typedef boost::shared_ptr<EvolutionStrategy> EvolutionStrategyP;
+typedef std::shared_ptr<EvolutionStrategy> EvolutionStrategyP;
 
 #endif // Evolution_Strategy_h
 

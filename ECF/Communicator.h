@@ -2,9 +2,9 @@
 #define Communicator_h
 
 class Individual;
-typedef boost::shared_ptr<Individual> IndividualP;
+typedef std::shared_ptr<Individual> IndividualP;
 class State;
-typedef boost::shared_ptr<State> StateP;
+typedef std::shared_ptr<State> StateP;
 
 
 namespace Comm
@@ -135,7 +135,7 @@ public:
 	{	return mpiGlobalSize_;	}
 
 };
-typedef boost::shared_ptr<Communicator> CommunicatorP;
+typedef std::shared_ptr<Communicator> CommunicatorP;
 
 #else // non _MPI
 
@@ -154,12 +154,12 @@ public:
 	{	return 0;	}
 
 };
-typedef boost::shared_ptr<Communicator> CommunicatorP;
+typedef std::shared_ptr<Communicator> CommunicatorP;
 #endif // _MPI
 
 }	// namespace
 
-typedef boost::shared_ptr<Comm::Communicator> CommunicatorP;
+typedef std::shared_ptr<Comm::Communicator> CommunicatorP;
 
 
 #endif // Communicator_h

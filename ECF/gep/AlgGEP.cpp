@@ -147,7 +147,7 @@ void AlgGEP::invert(StateP state, const std::vector<IndividualP>& pool)
 			// invert the i-th individual
 			ECF_LOG(state, 5, "Inverting individual: \n" + pool.at(i)->toString());
 			// first, choose a random gene in the individual
-			GEPChromosomeP individual = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
+			GEPChromosomeP individual = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
 			pool.at(i)->fitness->setInvalid();
 			uint invGene = state_->getRandomizer()->getRandomInteger(individual->genes);
 			uint geneOffset = invGene * (individual->geneLength);
@@ -191,7 +191,7 @@ void AlgGEP::invert(StateP state, const std::vector<IndividualP>& pool)
 void AlgGEP::invertDc(StateP state, const std::vector<IndividualP>& pool)
 {
 	// Do a test and check whether the Dc domain actually exists
-	GEPChromosomeP test = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(0)->getGenotype());
+	GEPChromosomeP test = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(0)->getGenotype());
 	if (test->dcLength < 1){
 		ECF_LOG(state, 5, "ERCs not used in the cromosome. Dc inversion aborted.");
 		return; // Do nothing if ERCs are not used
@@ -202,7 +202,7 @@ void AlgGEP::invertDc(StateP state, const std::vector<IndividualP>& pool)
 			pool.at(i)->fitness->setInvalid();
 			ECF_LOG(state, 5, "Inverting ERCs of individual: \n" + pool.at(i)->toString());
 			// first, choose a random gene in the individual
-			GEPChromosomeP individual = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
+			GEPChromosomeP individual = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
 			uint invGene = state_->getRandomizer()->getRandomInteger(individual->genes);
 			uint geneOffset = invGene * (individual->geneLength);
 			uint dcStart = geneOffset + individual->headLength + individual->tailLength;
@@ -259,7 +259,7 @@ void AlgGEP::transposeIS(StateP state, const std::vector<IndividualP>& pool)
 			ECF_LOG(state, 5, "Transposing individual using IS transposition: \n" + pool.at(i)->toString());
 			pool.at(i)->fitness->setInvalid();
 			// first, choose a random gene in the individual 
-			GEPChromosomeP individual = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
+			GEPChromosomeP individual = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
 			uint invGene = state_->getRandomizer()->getRandomInteger(individual->genes);
 			uint geneOffset = invGene * (individual->geneLength);
 
@@ -315,7 +315,7 @@ void AlgGEP::transposeRIS(StateP state, const std::vector<IndividualP>& pool)
 		if (state_->getRandomizer()->getRandomDouble() <= transRISRate_) {
 			ECF_LOG(state, 5, "Transposing individual using RIS transposition: \n" + pool.at(i)->toString());
 			// first, choose a random gene in the individual
-			GEPChromosomeP individual = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
+			GEPChromosomeP individual = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
 			uint invGene = state_->getRandomizer()->getRandomInteger(individual->genes);
 			uint geneOffset = invGene * (individual->geneLength);
 
@@ -379,7 +379,7 @@ void AlgGEP::transposeGene(StateP state, const std::vector<IndividualP>& pool)
 		if (state_->getRandomizer()->getRandomDouble() <= transGeneRate_) {
 			ECF_LOG(state, 5, "Transposing individual using gene transposition: \n" + pool.at(i)->toString());
 			// first, choose a random gene in the individual 
-			GEPChromosomeP individual = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
+			GEPChromosomeP individual = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
 			if (individual->genes == 1){
 				ECF_LOG(state, 5, "Gene transposition failed: genotype consists of one gene");
 				return;
@@ -417,7 +417,7 @@ void AlgGEP::transposeGene(StateP state, const std::vector<IndividualP>& pool)
 void AlgGEP::transposeDc(StateP state, const std::vector<IndividualP>& pool)
 {
 	// Do a test and check whether the Dc domain actually exists
-	GEPChromosomeP test = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(0)->getGenotype());
+	GEPChromosomeP test = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(0)->getGenotype());
 	if (test->dcLength < 1){
 		ECF_LOG(state, 5, "ERCs not used in the chromosome. Dc transposition aborted.");
 		return; // Do nothing if ERCs are not used
@@ -427,7 +427,7 @@ void AlgGEP::transposeDc(StateP state, const std::vector<IndividualP>& pool)
 			pool.at(i)->fitness->setInvalid();
 			ECF_LOG(state, 5, "Transposing the constant domain: \n" + pool.at(i)->toString());
 			// first, choose a random gene in the individual 
-			GEPChromosomeP individual = boost::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
+			GEPChromosomeP individual = std::static_pointer_cast<GEP::GEPChromosome> (pool.at(i)->getGenotype());
 			uint invGene = state_->getRandomizer()->getRandomInteger(individual->genes);
 			uint geneOffset = invGene * (individual->geneLength);
 			uint dcStart = geneOffset + individual->headLength + individual->tailLength;

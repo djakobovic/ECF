@@ -107,7 +107,7 @@ public:
 };
 }
 
-typedef boost::shared_ptr<BitString::BitString> BitStringP;
+typedef std::shared_ptr<BitString::BitString> BitStringP;
 
 #endif // BitString_h
 

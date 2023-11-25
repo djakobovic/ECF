@@ -55,7 +55,7 @@ public:
 
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<MutScaleNeuron> MutScaleNeuronP;
+typedef std::shared_ptr<MutScaleNeuron> MutScaleNeuronP;
 
 #endif /* MUTSCALENEURON_H_ */
 

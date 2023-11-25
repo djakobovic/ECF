@@ -4,9 +4,9 @@
 #include "Individual.h"
 
 class HallOfFame;
-typedef boost::shared_ptr<HallOfFame> HallOfFameP;
+typedef std::shared_ptr<HallOfFame> HallOfFameP;
 class StatCalc;
-typedef boost::shared_ptr<StatCalc> StatCalcP;
+typedef std::shared_ptr<StatCalc> StatCalcP;
 
 /**
  * \ingroup evol population
@@ -33,7 +33,7 @@ public:
 protected:
 	uint nIndividuals_;
 };
-typedef boost::shared_ptr<Deme> DemeP;
+typedef std::shared_ptr<Deme> DemeP;
 
 #endif // Deme_h
 

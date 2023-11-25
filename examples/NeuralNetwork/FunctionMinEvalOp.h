@@ -40,6 +40,6 @@ public:
 
 	std::vector<double> Errors_;
 };
-typedef boost::shared_ptr<FunctionMinEvalOp> FunctionMinEvalOpP;
+typedef std::shared_ptr<FunctionMinEvalOp> FunctionMinEvalOpP;
 
 #endif /* FUNCTIONMINEVALOP_H_ */

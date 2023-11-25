@@ -456,6 +456,6 @@ private:
 	 void applyActivationFunctionDerivativeToTheLayer(std::vector<double> &activatedOutput, int layer);
 };
 
-typedef boost::shared_ptr<NeuralNetwork> NeuralNetworkP;
+typedef std::shared_ptr<NeuralNetwork> NeuralNetworkP;
 
 #endif

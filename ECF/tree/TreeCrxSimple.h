@@ -19,6 +19,6 @@ public:
 protected:
 	double funcChoiceProb_;
 };
-typedef boost::shared_ptr<TreeCrxSimple> TreeCrxSimpleP;
+typedef std::shared_ptr<TreeCrxSimple> TreeCrxSimpleP;
 }
 #endif // TreeCrxSimple_h

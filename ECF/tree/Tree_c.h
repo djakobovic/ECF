@@ -15,7 +15,7 @@ namespace Tree
  */
 
 class PrimitiveSet;
-typedef boost::shared_ptr<PrimitiveSet> PrimitiveSetP;
+typedef std::shared_ptr<PrimitiveSet> PrimitiveSetP;
 
 /**
  * \ingroup genotypes tree
@@ -80,7 +80,7 @@ public:
 	uint initMinDepth_;          ///< min allowed Tree depth at initialization (minDepth_ used if not defined)
 };
 }
-typedef boost::shared_ptr<Tree::Tree> TreeP;
+typedef std::shared_ptr<Tree::Tree> TreeP;
 
 #endif
 

@@ -59,7 +59,7 @@ namespace Tree
 		std::vector<PrimitiveP> primitives_;                                //!< vector of active (actual used) primitives
 		std::map <std::string, PrimitiveP> mPrimitiveSet_;                  //!< map of active (actual used) primitives
 	};
-	typedef boost::shared_ptr<PrimitiveSetAP> PrimitiveSetAPP;
+	typedef std::shared_ptr<PrimitiveSetAP> PrimitiveSetAPP;
 
 	typedef std::map <std::string, PrimitiveP>::iterator prim_iter;
 	typedef std::map <std::string, Primitives::terminal_type>::iterator type_iter;

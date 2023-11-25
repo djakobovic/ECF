@@ -44,7 +44,7 @@ public:
 
 
 };
-typedef boost::shared_ptr<ArtificialBeeColony> ArtificialBeeColonyP;
+typedef std::shared_ptr<ArtificialBeeColony> ArtificialBeeColonyP;
 
 #endif // Artificial_Bee_Colony_h
 

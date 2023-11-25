@@ -5,7 +5,7 @@
 #include <string>
 
 class MOFitness;
-typedef boost::shared_ptr<MOFitness> MOFitnessP;
+typedef std::shared_ptr<MOFitness> MOFitnessP;
 
 
 // razred nasljedjuje osnovni Fitness, ali zapravo koristimo vektor Fitness objekata!

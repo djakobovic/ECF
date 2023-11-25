@@ -26,7 +26,7 @@ bool PermutationCrsSPX::mate(GenotypeP gen1, GenotypeP gen2, GenotypeP child)
 	Permutation* p2 = (Permutation*) (gen2.get());
 
 	// uzmimo radije smart pointer, da ne moramo rucno brisati visak
-	PermutationP ch = boost::static_pointer_cast<Permutation> (child);
+	PermutationP ch = std::static_pointer_cast<Permutation> (child);
 
 	// stvori kopiju genotipa
 	PermutationP ch2(ch->copy());

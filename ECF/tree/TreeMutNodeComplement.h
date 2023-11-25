@@ -17,6 +17,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeMutNodeComplement> TreeMutNodeComplementP;
+typedef std::shared_ptr<TreeMutNodeComplement> TreeMutNodeComplementP;
 }
 #endif // TreeMutNodeComplement_h

@@ -25,8 +25,8 @@ FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
 
 	// get the genotype we defined in the configuration file
 	Tree::Tree* tree = (Tree::Tree*) individual->getGenotype().get();
-	// (you can also use boost smart pointers:)
-	//TreeP tree = boost::static_pointer_cast<Tree::Tree> (individual->getGenotype());
+	// (you can also use smart pointers:)
+	//TreeP tree = std::static_pointer_cast<Tree::Tree> (individual->getGenotype());
 
 	double value = 0;
 	for(uint i = 0; i < nSamples; i++) {

@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BitStringMutMix> BitStringMutMixP;
+typedef std::shared_ptr<BitStringMutMix> BitStringMutMixP;
 }
 #endif // BitStringMut_h
 

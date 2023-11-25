@@ -103,5 +103,5 @@ public:
 };
 
 }
-typedef boost::shared_ptr<Binary::Binary> BinaryP;
+typedef std::shared_ptr<Binary::Binary> BinaryP;
 #endif

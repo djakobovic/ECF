@@ -15,6 +15,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<PermutationMutToggle> PermutationMutToggleP;
+typedef std::shared_ptr<PermutationMutToggle> PermutationMutToggleP;
 }
 #endif /* PERMUTATIONMUTTOGGLE_H_ */

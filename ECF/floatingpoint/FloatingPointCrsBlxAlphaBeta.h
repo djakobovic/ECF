@@ -19,7 +19,7 @@ public:
 	double alpha;
 	double beta;
 };
-typedef boost::shared_ptr<FloatingPointCrsBlxAlphaBeta> FloatingPointCrsBlxAlphaBetaP;
+typedef std::shared_ptr<FloatingPointCrsBlxAlphaBeta> FloatingPointCrsBlxAlphaBetaP;
 }
 #endif /* FLOATINGPOINTCRSBLXALPHABETA_H_ */
 

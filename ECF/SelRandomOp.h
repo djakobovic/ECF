@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	IndividualP select(const std::vector<IndividualP>&);
 };
-typedef boost::shared_ptr<SelRandomOp> SelRandomOpP;
+typedef std::shared_ptr<SelRandomOp> SelRandomOpP;
 
 #endif // SelRandomOp_h
 

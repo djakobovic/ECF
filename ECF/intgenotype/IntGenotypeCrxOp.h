@@ -12,6 +12,6 @@ namespace IntGenotype
 		bool mate(GenotypeP gen1, GenotypeP gen2, GenotypeP child);
 		
 	};
-	typedef boost::shared_ptr<IntGenotypeCrxOp> IntGenotypeCrxOpP;
+	typedef std::shared_ptr<IntGenotypeCrxOp> IntGenotypeCrxOpP;
 
 }

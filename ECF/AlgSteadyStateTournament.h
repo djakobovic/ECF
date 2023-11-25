@@ -37,7 +37,7 @@ protected:
 	SelectionOperatorP selRandomOp, selWorstOp;
 
 };
-typedef boost::shared_ptr<SteadyStateTournament> SteadyStateTournamentP;
+typedef std::shared_ptr<SteadyStateTournament> SteadyStateTournamentP;
 
 #endif // Steady_State_Tournament_h
 

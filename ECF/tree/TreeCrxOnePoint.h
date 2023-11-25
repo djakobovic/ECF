@@ -18,6 +18,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeCrxOnePoint> TreeCrxOnePointP;
+typedef std::shared_ptr<TreeCrxOnePoint> TreeCrxOnePointP;
 }
 #endif // TreeCrxOnePoint_h

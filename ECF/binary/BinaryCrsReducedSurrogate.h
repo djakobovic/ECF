@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<BinaryCrsReducedSurrogate> BinaryCrsReducedSurrogateP;
+typedef std::shared_ptr<BinaryCrsReducedSurrogate> BinaryCrsReducedSurrogateP;
 }
 
 #endif /* BINARYREDUCEDSURROGATECRS_H_ */

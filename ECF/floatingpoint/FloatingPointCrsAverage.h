@@ -16,7 +16,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<FloatingPointCrsAverage> FloatingPointCrsAverageP;
+typedef std::shared_ptr<FloatingPointCrsAverage> FloatingPointCrsAverageP;
 }
 #endif /* FLOATINGPOINTCRSAVERAGE_H_ */
 

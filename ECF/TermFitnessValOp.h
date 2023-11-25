@@ -15,6 +15,6 @@ public:
 protected:
 	double termValue_;
 };
-typedef boost::shared_ptr<TermFitnessValOp> TermFitnessValOpP;
+typedef std::shared_ptr<TermFitnessValOp> TermFitnessValOpP;
 
 #endif // TermFitnessValOp_H

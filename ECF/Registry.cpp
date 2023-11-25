@@ -117,21 +117,6 @@ bool Registry::isModified(std::string key, uint index)
 }
 
 
-std::string q(const std::string& s) { return "\"" + s + "\""; }
-
-void print_tree(const pt::ptree& pt, int level)
-{
-    const std::string sep(2 * level, ' ');
-    BOOST_FOREACH(const pt::ptree::value_type &v, pt) {
-        std::cout
-            << sep
-            << q(v.first) << " : " << q(v.second.data()) << "\n";
-        print_tree(v.second, level + 1);
-    }
-}
-
-void print_tree(const pt::ptree& pt) { print_tree(pt, 0); }
-
 
 /**
  * Reads entries from an XML node.

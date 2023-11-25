@@ -18,6 +18,6 @@ public:
 	int calculateSize(int avg);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeCrxSizeFair> TreeCrxSizeFairP;
+typedef std::shared_ptr<TreeCrxSizeFair> TreeCrxSizeFairP;
 }
 #endif // TreeCrxSizeFair_h

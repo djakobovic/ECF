@@ -2,9 +2,9 @@
 #define Mutation_h
 
 class Individual;
-typedef boost::shared_ptr<Individual> IndividualP;
+typedef std::shared_ptr<Individual> IndividualP;
 class Genotype;
-typedef boost::shared_ptr<Genotype>  GenotypeP;
+typedef std::shared_ptr<Genotype>  GenotypeP;
 
 /**
  * \ingroup evol evoop
@@ -40,7 +40,7 @@ public:
 	double probability_;    //!< probability of usage of this mutation operator
 	GenotypeP myGenotype_;  //!< pointer to the Genotype that defines this MutationOp
 };
-typedef boost::shared_ptr<MutationOp> MutationOpP;
+typedef std::shared_ptr<MutationOp> MutationOpP;
 
 
 /**
@@ -73,6 +73,6 @@ protected:
 	std::vector<bool> protectedGenotypes_;  //!< protected (non-mutatable) genotypes flags
 
 };
-typedef boost::shared_ptr<Mutation> MutationP;
+typedef std::shared_ptr<Mutation> MutationP;
 
 #endif // Mutation_h

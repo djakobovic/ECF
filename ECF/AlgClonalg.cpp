@@ -2,7 +2,7 @@
 #include "ECF_macro.h"
 #include "AlgClonalg.h"
 #include <cmath>
-
+#include <algorithm>
 
 Clonalg::Clonalg()
 {
@@ -88,7 +88,7 @@ bool Clonalg::initialize(StateP state)
 	// algorithm accepts a single FloatingPoint or Binary genotype 
 	// or a genotype derived from the abstract RealValueGenotype class
 	GenotypeP activeGenotype = state->getGenotypes()[0];
-	RealValueGenotypeP rv = boost::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
+	RealValueGenotypeP rv = std::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
 	if(!rv) {
 		ECF_LOG_ERROR(state, "Error: CLONALG algorithm accepts only a RealValueGenotype derived genotype! (FloatingPoint or Binary)");
 		throw ("");
@@ -141,7 +141,7 @@ bool Clonalg::advanceGeneration(StateP state, DemeP deme)
 bool Clonalg::markAntibodies(DemeP deme)
 {
 	for( uint i = 0; i < deme->getSize(); i++ ) { // for each antibody
-		RealValueGenotypeP flp = boost::static_pointer_cast<RealValueGenotype> (deme->at(i)->getGenotype(1));
+		RealValueGenotypeP flp = std::static_pointer_cast<RealValueGenotype> (deme->at(i)->getGenotype(1));
 		double &parentAb = flp->realValue[0];
 		parentAb = (double)i;				
 	}
@@ -203,7 +203,7 @@ bool Clonalg::hypermutationPhase(StateP state, DemeP deme, std::vector<Individua
 	for( uint i = 0; i < clones.size(); i++ ) { // for each antibody in vector clones
 		IndividualP antibody = clones.at(i);
 		
-		RealValueGenotypeP flp = boost::static_pointer_cast<RealValueGenotype> (antibody->getGenotype(0));
+		RealValueGenotypeP flp = std::static_pointer_cast<RealValueGenotype> (antibody->getGenotype(0));
 	    std::vector< double > &antibodyVars = flp->realValue;
 		
 		// inversely proportional hypermutation (better antibodies are mutated less)
@@ -251,7 +251,7 @@ bool Clonalg::selectionPhase(StateP state, DemeP deme, std::vector<IndividualP> 
 		std::vector<IndividualP> temp_clones;
 
 		for (uint i = 0; i < clones.size(); i++) {
-			RealValueGenotypeP flp = boost::static_pointer_cast<RealValueGenotype> (clones.at(i)->getGenotype(1));
+			RealValueGenotypeP flp = std::static_pointer_cast<RealValueGenotype> (clones.at(i)->getGenotype(1));
 			double &parentAb = flp->realValue[0];
 			if (formerParent != parentAb) {
 				temp_clones.push_back(clones.at(i));
@@ -278,7 +278,7 @@ bool Clonalg::birthPhase(StateP state, DemeP deme, std::vector<IndividualP> &clo
 	uint birthNumber = (uint) (deme->getSize() - clones.size());
 	
 	IndividualP newAntibody = copy(deme->at(0));
-	RealValueGenotypeP flp = boost::static_pointer_cast<RealValueGenotype> (newAntibody->getGenotype(0));
+	RealValueGenotypeP flp = std::static_pointer_cast<RealValueGenotype> (newAntibody->getGenotype(0));
 
 	for (uint i = 0; i<birthNumber; i++) {
 		//create a random antibody

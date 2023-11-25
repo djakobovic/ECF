@@ -55,5 +55,5 @@ public:
 
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<MutGauss> MutGaussP;
+typedef std::shared_ptr<MutGauss> MutGaussP;
 #endif /* MUTGAUSS_H_ */

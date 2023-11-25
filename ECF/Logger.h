@@ -6,7 +6,7 @@
 #include <fstream>
 
 class State;
-typedef boost::shared_ptr<State> StateP;
+typedef std::shared_ptr<State> StateP;
 
 
 /**
@@ -93,6 +93,6 @@ protected:
 	std::ofstream logFile_;
 	StateP state_;
 };
-typedef boost::shared_ptr<Logger> LoggerP;
+typedef std::shared_ptr<Logger> LoggerP;
 
 #endif

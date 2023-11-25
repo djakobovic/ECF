@@ -43,9 +43,9 @@ protected:
 	//! sort vector of antibodies first by their antibody parents and then by their fitness
 	static bool sortPopulationByParentAndFitness (IndividualP ab1,IndividualP ab2) 
 	{ 
-		FloatingPointP flp = boost::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (ab1->getGenotype(1));
+		FloatingPointP flp = std::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (ab1->getGenotype(1));
 		double &parentAb1 = flp->realValue[0];
-		flp = boost::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (ab2->getGenotype(1));
+		flp = std::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (ab2->getGenotype(1));
 		double &parentAb2 = flp->realValue[0];
 
 		if (parentAb1 <parentAb2) return true;
@@ -69,7 +69,7 @@ public:
 	bool replacePopulation(StateP state, DemeP deme, std::vector<IndividualP> &clones);
 
 };
-typedef boost::shared_ptr<Clonalg> ClonalgP;
+typedef std::shared_ptr<Clonalg> ClonalgP;
 
 
 #endif // Clonalg_h

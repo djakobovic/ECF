@@ -4,9 +4,9 @@
 #include "Individual.h"
 
 class Individual;
-typedef boost::shared_ptr<Individual> IndividualP;
+typedef std::shared_ptr<Individual> IndividualP;
 class Genotype;
-typedef boost::shared_ptr<Genotype>  GenotypeP;
+typedef std::shared_ptr<Genotype>  GenotypeP;
 
 /**
  * \ingroup evol evoop
@@ -42,7 +42,7 @@ public:
 	double probability_;     //!< probability of usage of this crossover operator
 	GenotypeP myGenotype_;   //!< pointer to the Genotype that defines this CrossoverOp
 };
-typedef boost::shared_ptr<CrossoverOp> CrossoverOpP;
+typedef std::shared_ptr<CrossoverOp> CrossoverOpP;
 
 
 /**
@@ -68,6 +68,6 @@ protected:
 	uint crxGenotypes_;                                   //!< what genotypes (if more than one) to cross (random, all)
 	std::vector<bool> protectedGenotypes_;                //!< protected (non-crossable) genotypes flags
 };
-typedef boost::shared_ptr<Crossover> CrossoverP;
+typedef std::shared_ptr<Crossover> CrossoverP;
 
 #endif // Crossover_h

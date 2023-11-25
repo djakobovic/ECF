@@ -40,7 +40,7 @@ public:
 	bool setSelPressure(double);
 
 };
-typedef boost::shared_ptr<SelFitnessProportionalOp> SelFitnessProportionalOpP;
+typedef std::shared_ptr<SelFitnessProportionalOp> SelFitnessProportionalOpP;
 
 #endif // SelFitnessProportionalOp_h
 

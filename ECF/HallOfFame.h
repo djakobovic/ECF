@@ -37,5 +37,5 @@ public:
 	uint getLastChange()
 	{	return lastChangeGen_;	}
 };
-typedef boost::shared_ptr<HallOfFame> HallOfFameP;
+typedef std::shared_ptr<HallOfFame> HallOfFameP;
 #endif /* HALLOFFAME_H_ */

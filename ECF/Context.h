@@ -32,6 +32,6 @@ protected:
 	bool bTerminate_;
 	uint generationNo_;
 };
-typedef boost::shared_ptr<EvolutionContext> EvolutionContextP;
+typedef std::shared_ptr<EvolutionContext> EvolutionContextP;
 
 #endif // Context_h

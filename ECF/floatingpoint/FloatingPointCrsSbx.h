@@ -19,7 +19,7 @@ public:
 
 	uint ni;
 };
-typedef boost::shared_ptr<FloatingPointCrsSbx> FloatingPointCrsSbxP;
+typedef std::shared_ptr<FloatingPointCrsSbx> FloatingPointCrsSbxP;
 }
 #endif /* FLOATINGPOINTCRSSBX_H_ */
 

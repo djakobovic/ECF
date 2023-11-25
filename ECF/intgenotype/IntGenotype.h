@@ -75,4 +75,4 @@ namespace IntGenotype
 	};
 }
 
-typedef boost::shared_ptr<IntGenotype::IntGenotype> IntGenotypeP;
+typedef std::shared_ptr<IntGenotype::IntGenotype> IntGenotypeP;

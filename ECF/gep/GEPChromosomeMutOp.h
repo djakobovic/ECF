@@ -17,5 +17,5 @@ namespace GEP{
 		bool mutate(GenotypeP gene);
 	};
 }
-typedef boost::shared_ptr<GEP::GEPChromosomeMutOp> GEPChromosomeMutOpP;
+typedef std::shared_ptr<GEP::GEPChromosomeMutOp> GEPChromosomeMutOpP;
 #endif // GEPChromosomeMutOp_h

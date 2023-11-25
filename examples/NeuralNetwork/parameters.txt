@@ -24,7 +24,7 @@
 			<Entry key="activations">sig sig lin</Entry>
 			<Entry key="lbound">-1</Entry>
 			<Entry key="ubound">1</Entry>
-			<Entry key="dataFile">Testing/data(x2+y2)</Entry>
+			<Entry key="dataFile">data(x2+y2)</Entry>
 			<Entry key="errorFunc">MSE</Entry>
 			<Entry key="mut.gauss">0</Entry>
 			<Entry key="mut.gaussall">0</Entry>
@@ -43,6 +43,6 @@
 		<Entry key="term.maxgen">500000</Entry>
 		<Entry key="log.frequency">10</Entry>
 		<Entry key="log.level">3</Entry>
-		<Entry key="log.filename">Testing/log.txt</Entry>
+		<Entry key="log.filename">log.txt</Entry>
 	</Registry>
 </ECF>

@@ -17,6 +17,6 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<TreeCrxUniform> TreeCrxUniformP;
+typedef std::shared_ptr<TreeCrxUniform> TreeCrxUniformP;
 }
 #endif // TreeCrxUniform_h

@@ -15,7 +15,7 @@ AlgNSGA2::AlgNSGA2()
 
 	selWorstOp = static_cast<SelectionOperatorP> (new SelWorstOp);
 	this->parentPop = new std::vector <IndividualP>();
-	this->fronts = boost::shared_ptr<std::vector <std::vector <IndividualP> > > (new std::vector <std::vector <IndividualP> >());
+	this->fronts = std::shared_ptr<std::vector <std::vector <IndividualP> > > (new std::vector <std::vector <IndividualP> >());
 
 }
 
@@ -35,20 +35,20 @@ void AlgNSGA2::quickSort(std::vector <IndividualP> *group, int left, int right, 
 	int i = left, j = right;
 	
 	IndividualP tmp;
-	MOFitnessP pivotMO =  boost::static_pointer_cast<MOFitness> (group->at((left + right) / 2)->fitness);
+	MOFitnessP pivotMO =  std::static_pointer_cast<MOFitness> (group->at((left + right) / 2)->fitness);
 	double pivot =  pivotMO->getProperty(prop, objective);
  
 	/* partition */
 	while (i <= j) {
-		MOFitnessP moFitnessI =  boost::static_pointer_cast<MOFitness> (group->at(i)->fitness);
+		MOFitnessP moFitnessI =  std::static_pointer_cast<MOFitness> (group->at(i)->fitness);
 		while (moFitnessI->getProperty(prop, objective) <  pivot) {
 			i++;
-			moFitnessI =  boost::static_pointer_cast<MOFitness> (group->at(i)->fitness);
+			moFitnessI =  std::static_pointer_cast<MOFitness> (group->at(i)->fitness);
 		}
-		MOFitnessP moFitnessJ =  boost::static_pointer_cast<MOFitness> (group->at(j)->fitness);
+		MOFitnessP moFitnessJ =  std::static_pointer_cast<MOFitness> (group->at(j)->fitness);
 		while (pivot < moFitnessJ->getProperty(prop, objective)) {				
 			j--;
-			moFitnessJ =  boost::static_pointer_cast<MOFitness> (group->at(j)->fitness);
+			moFitnessJ =  std::static_pointer_cast<MOFitness> (group->at(j)->fitness);
 		}
 
 		if (i <= j) {
@@ -74,9 +74,9 @@ void AlgNSGA2::sortBasedOnProperty(std::vector <IndividualP>* deme, double* fMin
 	int right = deme->size()-1;
 	quickSort(deme, left, right, prop, objective);
 
-	MOFitnessP fitness = boost::static_pointer_cast<MOFitness> (deme->at(left)->fitness);
+	MOFitnessP fitness = std::static_pointer_cast<MOFitness> (deme->at(left)->fitness);
 	*fMin = fitness->getProperty(prop, objective);
-	fitness = boost::static_pointer_cast<MOFitness> (deme->at(right)->fitness);
+	fitness = std::static_pointer_cast<MOFitness> (deme->at(right)->fitness);
 	*fMax = fitness->getProperty(prop, objective);
 }
 
@@ -121,7 +121,7 @@ int AlgNSGA2::checkDominance(MOFitnessP fitness1, MOFitnessP fitness2)
 // O(M * N^2),
 // M => broj funkcija ciljeva
 // N velicina populacije za sortiranje
-void AlgNSGA2::nonDomSorting(boost::shared_ptr<std::vector <IndividualP> > pool, int N, boost::shared_ptr<std::vector <std::vector <IndividualP> > > fronts)
+void AlgNSGA2::nonDomSorting(std::shared_ptr<std::vector <IndividualP> > pool, int N, std::shared_ptr<std::vector <std::vector <IndividualP> > > fronts)
 {
 	fronts->clear();
 	std::vector <IndividualP> Q = *(new std::vector <IndividualP>());
@@ -133,7 +133,7 @@ void AlgNSGA2::nonDomSorting(boost::shared_ptr<std::vector <IndividualP> > pool,
 	// u slucaju da je cijela populacija u prvoj fronti, mora se i zadnji ubaciti u prvu frontu
 	for (uint i = 0; i < pool->size(); i++) {
 		IndividualP ind = pool->at(i);
-		MOFitnessP fitnessI =  boost::static_pointer_cast<MOFitness> (ind->fitness);
+		MOFitnessP fitnessI =  std::static_pointer_cast<MOFitness> (ind->fitness);
 
 		if (i == 0) {
 			fitnessI->nc = 0;
@@ -143,7 +143,7 @@ void AlgNSGA2::nonDomSorting(boost::shared_ptr<std::vector <IndividualP> > pool,
 
 		for (uint j = i+1; j < pool->size(); j++) {
 			IndividualP other = pool->at(j);
-			MOFitnessP fitnessJ = boost::static_pointer_cast<MOFitness> (other->fitness);
+			MOFitnessP fitnessJ = std::static_pointer_cast<MOFitness> (other->fitness);
 
 			if (i == 0) {
 				fitnessJ->nc = 0;
@@ -184,12 +184,12 @@ void AlgNSGA2::nonDomSorting(boost::shared_ptr<std::vector <IndividualP> > pool,
 		std::vector <IndividualP> newQ; 
 		for (uint i=0; i<Q.size(); i++) {
 			//pool->push_back(Q.at(i));
-			MOFitnessP fitnessI = boost::static_pointer_cast<MOFitness> (Q.at(i)->fitness);
+			MOFitnessP fitnessI = std::static_pointer_cast<MOFitness> (Q.at(i)->fitness);
 
 			for (uint j=0; j<fitnessI->Sp->size(); j++) {
 				// za svako rjesenje prolazimo po skupu rjesenja nad kojima ono dominira te azuriramo nc
 				IndividualP dominated = fitnessI->Sp->at(j);
-				MOFitnessP fitnessJ = boost::static_pointer_cast<MOFitness> (dominated->fitness);
+				MOFitnessP fitnessJ = std::static_pointer_cast<MOFitness> (dominated->fitness);
 				fitnessJ->nc--;
 				if (fitnessJ->nc == 0) {
 					fitnessJ->rank = p;
@@ -207,7 +207,7 @@ void AlgNSGA2::nonDomSorting(boost::shared_ptr<std::vector <IndividualP> > pool,
 // O(M * N * logN)
 void AlgNSGA2::crowdedDistanceEst(StateP state, std::vector <IndividualP> *deme) 
 {
-	MOFitnessP fitness =  boost::static_pointer_cast<MOFitness> (deme->at(0)->fitness);
+	MOFitnessP fitness =  std::static_pointer_cast<MOFitness> (deme->at(0)->fitness);
 	uint objCount = fitness->size();
 	for (uint i = 0; i<objCount; i++) {
 
@@ -222,7 +222,7 @@ void AlgNSGA2::crowdedDistanceEst(StateP state, std::vector <IndividualP> *deme)
 		// sad su rjesenja sortirana, na nultom indeksu nalazi se najbolje
 		// na posljednjem nalazi se najlošije
 		for (uint j = 0; j<deme->size(); j++) {
-			fitness =  boost::static_pointer_cast<MOFitness> (deme->at(j)->fitness);
+			fitness =  std::static_pointer_cast<MOFitness> (deme->at(j)->fitness);
 
 
 			if (i == 0) {
@@ -243,11 +243,11 @@ void AlgNSGA2::crowdedDistanceEst(StateP state, std::vector <IndividualP> *deme)
 				// tada je crowding distance odreden napucenoscu prostora rjesenja
 
 				// sljedbenik (j+1) ima veci fitness od (j) s obzirom na funkciju cilja 'i'
-				MOFitnessP fitnessNeighbour = boost::static_pointer_cast<MOFitness> (deme->at(j+1)->fitness);
+				MOFitnessP fitnessNeighbour = std::static_pointer_cast<MOFitness> (deme->at(j+1)->fitness);
 				increment = fitnessNeighbour->getValueOfObjective(i);
 
 				// prethodnik (j-1) ima manji fitness od (j) s obzirom na funkciju cilja 'i'
-				fitnessNeighbour = boost::static_pointer_cast<MOFitness> (deme->at(j-1)->fitness);
+				fitnessNeighbour = std::static_pointer_cast<MOFitness> (deme->at(j-1)->fitness);
 				increment -= fitnessNeighbour->getValueOfObjective(i);
 				
 
@@ -362,8 +362,8 @@ bool AlgNSGA2::advanceGeneration(StateP state, DemeP deme)
 		std::ofstream myfile;
 		myfile.open ("paretoFront.txt");
 		for (uint i = 0; i<deme->size(); i++) {
-			FloatingPointP gen = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (deme->at(i)->getGenotype(0));
-			//MOFitnessP fitness = boost::static_pointer_cast<MOFitness> (deme->at(i)->fitness);
+			FloatingPointP gen = std::static_pointer_cast<FloatingPoint::FloatingPoint> (deme->at(i)->getGenotype(0));
+			//MOFitnessP fitness = std::static_pointer_cast<MOFitness> (deme->at(i)->fitness);
 			myfile << gen->realValue[0] << " " << gen->realValue[1] << "\n";
 		}
 		myfile.close();

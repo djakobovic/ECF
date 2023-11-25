@@ -26,7 +26,7 @@ public:
 	bool initialize(StateP s);
 };
 
-typedef boost::shared_ptr<SimpleRandomizer> SimpleRandomizerP;
+typedef std::shared_ptr<SimpleRandomizer> SimpleRandomizerP;
 
 #endif
 

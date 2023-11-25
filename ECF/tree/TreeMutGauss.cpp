@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "boost/random/normal_distribution.hpp"
-
 
 namespace Tree
 {
@@ -20,8 +18,11 @@ bool TreeMutGauss::initialize(StateP state)
 {
 	voidP sptr = myGenotype_->getParameterValue(state, "mut.gauss");
 	probability_ = *((double*)sptr.get());
+	std::random_device rd;
+	std::mt19937 rng(rd());
+	engine_ = rng;
+	//engine_.seed((uint32_t) time(NULL));
 
-	engine_.seed((uint32_t) time(NULL));
 	return true;
 }
 
@@ -51,13 +52,14 @@ bool TreeMutGauss::mutate(GenotypeP gene)
 
 	// generate Gauss noise offset and add it
 	// TODO: parametrize distribution!
-	boost::normal_distribution<double> N(0, 1);
+	std::normal_distribution<double> N(0, 1);
 
 	// e.g. http://www.codepedia.com/1/CppBoostRandom
 	// TODO: preserve state
 	//boost::lagged_fibonacci607 engine(state_->getRandomizer()->getRandomInteger(100000) + 1);
 
-	double offset = N.operator () <boost::lagged_fibonacci607>(engine_);
+	//double offset = N.operator () <boost::lagged_fibonacci607>(engine_);
+	double offset = N(engine_);
 	double newValue = oldValue + offset;
 
 	// change double ERC value and name

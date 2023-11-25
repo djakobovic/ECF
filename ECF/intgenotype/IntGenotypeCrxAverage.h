@@ -13,6 +13,6 @@ namespace IntGenotype
 		bool mate(GenotypeP gen1, GenotypeP gen2, GenotypeP child);
 		
 	};
-	typedef boost::shared_ptr<IntGenotypeCrxAverage> IntGenotypeCrxAverageP;
+	typedef std::shared_ptr<IntGenotypeCrxAverage> IntGenotypeCrxAverageP;
 
 }

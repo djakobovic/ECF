@@ -37,7 +37,7 @@ bool GenHookeJeeves::initialize(StateP state)
 	// algorithm accepts a single FloatingPoint or Binary genotype 
 	// or a genotype derived from the abstract RealValueGenotype class
 	GenotypeP activeGenotype = state->getGenotypes()[0];
-	RealValueGenotypeP rv = boost::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
+	RealValueGenotypeP rv = std::dynamic_pointer_cast<RealValueGenotype> (activeGenotype);
 	if(!rv) {
 		ECF_LOG_ERROR(state, "Error: This algorithm accepts only a RealValueGenotype derived genotype! (FloatingPoint or Binary)");
 		throw ("");
@@ -124,9 +124,9 @@ bool GenHookeJeeves::advanceGeneration(StateP state, DemeP deme)
 
 		IndividualP ind = deme->at(i);
 		// bazna tocka:
-		FloatingPointP x = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (ind->getGenotype(0));
+		FloatingPointP x = std::static_pointer_cast<FloatingPoint::FloatingPoint> (ind->getGenotype(0));
 		// pocetna tocka pretrazivanja:
-		FloatingPointP xn = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (ind->getGenotype(1));
+		FloatingPointP xn = std::static_pointer_cast<FloatingPoint::FloatingPoint> (ind->getGenotype(1));
 
 		FitnessP finalFit;
 		// je li prva iteracija uz ovaj deltax?
@@ -235,7 +235,7 @@ bool GenHookeJeeves::advanceGeneration(StateP state, DemeP deme)
 				convergedTotal_++;
 
 				// zapisi generaciju u kojoj je jedinka konvergirala
-				FloatingPointP fp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (ind->getGenotype(2));
+				FloatingPointP fp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (ind->getGenotype(2));
 				fp->realValue[0] = (double) state->getGenerationNo();
 			}
 

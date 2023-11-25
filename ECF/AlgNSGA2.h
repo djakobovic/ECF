@@ -9,7 +9,7 @@ class AlgNSGA2 : public Algorithm
 {
 protected:
 	std::vector <IndividualP> *parentPop;
-	boost::shared_ptr<std::vector <std::vector <IndividualP> > > fronts;
+	std::shared_ptr<std::vector <std::vector <IndividualP> > > fronts;
 	SelectionOperatorP selRandomOp, selWorstOp;
 
 public:
@@ -34,7 +34,7 @@ public:
 	int checkDominance(MOFitnessP fitness1, MOFitnessP fitness2);
 
 	// azurira rank polje u MOFitness-u jedinki
-	void nonDomSorting(boost::shared_ptr<std::vector <IndividualP> > pool, int N, boost::shared_ptr<std::vector <std::vector <IndividualP> > > fronts);
+	void nonDomSorting(std::shared_ptr<std::vector <IndividualP> > pool, int N, std::shared_ptr<std::vector <std::vector <IndividualP> > > fronts);
 
 	// azurira crowding_distance polje u MOFitness-u jedinki
 	void crowdedDistanceEst(StateP state, std::vector <IndividualP> *deme);
@@ -42,4 +42,4 @@ public:
 	void makeNewPop(StateP state, DemeP deme);
 
 };
-typedef boost::shared_ptr<AlgNSGA2> AlgNSGA2P;
+typedef std::shared_ptr<AlgNSGA2> AlgNSGA2P;

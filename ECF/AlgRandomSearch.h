@@ -24,6 +24,6 @@ public:
 	bool initialize(StateP state);
 	void registerParameters(StateP state);
 };
-typedef boost::shared_ptr<RandomSearch> RandomSearchP;
+typedef std::shared_ptr<RandomSearch> RandomSearchP;
 
 #endif // Random_Search_h

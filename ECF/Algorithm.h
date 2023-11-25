@@ -318,7 +318,7 @@ public:
 		return true;
 	}
 };
-typedef boost::shared_ptr<Algorithm> AlgorithmP;
+typedef std::shared_ptr<Algorithm> AlgorithmP;
 
 #endif // Algorithm_h
 

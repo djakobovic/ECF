@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <vector>
 #include <random>
+#include <algorithm>
 
 CuckooSearch::CuckooSearch()
 {
@@ -96,8 +97,8 @@ bool CuckooSearch::advanceGeneration(StateP state, DemeP deme)
 
 	// replace some individuals/nests by constructing new nests
 	// nest is replaced only if it is better than original
-	random_shuffle(nest1.begin(), nest1.end());
-	random_shuffle(nest2.begin(), nest2.end());
+	std::shuffle(nest1.begin(), nest1.end(), gen);
+	std::shuffle(nest2.begin(), nest2.end(), gen);
 	double randNum = (double)rand() / RAND_MAX;
 	for (uint i = 0; i < deme->size(); i++) {
 		IndividualP trial = (IndividualP)deme->at(i)->copy();

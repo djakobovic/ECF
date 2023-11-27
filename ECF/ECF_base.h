@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <memory>
 #include "xml/xmlParser.h"
 #ifdef _MPI
 #include "mpi.h"

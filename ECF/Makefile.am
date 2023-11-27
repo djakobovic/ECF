@@ -149,6 +149,13 @@ pkginclude_intgenotype_HEADERS = intgenotype/IntGenotype.h \
 	intgenotype/IntGenotypeCrxOp.h \
 	intgenotype/IntGenotypeCrxTwoPoint.h \
 	intgenotype/IntGenotypeMutOp.h
+pkginclude_gep_HEADERS = gep/AlgGEP.h \
+	gep/GEPChromosome.h \
+	gep/GEPChromosomeCrsGene.h \
+	gep/GEPChromosomeCrsOnePoint.h \
+	gep/GEPChromosomeCrsTwoPoint.h \
+	gep/GEPChromosomeMutGauss.h \
+	gep/GEPChromosomeMutOp.h
 pkginclude_xml_HEADERS = xml/xmlParser.h
 pkginclude_xcs_HEADERS = xcs/AlgXCS.h \
 	xcs/Classifier.h \
@@ -161,9 +168,9 @@ if MPI
 libecf_la_SOURCES = AlgAEliGPEA2.cpp \
 	AlgAEliGPEA.cpp \
 	AlgSGenGPEA.cpp \
-	Communicator.cpp 
+	Communicator.cpp
 else
-libecf_la_SOURCES = 
+libecf_la_SOURCES =
 endif
 libecf_la_SOURCES += Algorithm.cpp \
 	AlgRouletteWheel.cpp \
@@ -282,19 +289,12 @@ libecf_la_SOURCES += Algorithm.cpp \
 	intgenotype/IntGenotypeCrxTwoPoint.cpp \
 	intgenotype/IntGenotypeMutOp.cpp \
 	gep/AlgGEP.cpp \
-	gep/AlgGEP.h \
 	gep/GEPChromosome.cpp \
-	gep/GEPChromosome.h \
 	gep/GEPChromosomeCrsGene.cpp \
-	gep/GEPChromosomeCrsGene.h \
 	gep/GEPChromosomeCrsOnePoint.cpp \
-	gep/GEPChromosomeCrsOnePoint.h \
 	gep/GEPChromosomeCrsTwoPoint.cpp \
-	gep/GEPChromosomeCrsTwoPoint.h \
 	gep/GEPChromosomeMutGauss.cpp \
-	gep/GEPChromosomeMutGauss.h \
 	gep/GEPChromosomeMutOp.cpp \
-	gep/GEPChromosomeMutOp.h \
 	xml/xmlParser.cpp \
 	xcs/AlgXCS.cpp \
 	xcs/Classifier.cpp \

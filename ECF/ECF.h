@@ -50,6 +50,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <memory>
 #include "xml/xmlParser.h"
 
 typedef std::shared_ptr<void>  voidP;

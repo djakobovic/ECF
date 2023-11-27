@@ -1,4 +1,4 @@
-#include "GepChromosomeCrsGene.h"
+#include "GEPChromosomeCrsGene.h"
 
 namespace GEP{
 	void GEPChromosomeCrsGene::registerParameters(StateP state)

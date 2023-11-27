@@ -2,7 +2,7 @@
 #define GEPCHROMOSOME_H
 
 #include "../ECF.h"
-#include "../Tree/Tree.h"
+#include "../tree/Tree.h"
 #include "GEPChromosomeCrsOnePoint.h"
 #include "GEPChromosomeCrsTwoPoint.h"
 #include "GEPChromosomeCrsGene.h"

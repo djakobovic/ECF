@@ -1,4 +1,4 @@
-AC_INIT([libecf], [1.5], [domagoj.jakobovic@fer.hr])
+AC_INIT([libecf], [1.6], [domagoj.jakobovic@fer.hr])
 AM_INIT_AUTOMAKE
 
 AC_PROG_CXX

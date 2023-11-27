@@ -8,6 +8,7 @@ pkginclude_apgenotypedir = $(includedir)/ECF/apgenotype
 pkginclude_intgenotypedir = $(includedir)/ECF/intgenotype
 pkginclude_xmldir = $(includedir)/ECF/xml
 pkginclude_xcsdir = $(includedir)/ECF/xcs
+pkginclude_gepdir = $(includedir)/ECF/gep
 
 pkginclude_main_HEADERS = Algorithm.h \
 	AlgRouletteWheel.h \
@@ -280,10 +281,24 @@ libecf_la_SOURCES += Algorithm.cpp \
 	intgenotype/IntGenotypeCrxOp.cpp \
 	intgenotype/IntGenotypeCrxTwoPoint.cpp \
 	intgenotype/IntGenotypeMutOp.cpp \
+	gep/AlgGEP.cpp \
+	gep/AlgGEP.h \
+	gep/GEPChromosome.cpp \
+	gep/GEPChromosome.h \
+	gep/GEPChromosomeCrsGene.cpp \
+	gep/GEPChromosomeCrsGene.h \
+	gep/GEPChromosomeCrsOnePoint.cpp \
+	gep/GEPChromosomeCrsOnePoint.h \
+	gep/GEPChromosomeCrsTwoPoint.cpp \
+	gep/GEPChromosomeCrsTwoPoint.h \
+	gep/GEPChromosomeMutGauss.cpp \
+	gep/GEPChromosomeMutGauss.h \
+	gep/GEPChromosomeMutOp.cpp \
+	gep/GEPChromosomeMutOp.h \
 	xml/xmlParser.cpp \
 	xcs/AlgXCS.cpp \
 	xcs/Classifier.cpp \
 	xcs/Environment.cpp \
 	xcs/XCSParams.cpp
 
-libecf_la_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/binary -I$(top_srcdir)/floatingpoint -I$(top_srcdir)/bitstring -I$(top_srcdir)/tree -I$(top_srcdir)/permutation -I$(top_srcdir)/apgenotype -I$(top_srcdir)/intgenotype -I$(top_srcdir)/xml -I$(top_srcdir)/xcs
+libecf_la_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/binary -I$(top_srcdir)/floatingpoint -I$(top_srcdir)/bitstring -I$(top_srcdir)/tree -I$(top_srcdir)/permutation -I$(top_srcdir)/apgenotype -I$(top_srcdir)/intgenotype -I$(top_srcdir)/gep -I$(top_srcdir)/xml -I$(top_srcdir)/xcs

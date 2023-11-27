@@ -1,16 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(ECF)
 
-# try this if environment variable is not set
-set (BOOST_ROOT "C:/Program Files/boost_1_74_0")
-
-find_package(Boost)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-else()
-    message(STATUS "Cannot find Boost! Try setting the include dir manually above")
-endif()
-
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../debug)
 endif()
@@ -19,6 +9,20 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 set(SOURCE_FILES
+	ECF/gep/AlgGEP.cpp 
+	ECF/gep/AlgGEP.h 
+	ECF/gep/GEPChromosome.cpp 
+	ECF/gep/GEPChromosome.h 
+	ECF/gep/GEPChromosomeCrsGene.cpp 
+	ECF/gep/GEPChromosomeCrsGene.h 
+	ECF/gep/GEPChromosomeCrsOnePoint.cpp 
+	ECF/gep/GEPChromosomeCrsOnePoint.h 
+	ECF/gep/GEPChromosomeCrsTwoPoint.cpp 
+	ECF/gep/GEPChromosomeCrsTwoPoint.h 
+	ECF/gep/GEPChromosomeMutGauss.cpp 
+	ECF/gep/GEPChromosomeMutGauss.h 
+	ECF/gep/GEPChromosomeMutOp.cpp 
+	ECF/gep/GEPChromosomeMutOp.h 
     ECF/intgenotype/IntGenotype.cpp
     ECF/intgenotype/IntGenotype.h
     ECF/intgenotype/IntGenotypeCrxAverage.cpp

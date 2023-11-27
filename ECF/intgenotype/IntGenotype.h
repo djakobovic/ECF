@@ -18,6 +18,11 @@ namespace IntGenotype
 	 /**
 	  * \ingroup intgenotype genotypes
 	  * \brief IntGenotype class - implements genotype as a vector of int values
+	  *
+	  * IntGenotype parameters are:
+	  * - lbound: lower bound of vector  values
+	  * - ubound: upper bound of vector values
+	  * - size: int vector size
 	  */
 	class IntGenotype : public Genotype
 	{

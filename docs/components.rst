@@ -62,7 +62,7 @@ operators which do nothing):
 			return true;
 		}
 	};
-	typedef boost::shared_ptr<MyGenotypeCrxOp> MyGenotypeCrxOpP;
+	typedef std::shared_ptr<MyGenotypeCrxOp> MyGenotypeCrxOpP;
 
 	// empty mut op
 	class MyGenotypeMutOp : public MutationOp
@@ -74,7 +74,7 @@ operators which do nothing):
 			return true;
 		}
 	};
-	typedef boost::shared_ptr<MyGenotypeMutOp> MyGenotypeMutOpP;
+	typedef std::shared_ptr<MyGenotypeMutOp> MyGenotypeMutOpP;
 
 
 	class MyGenotype : public Genotype
@@ -162,7 +162,7 @@ operators which do nothing):
 				sValues >> realValues_[iVar];
 		}
 	};
-	typedef boost::shared_ptr<MyGenotype> MyGenotypeP;
+	typedef std::shared_ptr<MyGenotype> MyGenotypeP;
 
  
 
@@ -306,7 +306,7 @@ Step 1: First, write an algorithm class:
 
 			// HOW TO: access individual data
 			// get FloatingPoint genotype from individual
-			FloatingPointP fp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (trial->getGenotype(0));
+			FloatingPointP fp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (trial->getGenotype(0));
 			// or use ordinary pointers:
 			//FloatingPoint::FloatingPoint* fp = static_cast<FloatingPoint::FloatingPoint*> (trial->getGenotype().get());
 
@@ -326,7 +326,7 @@ Step 1: First, write an algorithm class:
 			return true;
 		}
 	};
-	typedef boost::shared_ptr<MyAlg> MyAlgP;
+	typedef std::shared_ptr<MyAlg> MyAlgP;
 
 Step 2: then, a new algorithm can be added to ECF with
 'State::addAlgorithm(AlgorithmP)' function, invoked before
@@ -410,7 +410,7 @@ generation number is specified in the configuration file (e.g. with
 			return true;
 		}
 	};
-	typedef boost::shared_ptr<MyOp> MyOpP;
+	typedef std::shared_ptr<MyOp> MyOpP;
 
 | 
 

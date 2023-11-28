@@ -5,10 +5,9 @@
 These examples are a short introduction to the use of ECF when solving a
 specific problem with a specific genotype (individual data structure).
 
-The examples also contain the commented use of boost::shared_ptr smart
-pointers (see e.g. http://www.codeproject.com/KB/stl/boostsmartptr.aspx)
-which are used in other ECF components; for instance, a
-boost::dynamic_pointer_cast construct may be used to check the Genotype
+The examples also contain the commented use of std::shared_ptr 
+pointers which are used in other ECF components; for instance, a
+std::dynamic_pointer_cast construct may be used to check the Genotype
 type in the Individual.
 
 
@@ -55,8 +54,8 @@ and then implement the *evaluate* function:
 		// Each individual is a vector of genotypes (defined in the configuration file).
 		// We'll use BitString, and retrieve it as the first and only genotype
 		BitString::BitString* bitstr = (BitString::BitString*) individual->getGenotype(0).get(); // don't need zero for the first one
-		// (you can also use boost smart pointers:)
-		//BitStringP bitstr = boost::static_pointer_cast<BitString::BitString> (individual->getGenotype(0));
+		// (you can also use smart pointers:)
+		//BitStringP bitstr = std::static_pointer_cast<BitString::BitString> (individual->getGenotype(0));
 
 		// count the ones; where are they?
 		// BitString genotype contains a std::vector of bool's named 'bits'
@@ -168,8 +167,8 @@ and then implement the *evaluate* function:
 
            // we define FloatingPoint as the only genotype (in the configuration file)
            FloatingPoint::FloatingPoint* gen = (FloatingPoint::FloatingPoint*) individual->getGenotype().get();
-           // (you can also use boost smart pointers:)
-           //FloatingPointP gen = boost::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (individual->getGenotype());
+           // (you can also use smart pointers:)
+           //FloatingPointP gen = std::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (individual->getGenotype());
 
            double realTemp, value = 0;
            // we implement the fitness function 'as is', without any translation
@@ -391,8 +390,8 @@ evaluator implementation may look like this:
 
            // get the genotype we defined in the configuration file
            Tree::Tree* tree = (Tree::Tree*) individual->getGenotype().get();
-           // (you can also use boost smart pointers:)
-           //TreeP tree = boost::static_pointer_cast<Tree::Tree> (individual->getGenotype());
+           // (you can also use smart pointers:)
+           //TreeP tree = std::static_pointer_cast<Tree::Tree> (individual->getGenotype());
 
            double value = 0;
            for(uint i = 0; i < nSamples; i++) {
@@ -531,8 +530,8 @@ cities or load them from a separate problem description file:
 
 		// get Permutation genotype from the individual
 		Permutation::Permutation* perm = (Permutation::Permutation*) individual->getGenotype().get();
-		// (you can also use boost smart pointers:)
-		//PermutationP perm = boost::static_pointer_cast<Permutation::Permutation> (individual->getGenotype());
+		// (you can also use smart pointers:)
+		//PermutationP perm = std::static_pointer_cast<Permutation::Permutation> (individual->getGenotype());
 
 		int fitnessV = 0;
 		// genotype Permutation keeps a vector of indexes named 'variables'

@@ -1,1 +1,1 @@
-html_theme = "default"
+html_theme = default

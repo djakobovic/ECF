@@ -1,6 +1,6 @@
 
 **********************************************************
-Evolutionary Computation Framework - documentation (v 1.5)
+Evolutionary Computation Framework - documentation (v 1.6)
 **********************************************************
 
 Introduction
@@ -101,9 +101,7 @@ while the **configuration file** might look like this:
 	</ECF>
 
 | **Implementation note**: each *Class* in ECF has an associated type
-  *ClassP* which is a *boost* smart pointer to an object of that class.
-| See `more information on using
-  boost <http://www.codeproject.com/KB/stl/boostsmartptr.aspx>`__.
+  *ClassP* which is a *std::shared_ptr* pointer to an object of that class.
 
 
 

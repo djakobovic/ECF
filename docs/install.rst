@@ -1,28 +1,6 @@
 1. ECF installation / running the examples
 ==========================================
 
-Prerequisites – boost library
------------------------------
-
-ECF uses some features of *boost* C++ library
-(`www.boost.org <http://www.boost.org/>`__). To use ECF, a minimal boost
-installation (only header files, no compilation) is needed. After the
-boost source files are extracted, the ECF projects may be compiled (on
-Windows, check the boost directory location!).
-
-**NOTE**: in Visual Studio projects included in the ECF, *boost* include
-directory is set to "C:\\Program Files\\boost\\boost_1_74_0". If you
-installed to a different location (or use a newer boost version), change
-the directory accordingly (in project's *Additional include
-directories*).
-
-**Obtaining boost**: the latest version can be downloaded from
-https://www.boost.org/users/download/. For linux packages, be sure to
-search for 'libboost-dev' package (e.g. 'sudo apt-get install
-libboost-dev').
-
---------------
-
 Installation
 ------------
 
@@ -58,10 +36,7 @@ exist", reload the CMake project with Tools - CMake - Reload.
 Autotools (Linux)
 ~~~~~~~~~~~~~~~~~
 
-*Semi-automatic* installation is available with this `nifty little
-script <http://ecf.zemris.fer.hr/ecf_install.sh>`__ (thanks to Jernej Makovsek), tested on
-Ubuntu.
-Otherwise, standard installation procedure applies (you may need to
+Standard installation procedure applies (you may need to
 *chmod* the 'configure' script beforehand to be able to execute it):
 
 ::
@@ -70,20 +45,20 @@ Otherwise, standard installation procedure applies (you may need to
     $ make
     $ make install
 
+Should any errors occurr, or if *configure* is missing, try reconfiguring the package by running
+aclocal, autoconf and automake (or just autoreconf -fi) before
+./configure.
+
+::
+
+	$ autoreconf -fi
+
 By default, the compiled libraries are installed in folder
 '/usr/local/lib', while the headers are installed in
 '/usr/local/include'.
 You can specify a different installation folder by giving the option
 '--prefix=<PATH>' to the 'configure' script, e.g.
 --prefix=/home/someuser/ecf/.
-
-Should any errors occurr, try reconfiguring the package by running
-aclocal, autoconf and automake  (or just autoreconf -fi) before
-./configure.
-
-::
-
-	$ autoreconf -fi
 
 Each directory in /examples contains a Makefile used to build a specific
 example:

@@ -168,7 +168,7 @@ and then implement the *evaluate* function:
            // we define FloatingPoint as the only genotype (in the configuration file)
            FloatingPoint::FloatingPoint* gen = (FloatingPoint::FloatingPoint*) individual->getGenotype().get();
            // (you can also use smart pointers:)
-           //FloatingPointP gen = std::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (individual->getGenotype());
+           //FloatingPointP gen = std::static_pointer_cast<FloatingPoint::FloatingPoint> (individual->getGenotype());
 
            double realTemp, value = 0;
            // we implement the fitness function 'as is', without any translation

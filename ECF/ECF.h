@@ -55,7 +55,7 @@
 
 typedef std::shared_ptr<void>  voidP;
 
-const std::string ECF_VERSION = "1.6";
+const std::string ECF_VERSION = "1.6.1";
 
 // base:
 #include "ECF_base.h"

@@ -52,8 +52,8 @@ and simply not change it during the evolution.
 3. Defining Ephemereal random constants (ERCs)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`ERCs <http://cs.gmu.edu/~eclab/projects/ecj/docs/classdocs/ec/gp/ERC.html>`__
-of in-built types may be defined in the configuration file in the
+ERCs represent a special type of terminals that assume a random value upon initialization, but the initial value can later be modified with mutation or specialized operators.
+ERCs of in-built types may be defined in the configuration file in the
 "terminalset" variable, e.g.:
 
 .. code-block:: xml
@@ -76,8 +76,6 @@ operator ("mut.gauss" in Tree genotype parameters).
 
 To distinguish ERCs from constants in output, any ERC will have a prefix
 denoting its type, e.g. D_1.234, I_3
-
-*TODO*: user-type ERCs
 
  
 

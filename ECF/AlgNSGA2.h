@@ -7,7 +7,7 @@
 
 class AlgNSGA2 : public Algorithm
 {
-protected:
+public:
 	std::vector <IndividualP> *parentPop;
 	std::shared_ptr<std::vector <std::vector <IndividualP> > > fronts;
 	SelectionOperatorP selRandomOp, selWorstOp;

@@ -112,7 +112,7 @@ bool Migration::operate(StateP state)
 				victim = selOp_[RANDOM]->select(*myDeme);
 			while(victim == myBest);
 
-			state->getAlgorithm()->replaceWith(victim, immigrants[i]);
+			myDeme->replace(victim->index, immigrants[i]);
 		}
 	}
 

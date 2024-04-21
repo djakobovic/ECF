@@ -1,14 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(GPSymbReg)
 
-# try setting dir manually if environment variable is not set
-#set (BOOST_ROOT "C:/Program Files/boost_1_74_0")
-
-find_package(Boost)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-endif()
-
 set(SOURCE_FILES
     main.cpp
     SymbRegEvalOp.cpp

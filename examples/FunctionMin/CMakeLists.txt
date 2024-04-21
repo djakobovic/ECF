@@ -6,14 +6,6 @@ set(SOURCE_FILES
     FunctionMinEvalOp.h
     main.cpp)
 
-# try setting dir manually if environment variable is not set
-#set (BOOST_ROOT "C:/Program Files/boost_1_74_0")
-
-find_package(Boost)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-endif()
-
 include_directories(../../)
 add_executable(FunctionMin ${SOURCE_FILES})
 

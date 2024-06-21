@@ -21,7 +21,7 @@
 		<GEPChromosome>
 			<Entry key="headlength">3</Entry>
 			<Entry key="genes">2</Entry>
-			<Entry key="functionset">sin + * - /</Entry>
+			<Entry key="functionset">avg sin + * - /</Entry>
 			<Entry key="terminalset">X Y 1</Entry>
 			<Entry key="linkingfunctions">+ * / - sin</Entry>
 			<Entry key="linklength">1</Entry>
@@ -35,9 +35,10 @@
 
 	<Registry>
 		<Entry key="randomizer.seed">0</Entry>
-		<Entry key="population.size">50</Entry>
+		<Entry key="population.size">100</Entry>
 		<Entry key="population.demes">1</Entry>
 		<Entry key="mutation.indprob">0.5</Entry>
+		<Entry key="term.maxgen">50</Entry>
 		<Entry key="term.eval">5000</Entry>
 		<Entry key="term.fitnessval">0.00001</Entry>
 		<Entry key="log.level">3</Entry>

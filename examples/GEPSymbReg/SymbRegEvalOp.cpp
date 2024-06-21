@@ -74,14 +74,18 @@ FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
 	// The system is multigenic. We iterate over every gene, transform it to a tree, execute it and link it with the results of its fellow genes
 	// The user specifies the linking function programatically or in the parameters
 
-	// a) Transform genes into subtrees and store them in a vector
-	/*std::vector<Tree::Tree*> tree;
-	for (uint g = 0; g < gep->genes; g++){
-		tree.push_back(gep->toTree(g));
-	}*/
+	//// a) Transform genes into subtrees and store them in a vector
+	//std::vector<Tree::Tree*> tree;
+	//tree.push_back(gep->makeCellTree());
+	//for (uint g = 0; g < gep->genes; g++){
+	//	tree.push_back(gep->toTree(g));
+	////	cout << tree[g]->toString() << endl;
+	//}
+
 
 	// b) or just assemble the whole expression
 	gep->assemble();
+
 
 	double value = 0;
 	double result;

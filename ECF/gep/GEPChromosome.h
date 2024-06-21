@@ -56,6 +56,7 @@ namespace GEP{
 		GEPChromosome* copy();
 		std::vector<CrossoverOpP> getCrossoverOp();
 		std::vector<MutationOpP> getMutationOp();
+		bool addFunction(Tree::PrimitiveP func);
 		void registerParameters(StateP state);
 		bool initialize(StateP state);
 		void initializeFirst(GEPChromosome* home);

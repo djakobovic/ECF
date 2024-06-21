@@ -22,7 +22,7 @@
         <Entry desc="" key="batch.repeats">0</Entry>
         <Entry desc="" key="log.filename">log.txt</Entry>
         <Entry desc="" key="log.level">3</Entry>
-		<Entry desc="" key="log.frequency">10</Entry>
+		<Entry desc="" key="log.frequency">1</Entry>
         <Entry desc="" key="mutation.indprob">0.3</Entry>
         <Entry desc="" key="population.size">50</Entry>
 		<Entry desc="" key="term.maxgen">100</Entry>

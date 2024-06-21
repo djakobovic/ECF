@@ -46,6 +46,18 @@ namespace GEP{
 		registerParameter(state, "linklength", (voidP)(new uint(1)), ECF::UINT);
 	}
 
+
+	/**
+	 * \brief Add user defined function primitive.
+	 * Must be called prior to initialization (no impact otherwise).
+	 */
+	bool GEPChromosome::addFunction(Tree::PrimitiveP func)
+	{
+		userFunctions_.push_back(func);
+		return true;
+	}
+
+
 	void GEPChromosome::generateChromosome()
 	{
 		Tree::Node* node;

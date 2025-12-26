@@ -9,7 +9,7 @@ namespace Primitives {
  * \ingroup tree genotypes primitives
  * \brief Terminal tree node class (Tree genotype).
  *
- * Terminal ia s Primitive that represents a single value (double by default).
+ * Terminal is a Primitive that represents a single value (double by default).
  */
 template <class T>
 class TerminalT : public Primitive
@@ -78,7 +78,7 @@ void TerminalT<T>::execute(void* result, Tree& tree)
  * Value of an ERC instance is defined once - when assigning to a node in a new tree. 
  * Only double-typed ERC instances may change value (with Gaussian mutation). 
  *
- * ERC's are distinguished from regular terminals by the prefix denoting their type, e.g.:
+ * ERCs are distinguished from regular terminals by the prefix denoting their type, e.g.:
  * D_3.14, I_5, B_true, C_a
  */
 template <class T>
@@ -91,8 +91,7 @@ public:
 	ERC()
 	{
 		nArguments_ = 0;
-		name_ = "ERC";
-		// ime se treba postaviti u Tree::initialize zbog prefiksa po tipu
+		name_ = "ERC";	// name should be set in Tree::initialize because of type prefix
 	}
 
 

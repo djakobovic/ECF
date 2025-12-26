@@ -30,7 +30,7 @@ bool Primitive::initialize(StateP state)
 /**
  * \brief	Assign primitive to node (when building a tree).
  * The default behaviour just returns the same pointer (common primitives).
- * ERC's should override and generate a new object with a new value.
+ * ERCs should override and generate a new object with a new value.
  * \param	sptr to this primitive
  */
 PrimitiveP Primitive::assignToNode(PrimitiveP primitive)
@@ -54,7 +54,7 @@ void Primitive::getValue(void* value)
 /**
  * \brief	Copy primitive (when copying a node, e.g. in crossover).
  * The default behaviour just returns the same pointer (common primitives).
- * (ERC's should override and make a new copy of the original object).
+ * (ERCs should override and make a new copy of the original object).
  * \param	sptr to this primitive
  */
 PrimitiveP Primitive::copyWithNode(PrimitiveP primitive)

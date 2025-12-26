@@ -129,7 +129,7 @@ public:
 
 		// HOW TO: access individual data
 		// get FloatingPoint genotype from individual
-		FloatingPointP fp = boost::static_pointer_cast<FloatingPoint::FloatingPoint> (trial->getGenotype(0));
+		FloatingPointP fp = std::static_pointer_cast<FloatingPoint::FloatingPoint> (trial->getGenotype(0));
 		// or use ordinary pointers:
 		//FloatingPoint::FloatingPoint* fp = static_cast<FloatingPoint::FloatingPoint*> (trial->getGenotype().get());
 
@@ -149,7 +149,7 @@ public:
 		return true;
 	}
 };
-typedef boost::shared_ptr<MyAlg> MyAlgP;
+typedef std::shared_ptr<MyAlg> MyAlgP;
 
 
 
@@ -178,11 +178,6 @@ int main(int argc, char **argv)
 }
 
 
-
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-#include <boost/foreach.hpp>
-namespace pt = boost::property_tree;
 
 // 2. primjer: GA minimizacija funkcije
 /*

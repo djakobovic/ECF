@@ -14,6 +14,6 @@ public:
 	std::vector<double> y;
 	uint nTocaka;
 };
-typedef boost::shared_ptr<AproxEvalOp> AproxEvalOpP;
+typedef std::shared_ptr<AproxEvalOp> AproxEvalOpP;
 
 #endif // aproskimacija_h

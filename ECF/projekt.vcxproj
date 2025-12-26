@@ -25,18 +25,18 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MPI_Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -299,23 +299,57 @@
     <ClInclude Include="xcs\ClassifierParams.h" />
     <ClInclude Include="xcs\Environment.h" />
     <ClInclude Include="xcs\XCSParams.h" />
-    <ClInclude Include="cartesian\Add.h" />
-    <ClInclude Include="cartesian\And.h" />
-    <ClInclude Include="cartesian\Cartesian.h" />
-    <ClInclude Include="cartesian\Cartesian_c.h" />
-    <ClInclude Include="cartesian\CartesianCrsOnePoint.h" />
-    <ClInclude Include="cartesian\CartesianMutOnePoint.h" />
-    <ClInclude Include="cartesian\Cos.h" />
-    <ClInclude Include="cartesian\Div.h" />
-    <ClInclude Include="cartesian\Function.h" />
-    <ClInclude Include="cartesian\FunctionSet.h" />
-    <ClInclude Include="cartesian\Mul.h" />
-    <ClInclude Include="cartesian\Not.h" />
-    <ClInclude Include="cartesian\Or.h" />
-    <ClInclude Include="cartesian\Sin.h" />
-    <ClInclude Include="cartesian\Sub.h" />
-    <ClInclude Include="cartesian\Xnor.h" />
-    <ClInclude Include="cartesian\Xor.h" />
+    <ClInclude Include="cartesian\Add.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\And.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Cartesian.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Cartesian_c.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\CartesianCrsOnePoint.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\CartesianMutOnePoint.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Cos.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Div.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Function.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\FunctionSet.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Mul.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Not.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Or.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Sin.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Sub.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Xnor.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="cartesian\Xor.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AlgCuckooSearch.cpp" />
@@ -451,10 +485,18 @@
     <ClCompile Include="xcs\Classifier.cpp" />
     <ClCompile Include="xcs\Environment.cpp" />
     <ClCompile Include="xcs\XCSParams.cpp" />
-    <ClCompile Include="cartesian\Cartesian.cpp" />
-    <ClCompile Include="cartesian\CartesianCrsOnePoint.cpp" />
-    <ClCompile Include="cartesian\CartesianMutOnePoint.cpp" />
-    <ClCompile Include="cartesian\FunctionSet.cpp" />
+    <ClCompile Include="cartesian\Cartesian.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="cartesian\CartesianCrsOnePoint.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="cartesian\CartesianMutOnePoint.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="cartesian\FunctionSet.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

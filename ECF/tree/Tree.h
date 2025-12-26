@@ -17,6 +17,8 @@
 #include "Neg.h"
 #include "Max.h"
 #include "Min.h"
+#include "Sqrt.h"
+#include "Log.h"
 
 #endif
 

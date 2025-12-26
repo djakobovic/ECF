@@ -1084,12 +1084,12 @@ bool State::run()
 	population_->updateDemeStats();
 
 	// call user-defined operators
-	ECF_LOG(this, 4, "Calling user defined operators...");
+	ECF_LOG(this, 5, "Calling user defined operators...");
 	for(uint i = 0; i < activeUserOps_.size(); i++)
 		activeUserOps_[i]->operate(state_);
 
 	// termination ops
-	ECF_LOG(this, 4, "Checking termination conditions...");
+	ECF_LOG(this, 5, "Checking termination conditions...");
 	for(uint i = 0; i < activeTerminationOps_.size(); i++)
 		activeTerminationOps_[i]->operate(state_);
 
@@ -1106,13 +1106,16 @@ bool State::run()
 
 		population_->updateDemeStats();
 
+		IndividualP bestInd = this->getPopulation()->getHof()->getBest().at(0);
+		ECF_LOG(this, 4, "Generation best:\n" + bestInd->toString());
+
 		// call user-defined operators
-		ECF_LOG(this, 4, "Calling user defined operators...");
+		ECF_LOG(this, 5, "Calling user defined operators...");
 		for(uint i = 0; i < activeUserOps_.size(); i++)
 			activeUserOps_[i]->operate(state_);
 
 		// termination ops
-		ECF_LOG(this, 4, "Checking termination conditions...");
+		ECF_LOG(this, 5, "Checking termination conditions...");
 		for(uint i = 0; i < activeTerminationOps_.size(); i++)
 			activeTerminationOps_[i]->operate(state_);
 

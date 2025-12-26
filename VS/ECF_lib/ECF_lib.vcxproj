@@ -29,23 +29,23 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -252,6 +252,8 @@
     <ClInclude Include="..\..\ECF\TermMaxGenOp.h" />
     <ClInclude Include="..\..\ECF\TermMaxTimeOp.h" />
     <ClInclude Include="..\..\ECF\TermStagnationOp.h" />
+    <ClInclude Include="..\..\ECF\tree\Log.h" />
+    <ClInclude Include="..\..\ECF\tree\Sqrt.h" />
     <ClInclude Include="..\..\ECF\xml\xmlParser.h" />
     <ClInclude Include="..\..\ECF\binary\Binary.h" />
     <ClInclude Include="..\..\ECF\binary\BinaryCrsHalfUniform.h" />

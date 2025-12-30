@@ -41,6 +41,6 @@ public:
 	struct solution* solutionInstance;
 
 };
-typedef boost::shared_ptr<KnapsackEvalOp> KnapsackEvalOpP;
+typedef std::shared_ptr<KnapsackEvalOp> KnapsackEvalOpP;
 
 #endif KnapsackEvalOp_h

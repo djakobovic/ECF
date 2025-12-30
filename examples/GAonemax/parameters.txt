@@ -8,15 +8,15 @@
 
 	<Genotype>
 		<BitString>
-			<Entry key="size">500</Entry>
+			<Entry key="size">50</Entry>
 		</BitString>
 	</Genotype>
 
 	<Registry>
 		<Entry key="randomizer.seed">0</Entry> 
-		<Entry key="population.size">100</Entry>
+		<Entry key="population.size">3</Entry>
 		<Entry key="mutation.indprob">0.3</Entry> 
-		<Entry key="term.eval">30000</Entry>
+		<Entry key="term.eval">0</Entry>
 		<Entry key="term.fitnessval">500</Entry> 
 		<Entry key="log.level">3</Entry>
 		<Entry key="log.frequency">10</Entry>

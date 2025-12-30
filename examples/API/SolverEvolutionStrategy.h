@@ -24,7 +24,7 @@ protected:
 	{	return first->fitness->isBetterThan(second->fitness);	}
 
 };
-typedef boost::shared_ptr<SolverEvolutionStrategy> SolverEvolutionStrategyP;
+typedef std::shared_ptr<SolverEvolutionStrategy> SolverEvolutionStrategyP;
 
 #endif // Evolution_Strategy_h
 

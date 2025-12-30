@@ -118,8 +118,8 @@ FitnessP TSPEvalOp::evaluate(IndividualP individual)
 
 	// get Permutation genotype from the individual
 	Permutation::Permutation* perm = (Permutation::Permutation*) individual->getGenotype().get();
-	// (you can also use boost smart pointers:)
-	//PermutationP perm = boost::static_pointer_cast<Permutation::Permutation> (individual->getGenotype());
+	// (you can also use smart pointers:)
+	//PermutationP perm = std::static_pointer_cast<Permutation::Permutation> (individual->getGenotype());
 
 	int fitnessV = 0;
 	// genotype Permutation keeps a vector of indexes named 'variables'

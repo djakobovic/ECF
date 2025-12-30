@@ -35,7 +35,7 @@ public:
 
   FitnessP evaluate(IndividualP individual)
   {
-    TreeP tree = boost::dynamic_pointer_cast<Tree::Tree>(individual->getGenotype());
+    TreeP tree = std::static_pointer_cast<Tree::Tree>(individual->getGenotype());
     std::string nodes;
     nodes.reserve(1500);
     for (unsigned i = 0; i < tree->size(); ++i)

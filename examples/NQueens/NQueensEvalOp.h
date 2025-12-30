@@ -50,6 +50,6 @@ public:
 	void readSolutionInstance(IndividualP, struct solution*);
 
 };
-typedef boost::shared_ptr<NQueensEvalOp> NQueensEvalOpP;
+typedef std::shared_ptr<NQueensEvalOp> NQueensEvalOpP;
 
 #endif NQueensEvalOp_h

@@ -8,11 +8,11 @@
 		<FloatingPoint>
 			<Entry key="lbound">-50</Entry>
 			<Entry key="ubound">50</Entry>
-			<Entry key="dimension">10</Entry>
+			<Entry key="dimension">30</Entry>
 		</FloatingPoint>
 	</Genotype>
 	<Registry>
-		<Entry key="function">4</Entry>
+		<Entry key="function">1</Entry>
 		<Entry key="population.size">500</Entry>
 		<Entry key="mutation.indprob">0.3</Entry>
 		<Entry key="term.maxgen">5000</Entry>

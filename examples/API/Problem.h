@@ -7,7 +7,7 @@
 //
 class Move
 {};
-typedef boost::shared_ptr<Move> MoveP;
+typedef std::shared_ptr<Move> MoveP;
 
 
 //
@@ -15,7 +15,7 @@ typedef boost::shared_ptr<Move> MoveP;
 //
 class Path
 {};
-typedef boost::shared_ptr<Path> PathP;
+typedef std::shared_ptr<Path> PathP;
 
 
 //

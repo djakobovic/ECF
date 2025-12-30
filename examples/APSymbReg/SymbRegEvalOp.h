@@ -15,7 +15,6 @@
  * \par genotype parameters (in the config file)
  * - set of functions (inner tree nodes)
  * - set of terminals (variables and constants, tree leaves)
- * - min and max tree depth
  * - lbound and ubound for floating point representation in AP genotype
  *
  */

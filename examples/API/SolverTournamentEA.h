@@ -14,4 +14,4 @@ protected:
 	SelectionOperatorP selRandomOp, selWorstOp;
 
 };
-typedef boost::shared_ptr<SolverTournamentEA> SolverTournamentEAP;
+typedef std::shared_ptr<SolverTournamentEA> SolverTournamentEAP;

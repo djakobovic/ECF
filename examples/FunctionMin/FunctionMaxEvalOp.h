@@ -27,6 +27,6 @@ public:
 				return fitness;
 		}
 };
-typedef boost::shared_ptr<FunctionMaxEvalOp> FunctionMaxEvalOpP;
+typedef std::shared_ptr<FunctionMaxEvalOp> FunctionMaxEvalOpP;
 
 #endif /* FUNCTIONMAXEVALOP_H_ */

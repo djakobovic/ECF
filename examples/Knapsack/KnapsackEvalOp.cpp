@@ -111,7 +111,7 @@ FitnessP KnapsackEvalOp::evaluate(IndividualP individual)
     // Each individual is a vector of genotypes (defined in the configuration file).
     // We'll use BitString, and put it as the first and only genotype
 	BitString::BitString* bitstr = (BitString::BitString*) individual->getGenotype().get();
-	//BitStringP bitstr = boost::static_pointer_cast<BitString::BitString> (individual->getGenotype(0)); // don't need zero for the first one
+	//BitStringP bitstr = std::static_pointer_cast<BitString::BitString> (individual->getGenotype(0)); // don't need zero for the first one
         
 	// evaluate
 	struct solution* s = solutionInstance;

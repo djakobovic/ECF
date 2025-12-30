@@ -48,6 +48,6 @@ public:
 	void populateSolutionInstance(IndividualP, struct solution*);
 	void readSolutionInstance(IndividualP, struct solution*);
 };
-typedef boost::shared_ptr<FlowshopEvalOp> FlowshopEvalOpP;
+typedef std::shared_ptr<FlowshopEvalOp> FlowshopEvalOpP;
 
 #endif FlowshopEvalOp_h

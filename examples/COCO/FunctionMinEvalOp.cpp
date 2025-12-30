@@ -106,14 +106,14 @@ FitnessP FunctionMinEvalOp::evaluate(IndividualP individual)
 
 	// uncomment the following line when using FloatingPoint genotype:
 	FloatingPoint::FloatingPoint* gen = (FloatingPoint::FloatingPoint*) individual->getGenotype().get();
-	// (you can also use boost smart pointers:)
-	//FloatingPointP gen = boost::dynamic_pointer_cast<FloatingPoint::FloatingPoint> (individual->getGenotype());
+	// (you can also use smart pointers:)
+	//FloatingPointP gen = std::static_pointer_cast<FloatingPoint::FloatingPoint> (individual->getGenotype());
 
 	// alternative encoding: Binary Genotype
 
 	// uncomment the following line when using Binary genotype:
 	//Binary::Binary* gen = (Binary::Binary*) individual->getGenotype().get();
-	//BinaryP gen = boost::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype());
+	//BinaryP gen = std::static_pointer_cast<Binary::Binary> (individual->getGenotype());
 
 	double value = 0;
 

@@ -42,15 +42,15 @@ public:
 	std::map <std::string, PrimitiveP> mAllPrimitives_;                 //!< map of all registered primitive functions
 	std::map <std::string, Primitives::terminal_type> mTypeNames_;
 
-protected:
-	StateP state_;
-
 	std::vector<PrimitiveP> terminalSet_;                               //!< vector of active (actual used) terminals
 	std::map <std::string, PrimitiveP> mTerminalSet_;                   //!< map of active (actual used) terminals
 	std::vector<PrimitiveP> functionSet_;                               //!< vector of active (actual used) functions
 	std::map <std::string, PrimitiveP> mFunctionSet_;                   //!< map of active (actual used) functions
 	std::vector<PrimitiveP> primitives_;                                //!< vector of active (actual used) primitives
 	std::map <std::string, PrimitiveP> mPrimitiveSet_;                  //!< map of active (actual used) primitives
+
+protected:
+	StateP state_;
 };
 typedef std::shared_ptr<PrimitiveSet> PrimitiveSetP;
 

@@ -97,7 +97,7 @@ FitnessP MazeEnv::evaluate(IndividualP ind) {
 	fitness->setValue(0);
 	int move = 0;
 
-	BitStringP bstring = boost::dynamic_pointer_cast<BitString::BitString> (ind->getGenotype(1));
+	BitStringP bstring = std::dynamic_pointer_cast<BitString::BitString> (ind->getGenotype(1));
 	//TODO napravit neku metodu za pretvaranje bitstringa u int i obratno
 
 	for (int i =0; i < 3; i++){

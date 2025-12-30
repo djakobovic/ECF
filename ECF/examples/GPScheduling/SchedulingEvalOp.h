@@ -77,6 +77,6 @@ protected:
   Matrica SortedReady, Values, Durations, MachineIndex;
   std::string in_file;
 };
-typedef boost::shared_ptr<SchedulingEvalOp> SchedulingEvalOpP;
+typedef std::shared_ptr<SchedulingEvalOp> SchedulingEvalOpP;
 
 #endif // SchedulingEvalOp_h

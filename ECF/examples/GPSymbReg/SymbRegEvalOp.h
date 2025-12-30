@@ -13,6 +13,6 @@ public:
 	uint nSamples;
 	LoggerP logger;
 };
-typedef boost::shared_ptr<SymbRegEvalOp> SymbRegEvalOpP;
+typedef std::shared_ptr<SymbRegEvalOp> SymbRegEvalOpP;
 
 #endif // SymbRegEvalOp_h

@@ -426,7 +426,7 @@ FitnessP SchedulingEvalOp::evaluate(IndividualP individual)
 	FitnessP fitness = static_cast<FitnessP> (new FitnessMin);
 
 	// dohvat genotipa jedinke
-	TreeP tree = boost::dynamic_pointer_cast<Tree::Tree> (individual->getGenotype());
+	TreeP tree = std::dynamic_pointer_cast<Tree::Tree> (individual->getGenotype());
 
 // oroginalni kod iz BEAGLE implementacije
 	unsigned int i;

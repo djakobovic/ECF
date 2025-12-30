@@ -138,7 +138,7 @@ public:
 	 */
 	virtual bool advanceGeneration(StateP state)
 	{
-		ECF_LOG(state, 4, name_ + ": starting generation");
+		ECF_LOG(state, 5, name_ + ": starting generation");
 
 		bool bResult = true;
 		for(uint iDeme = 0; iDeme < state->getPopulation()->size(); iDeme++) {
@@ -146,7 +146,7 @@ public:
 			bResult |= advanceGeneration(state, state->getPopulation()->at(iDeme));
 		}
 
-		ECF_LOG(state, 4, name_ + ": ending generation");
+		ECF_LOG(state, 5, name_ + ": ending generation");
 
 		return bResult;
 	}

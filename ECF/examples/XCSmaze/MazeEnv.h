@@ -60,6 +60,6 @@ public:
 	void setResultsFile(const char* resultsFile);
 };
 
-typedef boost::shared_ptr<MazeEnv> MazeEnvP;
+typedef std::shared_ptr<MazeEnv> MazeEnvP;
 #endif // MazeEnv_h
 

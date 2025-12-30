@@ -54,7 +54,7 @@ FitnessP TSPEvalOp::evaluate(IndividualP individual)
 	{
 		FitnessP fitness = static_cast<FitnessP> (new FitnessMin);
 
-		PermutationP perm = boost::dynamic_pointer_cast<Permutation::Permutation> (individual->getGenotype());
+		PermutationP perm = std::dynamic_pointer_cast<Permutation::Permutation> (individual->getGenotype());
 
 		int fitnessV = 0;
 

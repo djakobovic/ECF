@@ -99,7 +99,7 @@ void Population::write(XMLNode &xPopulation)
  */
 void Population::updateDemeStats()
 {	
-	ECF_LOG(state_, 4, "Population: updating HoF and statistics of all demes");
+	ECF_LOG(state_, 5, "Population: updating HoF and statistics of all demes");
 
 	// operate statistics on all demes
 	for(uint iDeme = 0; iDeme < this->size(); iDeme++) {
@@ -177,7 +177,7 @@ bool Population::initialize(StateP state)
  */
 void Population::updateDemeStats()
 {
-	ECF_LOG(state_, 4, "Population: updating HoF and statistics of all demes");
+	ECF_LOG(state_, 5, "Population: updating HoF and statistics of all demes");
 	// every process 'processes' its local deme
 	ECF_LOG(state_, 3, "Deme: " + uint2str(getLocalDemeId()));
 	this->at(0)->hof_->operate(*(getLocalDeme()));

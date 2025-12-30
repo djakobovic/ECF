@@ -33,11 +33,11 @@ FitnessP AproxEvalOp::evaluate(IndividualP individual)
 {
 	FitnessP fitness = static_cast<FitnessP> (new FitnessMin);
 	
-	BinaryP a0 = boost::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(0));
-	BinaryP a1 = boost::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(1));
-	BinaryP ampli = boost::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(2));
-	BinaryP frekv = boost::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(3));
-	BinaryP pomak = boost::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(4));
+	BinaryP a0 = std::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(0));
+	BinaryP a1 = std::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(1));
+	BinaryP ampli = std::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(2));
+	BinaryP frekv = std::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(3));
+	BinaryP pomak = std::dynamic_pointer_cast<Binary::Binary> (individual->getGenotype(4));
 	
 	uint i,j;
 	double rez, suma = 0;

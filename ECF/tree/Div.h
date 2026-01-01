@@ -46,7 +46,10 @@ void DivT<T>::execute(void* result, Tree &tree)
     getNextArgument(&second, tree);
 
 	// T must be auto castable to double!
-	division = fabs(second) > MIN ? first / second : 1.;
+
+	//division = fabs(second) > MIN ? first / second : 1.;
+	// new version updated on 01/2026:
+	division = fabs(second) > MIN ? first / second : first;
 }
 
 }

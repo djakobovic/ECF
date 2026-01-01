@@ -8,18 +8,18 @@ namespace Primitives {
 	class Sqrt : public Primitive
 	{
 	public:
-		Sqrt::Sqrt(void)
+		Sqrt(void)
 		{
 			nArguments_ = 1;
 			name_ = "sqrt";
 		}
 
 
-		Sqrt::~Sqrt(void)
+		~Sqrt(void)
 		{ }
 
 
-		void Sqrt::execute(void* result, Tree& tree)
+		void execute(void* result, Tree& tree)
 		{
 			double& arg = *(double*)result;
 			getNextArgument(&arg, tree);

@@ -38,9 +38,6 @@
     <Filter Include="Examples\XCSMux">
       <UniqueIdentifier>{91999c45-57b0-4752-a5a0-de87511752ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Examples\CGP">
-      <UniqueIdentifier>{13c494ed-7f2b-4f55-a4a4-5818d24b2e2c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tree">
       <UniqueIdentifier>{12a6dfad-29c8-4824-aa38-00908c9366d3}</UniqueIdentifier>
     </Filter>
@@ -524,57 +521,6 @@
     <ClInclude Include="xcs\XCSParams.h">
       <Filter>XCS</Filter>
     </ClInclude>
-    <ClInclude Include="cartesian\Add.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\And.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Cartesian.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Cartesian_c.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\CartesianCrsOnePoint.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\CartesianMutOnePoint.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Cos.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Div.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Function.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\FunctionSet.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Mul.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Not.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Or.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Sin.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Sub.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Xnor.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
-    <ClInclude Include="cartesian\Xor.h">
-      <Filter>Examples\CGP</Filter>
-    </ClInclude>
     <ClInclude Include="MOFitness.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -642,9 +588,6 @@
     </ClCompile>
     <ClCompile Include="examples\XCSmaze\MazeEnv.cpp">
       <Filter>Examples\XCSMaze</Filter>
-    </ClCompile>
-    <ClCompile Include="examples\CGPFeedForward\CGPEvalOp.cpp">
-      <Filter>Examples\CGP</Filter>
     </ClCompile>
     <ClCompile Include="tree\Node.cpp">
       <Filter>Tree</Filter>
@@ -966,18 +909,6 @@
     </ClCompile>
     <ClCompile Include="xcs\XCSParams.cpp">
       <Filter>XCS</Filter>
-    </ClCompile>
-    <ClCompile Include="cartesian\Cartesian.cpp">
-      <Filter>Examples\CGP</Filter>
-    </ClCompile>
-    <ClCompile Include="cartesian\CartesianCrsOnePoint.cpp">
-      <Filter>Examples\CGP</Filter>
-    </ClCompile>
-    <ClCompile Include="cartesian\CartesianMutOnePoint.cpp">
-      <Filter>Examples\CGP</Filter>
-    </ClCompile>
-    <ClCompile Include="cartesian\FunctionSet.cpp">
-      <Filter>Examples\CGP</Filter>
     </ClCompile>
     <ClCompile Include="MOFitness.cpp">
       <Filter>Header Files</Filter>

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ECF", "ECF\projekt.vcxproj", "{E3DE51CD-6DA8-40C4-8B1D-0CF8D034C7D3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ECF", "projekt.vcxproj", "{E3DE51CD-6DA8-40C4-8B1D-0CF8D034C7D3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PECF", "ECF\PECF.vcxproj", "{2D096176-44D3-4D0E-982C-16F04A9A5E99}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PECF", "PECF.vcxproj", "{2D096176-44D3-4D0E-982C-16F04A9A5E99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -240,6 +240,7 @@ uint Cartesian::randomConnectionGenerator(uint rowNumber)
 void Cartesian::evaluate(vector<double>& inputData, vector<double>& results) 
 {
 	vector<double> working_vector (inputData);
+	working_vector.resize(this->nInputs);
 	vector<double> operands(this->maxArity);
 	double result = 0;
 	for(uint i = 0; i < this->size() - nOutputs; i++) {

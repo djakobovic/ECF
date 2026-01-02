@@ -1,57 +1,35 @@
 #ifndef Sin_h
 #define Sin_h
 #include "Function.h"
-#include <cmath>
 
-namespace cart
+namespace Cartesian
 {
 	template <class T>
-	class Sin : public Function
+	class SinT: public Function
 	{
 	public:
-		Sin();
-		~Sin();
+		SinT();
+		~SinT();
 
-		void evaluate(voidP inputs, void* result);
+		void evaluate(std::vector<T>& inputs, T& result);
 	};
 
-	typedef Sin<double> SinDouble;
-	typedef Sin<int> SinInt;
-
+	typedef SinT<double> Sin;
 	template <class T>
-	Sin<T>::Sin()
+	SinT<T>::SinT()
 	{
 		name_ = "sin";
-		numOfArgs_ = 1;
+		nArguments_ = 1;
 	}
 
 	template <class T>
-	Sin<T>::~Sin()
-	{
-	}
+	SinT<T>::~SinT()
+	{}
 
 	template <class T>
-	void Sin<T>::evaluate(voidP inputs, void* result)
+	void SinT<T>::evaluate(std::vector<T> &inputs, T &result)
 	{
-		T& data = *(T*) result;
-		stringstream ss;
-		ss << *((string*) inputs.get());
-		vector<T> readInputs;
-		T input;
-		uint i = 0;
-		while (ss >> input)
-		{
-			readInputs.push_back(input);
-			++i;
-			if (i == numOfArgs_)
-			{
-				break;
-			}
-		}
-
-		data = (T)sin((double)readInputs.at(0));
+		result = sin(inputs[0]);
 	}
-
 }
-
-#endif /* Sin_h */
+#endif //Sin_h

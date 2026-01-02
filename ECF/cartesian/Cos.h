@@ -1,57 +1,35 @@
 #ifndef Cos_h
 #define Cos_h
 #include "Function.h"
-#include <cmath>
 
-namespace cart
+namespace Cartesian
 {
 	template <class T>
-	class Cos : public Function
+	class CosT: public Function
 	{
 	public:
-		Cos();
-		~Cos();
+		CosT();
+		~CosT();
 
-		void evaluate(voidP inputs, void* result);
+		void evaluate(std::vector<T>& inputs, T& result);
 	};
 
-	typedef Cos<double> CosDouble;
-	typedef Cos<int> CosInt;
-
+	typedef CosT<double> Cos;
 	template <class T>
-	Cos<T>::Cos()
+	CosT<T>::CosT()
 	{
 		name_ = "cos";
-		numOfArgs_ = 1;
+		nArguments_ = 1;
 	}
 
 	template <class T>
-	Cos<T>::~Cos()
-	{
-	}
+	CosT<T>::~CosT()
+	{}
 
 	template <class T>
-	void Cos<T>::evaluate(voidP inputs, void* result)
+	void CosT<T>::evaluate(std::vector<T> &inputs, T &result)
 	{
-		T& data = *(T*) result;
-		stringstream ss;
-		ss << *((string*) inputs.get());
-		vector<T> readInputs;
-		T input;
-		uint i = 0;
-		while (ss >> input)
-		{
-			readInputs.push_back(input);
-			++i;
-			if (i == numOfArgs_)
-			{
-				break;
-			}
-		}
-
-		data = (T)cos((double)readInputs.at(0));
+		result = cos(inputs[0]);
 	}
-
 }
-
-#endif /* Cos_h */
+#endif //Cos_h

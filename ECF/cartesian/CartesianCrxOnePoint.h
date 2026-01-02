@@ -1,14 +1,14 @@
 #ifndef CartesianCrsOnePoint_h
 #define CartesianCrsOnePoint_h
 
-#include "../ECF_base.h"
+#include "ecf/ECF_base.h"
 
 
-namespace cart {
+namespace Cartesian {
 /**
  * \brief Cartesian genotype: one point crossover operator
  */
-class CartesianCrsOnePoint: public CrossoverOp 
+class CartesianCrxOnePoint: public CrossoverOp 
 {
 public:
 	/**
@@ -21,7 +21,7 @@ public:
 	bool initialize(StateP);
 	void registerParameters(StateP);
 };
-typedef boost::shared_ptr<CartesianCrsOnePoint> CartesianCrsOnePointP;
+typedef std::shared_ptr<CartesianCrxOnePoint> CartesianCrsOnePointP;
 
 }
 

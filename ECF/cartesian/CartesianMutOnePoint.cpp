@@ -1,85 +1,85 @@
 #include "CartesianMutOnePoint.h"
+#include "Cartesian_c.h"
+#include "FunctionSet.h"
 #include <cmath>
+#include <algorithm>
 
-namespace cart{
-
-void CartesianMutOnePoint::registerParameters(StateP state)
+namespace Cartesian
 {
-	//TODO: ako ce se jednog dana koristiti vise operatora
-	//myGenotype_->registerParameter(state, "mut.onepoint", (voidP) new double(0), DOUBLE);
-	myGenotype_->registerParameter(state, "mut.onepoint.prob", (voidP) new double(0.001), ECF::DOUBLE);
-}
 
-
-bool CartesianMutOnePoint::initialize(StateP state)
-{
-	//TODO: ako ce se jednog dana koristiti vise operatora
-	//voidP sptr = myGenotype_->getParameterValue(state, "mut.onepoint");
-	//probability_ = *((double*)sptr.get());
-
-	voidP sptr = myGenotype_->getParameterValue(state, "mut.onepoint.prob");
-	mutProb_ = *((double*)sptr.get());
-
-	useMutProb_ = false;
-	if(myGenotype_->isParameterDefined(state, "mut.onepoint.prob"))
-		useMutProb_ = true;
-
-	return true;
-}
-
-
-bool CartesianMutOnePoint::mutate(GenotypeP gene)
-{
-	Cartesian* mut = (Cartesian*) (gene.get());
-
-	//if mutation probability is used, then choose values in genotpye to be mutated depending on the
-	//predefined mutation probability
-	if (useMutProb_)
+	void CartesianMutOnePoint::registerParameters(StateP state)
 	{
-		for (int i = 0; i < mut->size(); i++)
-		{
-			if (state_->getRandomizer()->getRandomInteger(0, 1) < mutProb_)
-			{
-				mutOneValue(mut, i);
+		myGenotype_->registerParameter(state, "mut.onepoint", (voidP) new double(0), ECF::DOUBLE);
+	}
+
+
+	bool CartesianMutOnePoint::initialize(StateP state)
+	{
+		voidP sptr = myGenotype_->getParameterValue(state, "mut.onepoint");
+		probability_ = *((double*)sptr.get());
+		return true;
+	}
+
+	/*
+	 * Reimplementation of mutation at one point.
+	 * One point mutation needs to distinct between function gene or connection gene.
+	 * If a gene is a function gene, new function gene must be a function which takes
+	 * same number of arguments.
+	 * If a gene is a connection gene mutation must be such that connection is valid.(backwards looking)
+	 * */
+	bool CartesianMutOnePoint::mutate(GenotypeP gene)
+	{
+		Cartesian* cart = (Cartesian*)(gene.get());
+		RandomizerP randP = cart->state_->getRandomizer();
+		std::vector<uint> functionGenesIndecies;
+		FunctionSet *functionSet = (FunctionSet*)cart->functionSet.get();
+
+		for(uint i = 0; i < cart->size() - cart->nOutputs; i++) {
+			functionGenesIndecies.push_back(i);
+			i+=functionSet->vFunctions[cart->operator[](i)]->getNumberOfArguments();
+		}
+
+
+		const uint randomGeneIndex = randP->getRandomInteger(0, cart->size() - cart->nOutputs); // Gene that will be mutated
+		bool match = false;
+		for(uint i = 0; i < functionGenesIndecies.size(); i++) {
+			if(functionGenesIndecies[i] == randomGeneIndex) {
+				match = true;
+				break;
 			}
 		}
-	}
-	//if mutation probability isn't used, then randomly choose one value in genotype to be mutated
-	else
-	{
-		uint mutPoint = (uint)(state_->getRandomizer()->getRandomInteger(0, mut->size() - 1));
-
-		mutOneValue(mut, mutPoint);
-	}
-
-	return true;
-}
-
-void CartesianMutOnePoint::mutOneValue(Cartesian *mut, int mutPoint)
-{
-	//value chosen to be mutated in either input connection or function token
-	if (mutPoint < (mut->getNumOfRows() * mut->getNumOfCols() * (mut->getNumOfInputConn() + 1)))
-	{
-		//chosen value represents function token
-		if (((mutPoint + 1) % (mut->getNumOfInputConn() + 1) == 0))
-		{
-			mut->at(mutPoint) = mut->randFunction();
+		//Changing function gene.
+		if(match) {
+			int findex = randP->getRandomInteger(0, functionSet->vFunctions.size()-1);
+			while(functionSet->vFunctions[findex]->getNumberOfArguments() != functionSet->vFunctions[cart->operator[](randomGeneIndex)]->getNumberOfArguments()) {
+				findex = randP->getRandomInteger(0, functionSet->vFunctions.size()-1);
+			}
+			cart->at(randomGeneIndex) = findex;
 		}
-		//chosen value represents input connection
-		else
-		{
-			double num = (double)mutPoint / (double)(mut->getNumOfRows() * (mut->getNumOfInputConn() + 1));
-			//column in which input connection of current node is placed
-			uint currCol = (uint)floor(num) + 1;
-			mut->at(mutPoint) = mut->randInputConn(currCol - 1);
+		else {
+			int findex = 0;
+			for(uint i = 0; i < functionGenesIndecies.size(); i++) {
+				if(functionGenesIndecies[i] < randomGeneIndex) {
+					findex = i;
+				}
+				else {
+					break;
+				}
+			}
+			//findex now has a index location of a operator. This is needed for levels back and calculations of rewiring connection gene
+			int rowindex = 0;
+			int columnsum = cart->nCols - 1;
+			while(findex > columnsum) {
+				rowindex++;
+				columnsum += (cart->nCols -1);
+			}
+			cart->at(randomGeneIndex) = cart->randomConnectionGenerator(rowindex);
 		}
+
+		return true;
 	}
-	//chosen value represents output
-	else
-	{
-		mut->at(mutPoint) = mut->randOutput();
-	}
-}
 
 }
+
+
 

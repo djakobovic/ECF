@@ -1,38 +1,39 @@
 #ifndef Function_h
 #define Function_h
 #include "Cartesian_c.h"
-using namespace std;
+#include <math.h>
 
-namespace cart
+
+namespace Cartesian
 {
 	class Function
 	{
 	public:
 		Function() {}
-		Function(uint numArgs) {}
 		virtual ~Function() {}
 
 		/**
-		Evaluate result with given inputs in one of implemented derived classes of Function class.
+		Evaluate result with given inputs in one of implemented derived classes.
 		*/
-		virtual void evaluate(voidP inputs, void* result) = 0;
+		virtual void evaluate(std::vector<double>& inputs, double& result) = 0;
 
-		string getName()
+
+		std::string getName()
 		{
 			return name_;
 		}
 
-		uint getNumOfArgs()
+		uint getNumberOfArguments()
 		{
-			return numOfArgs_;
+			return nArguments_;
 		}
 
 	protected:
-		string name_;
-		uint numOfArgs_;
+		std::string name_;
+		uint nArguments_;
 	};
 
-	typedef boost::shared_ptr<Function> FunctionP;
+	typedef std::shared_ptr<Function> FunctionP;
 }
 
 

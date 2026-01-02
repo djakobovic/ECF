@@ -2,68 +2,43 @@
 #define Mul_h
 #include "Function.h"
 
-namespace cart
+namespace Cartesian
 {
 	template <class T>
-	class Mul : public Function
+	class MulT : public Function
 	{
 	public:
-		Mul();
-		Mul(uint numArgs);
-		~Mul();
+		MulT();
+		~MulT();
 
-		void evaluate(voidP inputs, void* result);
+		void evaluate(std::vector<T> &inputs, T &result);
 	};
 
-	typedef Mul<double> MulDouble;
-	typedef Mul<int> MulInt;
-
+	typedef MulT<double> Mul;
 	template <class T>
-	Mul<T>::Mul()
-	{
+	MulT<T>::MulT(){
 		name_ = "*";
-		numOfArgs_ = 2;
+		nArguments_ = 2;
 	}
 
 	template <class T>
-	Mul<T>::Mul(uint numArgs)
-	{
-		name_ = "*";
-		numOfArgs_ = numArgs;
-	}
+	MulT<T>::~MulT()
+	{}
 
 	template <class T>
-	Mul<T>::~Mul()
+	void MulT<T>::evaluate(std::vector<T> &inputs, T &result)
 	{
-	}
-
-	template <class T>
-	void Mul<T>::evaluate(voidP inputs, void* result)
-	{
-		T& prod = *(T*) result;
-		prod = 0;
-		stringstream ss;
-		ss << *((string*) inputs.get());
-		vector<T> readInputs;
-		T input;
-		uint i = 0;
-		while (ss >> input)
+		double product = 1;
+		for(uint i = 0; i < nArguments_; ++i)
 		{
-			readInputs.push_back(input);
-			++i;
-			if (i == numOfArgs_)
-			{
-				break;
-			}
+		   product *= inputs[i];
 		}
-
-		prod = readInputs.at(0);
-		for (int i = 1; i < (int)numOfArgs_; i++)
-		{
-			prod *= readInputs.at(i);
-		}
+		result = product;
 	}
+
+
+
+
 
 }
-
-#endif /* Mul_h */
+#endif  //Mul_h

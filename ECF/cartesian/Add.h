@@ -2,65 +2,41 @@
 #define Add_h
 #include "Function.h"
 
-namespace cart
+namespace Cartesian
 {
 	template <class T>
-	class Add : public Function
+	class AddT : public Function
 	{
 	public:
-		Add();
-		Add(uint numArgs);
-		~Add();
+		AddT();
+		~AddT();
 
-		void evaluate(voidP inputs, void* result);
+		void evaluate(std::vector<T>& inputs, T& result);
 	};
 
-	typedef Add<double> AddDouble;
-	typedef Add<int> AddInt;
+	typedef AddT<double> Add;
 
 	template <class T>
-	Add<T>::Add()
+	AddT<T>::AddT()
 	{
 		name_ = "+";
-		numOfArgs_ = 2;
+		nArguments_ = 2;
 	}
 
-	template <class T>
-	Add<T>::Add(uint numArgs)
-	{
-		name_ = "+";
-		numOfArgs_ = numArgs;
-	}
 
 	template <class T>
-	Add<T>::~Add()
-	{
-	}
+	AddT<T>::~AddT()
+	{}
 
 	template <class T>
-	void Add<T>::evaluate(voidP inputs, void* result)
+	void AddT<T>::evaluate(std::vector<T>& inputs, T& result)
 	{
-		T& sum = *(T*) result;
-		stringstream ss;
-		ss << *((string*) inputs.get());
-		vector<T> readInputs;
-		T input;
-		uint i = 0;
-		while (ss >> input)
-		{
-			readInputs.push_back(input);
-			++i;
-			if (i == numOfArgs_)
-			{
-				break;
-			}
+		double sum = 0;
+		for (uint i = 0; i < nArguments_; i++) {
+			sum += inputs[i];
 		}
 
-		sum = readInputs.at(0);
-		for (int i = 1; i < (int)numOfArgs_; i++)
-		{
-			sum += readInputs.at(i);
-		}
+		result = sum;
 	}
 
 }

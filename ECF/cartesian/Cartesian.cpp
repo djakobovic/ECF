@@ -3,419 +3,267 @@
 #include <map>
 #include <vector>
 
-namespace cart {
+
+namespace Cartesian {
+
 
 Cartesian::Cartesian(void)
 {
 	name_ = "Cartesian";
 }
 
+
 Cartesian::~Cartesian(void)
-{
-}
+{}
 
-bool Cartesian::initialize(StateP state)
-{
-	state_ = state;
-
-	stringstream names;
-	string name;
-	voidP sptr;
-
-	sptr = getParameterValue(state, "type");
-	names << *((string*) sptr.get());
-	name = names.str();
-
-	//type defines data type (from domain and codomain), if not defined default is double
-	if (name.length() == 0)
-	{
-		name = "double";
-	}
-	else if (name != "double" && name != "int" && name != "uint")
-	{
-		cerr << "Genoype initialization error:: Has to be one of types: double, int, uint" << endl;
-		return false;
-	}
-	else
-	{ }
-
-	//function nodes must be able to work with defined data type
-	funcSet = static_cast<FunctionSetP> (new FunctionSet(name));
-
-	sptr = getParameterValue(state, "numinputconns");
-	name = *((string*) sptr.get());
-	if (name.length() == 0)
-	{
-		cerr << "Genotype initialization error:: Number of input connections is undefined." << endl;
-		return false;
-	}
-	inputConns = str2uint(name);
-	if (inputConns == 0)
-	{
-		cerr << "Genotype initialization error:: Number of input connections can't be zero." << endl;
-		return false;
-	}
-
-	vector<string> functionset;
-	sptr = getParameterValue(state, "functionset");
-	//one function can be defined with multiple (but different) number of arguments
-	uint arg;
-	map<std::string, std::vector<uint> > args;
-
-	//extract function names and number of their arguments, if number of arguments isn't defined, then
-	//it's default (some function nodes can't have variable number of arguments, e.g. sin or cos)
-	names.str("");
-	names.clear();
-	names << *((string*) sptr.get());
-	while (names >> name)
-	{
-		//if it isn't function name then it can be number of arguments for the last read function name
-		if (!funcSet->existFunc[name])
-		{
-			char *c = (char *)name.c_str();
-			for (int i = 0; i < (int)name.length(); i++)
-			{
-				if (!isdigit(c[i]))
-				{
-					cerr << "Genoype initialization error:: Function " << name << " isn't implemented." << endl;
-					return false;
-				}
-			}
-			//some functions may go with many number of arguments, all numbers of arguments must be defined
-			//after stating the name of that function (in configuration file)
-			if (args[functionset.back()].empty())
-			{
-				vector<uint> vec;
-				vec.push_back(str2uint(name));
-				args[functionset.back()] = vec;
-			}
-			else
-			{
-				arg = str2uint(name);
-				//there can't be defined two or more functions with the same name and the same number
-				//of arguments
-				for (int i = 0; i < args[functionset.back()].size(); i++)
-				{
-					if (arg == args[functionset.back()].at(i))
-					{
-						cerr << "Genotype initialization error:: Number of arguments " << arg;
-						cerr << " for function " << functionset.back() << " already taken." << endl;
-						return false;
-					}
-				}
-				args[functionset.back()].push_back(arg);
-			}
-		}
-		else
-		{
-			functionset.push_back(name);
-		}
-	}
-
-	if (functionset.size() == 0)
-	{
-		cerr << "Genotype initialization error:: Must be defined at least one function in function set." << endl;
-		return false;
-	}
-
-	//create function objects
-	for (int i = 0; i < (int)functionset.size(); i++)
-	{
-		if (!args[functionset.at(i)].empty())
-		{
-			for (int j = 0; j < args[functionset.at(i)].size(); j++)
-			{
-				if (args[functionset.at(i)].at(j) > inputConns)
-				{
-					cerr << "Genoype initialization error:: Number of arguments for " << functionset.at(i);
-					cerr << " greater than number of input connections." << endl;
-					return false;
-				}
-				if (!funcSet->addFunction(functionset.at(i), args[functionset.at(i)].at(j)))
-				{
-					return false;
-				}
-			}
-		}
-		else
-		{
-			if (!funcSet->addFunction(functionset.at(i)))
-			{
-				return false;
-			}
-		}
-	}
-
-	//number of possible functions
-	numFunc = (uint)funcSet->size();
-
-	//extract constants, constants aren't necessary
-	sptr = getParameterValue(state, "constantset");
-	constantset = sptr;
-	names.str("");
-	names.clear();
-	names << *((string*) sptr.get());
-	uint numCons = 0;
-	while (names >> name)
-	{
-		++numCons;
-	}
-
-	//num of variables = num of inputs to be replaced by elements from domain
-	sptr = getParameterValue(state, "numvariables");
-	name = *((string*) sptr.get());
-	numVars = str2uint(name);
-
-	inputs = numVars + numCons;
-	if (inputs == 0)
-	{
-		cerr << "Genotype initialization error:: Number of inputs can't be zero." << endl;
-		return false;
-	}
-
-	sptr = getParameterValue(state, "numoutputs");
-	name = *((string*) sptr.get());
-	if (name.length() == 0)
-	{
-		cerr << "Genotype initialization error:: Number of outputs is undefined." << endl;
-		return false;
-	}
-	outputs = str2uint(name);
-	if (outputs == 0)
-	{
-		cerr << "Genotype initialization error:: Number of outputs can't be zero." << endl;
-		return false;
-	}
-
-	sptr = getParameterValue(state, "numrows");
-	name = *((string*) sptr.get());
-	if (name.length() == 0)
-	{
-		cerr << "Genotype initialization error:: Number of rows is undefined." << endl;
-		return false;
-	}
-	rows = str2uint(name);
-	if (rows == 0)
-	{
-		cerr << "Genotype initialization error:: Number of rows can't be zero." << endl;
-		return false;
-	}
-
-	sptr = getParameterValue(state, "numcols");
-	name = *((string*) sptr.get());
-	if (name.length() == 0)
-	{
-		cerr << "Genotype initialization error:: Number of columns is undefined." << endl;
-		return false;
-	}
-	cols = str2uint(name);
-	if (cols == 0)
-	{
-		cerr << "Genotype initialization error:: Number of columns can't be zero." << endl;
-		return false;
-	}
-
-
-	sptr = getParameterValue(state, "levelsback");
-	name = *((string*) sptr.get());
-	//if not defined, default is 1
-	if (name.length() == 0)
-	{
-		levelsBack = 1;
-	}
-	else
-	{
-		levelsBack = str2uint(name);
-	}
-
-	makeGenotype();
-
-	//printGenotype();
-
-	return true;
-}
 
 Cartesian* Cartesian::copy()
 {
 	Cartesian *newObject = new Cartesian(*this);
+	// no deep copy code needed
 
-	//create new copy of existing genotype
-	for(int i = 0; i < (int) this->size(); i++) {
-		(*newObject)[i] = this->at(i);
-	}
 	return newObject;
 }
 
-vector<CrossoverOpP> Cartesian::getCrossoverOp()
+
+std::vector<CrossoverOpP> Cartesian::getCrossoverOp()
 {
-	vector<CrossoverOpP> crossops;
-	crossops.push_back((CrossoverOpP) (new CartesianCrsOnePoint));
-	return crossops;
+	vector<CrossoverOpP> crxOps;
+	crxOps.push_back((CrossoverOpP) (new CartesianCrxOnePoint));	// ok
+	crxOps.push_back((CrossoverOpP) (new CartesianCrxHalfUniform));	// ok
+	crxOps.push_back((CrossoverOpP) (new CartesianCrxUniform));		// ok
+	return crxOps;
 }
 
-vector<MutationOpP> Cartesian::getMutationOp()
+
+std::vector<MutationOpP> Cartesian::getMutationOp()
 {
-	vector<MutationOpP> mutops;
-	mutops.push_back((MutationOpP) (new CartesianMutOnePoint));
-	return mutops;
+	vector<MutationOpP> mutOps;
+////	mutOps.push_back((MutationOpP) (new CartesianMutOnePoint));	// treba popraviti
+	mutOps.push_back((MutationOpP) (new CartesianMutNonSilent));	// ok
+////	mutOps.push_back((MutationOpP) (new CartesianMutSilent));	// treba popraviti
+	mutOps.push_back((MutationOpP) (new CartesianMutNewParameterLess));	// ok
+	return mutOps;
 }
+
 
 void Cartesian::registerParameters(StateP state)
 {
-	registerParameter(state, "type", (voidP) (new string), ECF::STRING);
-	registerParameter(state, "numoutputs", (voidP) (new string), ECF::STRING);
-	registerParameter(state, "numinputconns", (voidP) (new string), ECF::STRING);
-	registerParameter(state, "numrows", (voidP) (new string), ECF::STRING);
-	registerParameter(state, "numcols", (voidP) (new string), ECF::STRING);
-	registerParameter(state, "levelsback", (voidP) (new string), ECF::STRING);
-	// variableset + constantset = terminalset
-	registerParameter(state, "numvariables", (voidP) (new string), ECF::STRING);
-	registerParameter(state, "constantset", (voidP) (new string), ECF::STRING);
-	registerParameter(state, "functionset", (voidP) (new string), ECF::STRING);
+	registerParameter(state, "numoutputs", (voidP) (new uint(1)), ECF::UINT, "number of functional outputs (default: 1)");
+	registerParameter(state, "numrows", (voidP) (new uint(1)), ECF::UINT, "number of rows (default: 1)");
+	registerParameter(state, "numcols", (voidP) (new uint(10)), ECF::UINT, "number of columns (default: 10)");
+	registerParameter(state, "levelsback", (voidP) (new uint(2)), ECF::UINT, "number of previous columns to be used as possible inputs (default: 2)");
+	registerParameter(state, "numvariables", (voidP) (new uint(1)), ECF::UINT, "number of input variables (default: 1)");
+	registerParameter(state, "functionset", (voidP) (new std::string), ECF::STRING, "set of functions to use (default: none)");
+	//registerParameter(state, "constantset", (voidP)(new std::string), ECF::STRING, "set of input constants (default: none)");
 }
+
+
+bool Cartesian::initialize(StateP state)
+{
+	if (!isParameterDefined(state, "functionset")){
+		ECF_LOG_ERROR(state, "Error: required parameters for CGP genotype not defined (functionset)!");
+		throw("");
+	}
+
+	state_ = state;
+	std::stringstream ss;
+	std::string names,name;
+	voidP sptr;
+
+	// create and initialize the function set
+	functionSet = static_cast<FunctionSetP> (new FunctionSet);
+	functionSet->initialize(state_);
+
+	uint number;
+	//Simple parameters
+	sptr = getParameterValue(state, "numvariables");
+	number = *((uint*) sptr.get());
+	if(number <= 0) {
+		ECF_LOG_ERROR(state, "CGP initialization error: Number of variables is smaller than 1 or can not be parsed into a number.");
+		return false;
+	}
+	nVariables = number;
+
+	sptr = getParameterValue(state,"numoutputs");
+	number = *((uint*) sptr.get());
+	if(number <= 0) {
+		ECF_LOG_ERROR(state, "CGP initialization error: Number of outputs is smaller than 1 or can not be parsed into a number.");
+		return false;
+	}
+	nOutputs = number;
+
+	sptr = getParameterValue(state,"numrows");
+	number = *((uint*) sptr.get());
+	if(number <= 0) {
+		ECF_LOG_ERROR(state, "CGP initialization error: Number of rows is smaller than 1 or can not be parsed into a number.");
+		return false;
+	}
+	nRows = number;
+
+	sptr = getParameterValue(state,"numcols");
+	number = *((uint*) sptr.get());
+	if(number <= 0) {
+		ECF_LOG_ERROR(state, "CGP initialization error: Number of columns is smaller than 1 or can not be parsed into a number.");
+		return false;
+	}
+	nCols = number;
+
+	sptr = getParameterValue(state,"levelsback");
+	number = *((uint*) sptr.get());
+	if(number <= 0) {
+		ECF_LOG_ERROR(state, "CGP initialization error: Number of columns is smaller than 1 or can not be parsed into a number.");
+		return false;
+	}
+	nLevelsBack = number;
+
+	nConstants = 0;
+	sptr = getParameterValue(state,"constantset");
+	if (sptr) {
+		names = *((std::string*)sptr.get());
+		number = 0;
+		ss.str("");
+		ss.clear();
+		ss << names;
+		while (ss >> name) {
+			++number;
+		}
+		nConstants = number;
+	}
+	nInputs = nConstants + nVariables;
+
+	//Functionset parametri su malo složeniji
+	sptr = getParameterValue(state, "functionset");
+	names = *((std::string*) sptr.get());
+	ss.str("");
+	ss.clear();
+	ss << names;
+	name="";
+
+	while(ss >> name) {
+		functionSet->addFunction(name);
+		nFunctions++;
+	}
+
+	std::map<std::string, FunctionP>::iterator it;
+	for (it = functionSet->mFunctionSet.begin(); it != functionSet->mFunctionSet.end(); it++) {
+		uint nArgs = it->second->getNumberOfArguments();
+		if (nArgs > maxArity)
+		{
+			maxArity = nArgs;
+		}
+	}
+	buildRandomGenome();
+
+	return true;
+}
+
 
 void Cartesian::read(XMLNode &xCart)
 {
+	std::string s = xCart.getText(0);
+	std::istringstream ss(s);
+	std::string token;
+	uint i = 0;
+	while (getline(ss, token, ' '))
+	{
+		this->at(i++) = stoi(token);
+	}
 }
+
 
 void Cartesian::write(XMLNode &xCart)
 {
 	xCart = XMLNode::createXMLTopNode("Cartesian");
-	stringstream sValue;
+	std::stringstream sValue;
 	sValue << this->size();
 	xCart.addAttribute("size", sValue.str().c_str());
 
 	sValue.str("");
-	for (int i = 0; i < (int)(rows * cols * (inputConns + 1)); i++)
-	{
-		sValue << this->at(i) << " ";
-		if (((i + 1) % (inputConns + 1)) == 0)
-		{
-			sValue << "   ";
-		}
-	}
-	for (int i = 0; i < (int)outputs; i++)
-	{
-		sValue << this->at((rows * cols * (inputConns + 1)) + i) << " ";
-	}
+
+	// write genome to sValue
+	std::vector<uint>& genome = *this;
+	for(uint i = 0; i < genome.size(); i++)
+		sValue << genome[i] << " ";
 
 	xCart.addText(sValue.str().c_str());
 }
 
+
 uint Cartesian::getGenomeSize()
 {
-	return 0;
+	return this->size();
 }
 
-void Cartesian::makeGenotype()
+
+void Cartesian::buildRandomGenome() 
 {
-	uint currCol = 0;
-	//generate nodes - input connections + one function
-	for (int i = 0; i < (int)(rows * cols); i++)
-	{
-		if ((i % rows) == 0 && i != 0)
-		{
-			++currCol;
-		}
-		for (int j = 0; j < (int)inputConns; j++)
-		{
-			this->push_back(randInputConn(currCol));
-		}
-		this->push_back(randFunction());
-	}
-	//generate outputs
-	for (int i = 0; i < (int)outputs; i++)
-	{
-		this->push_back(randOutput());
-	}
-}
+	for (uint i = 0; i < nRows; i++) {
+		for(uint j = 0; j < nCols; j++) {
 
-uint Cartesian::randInputConn(uint currCol)
-{
-	int emax = inputs + (currCol * rows);
+			int functionID = state_->getRandomizer()->getRandomInteger(nFunctions);
+			//Pushing a function
+			this->push_back(functionID);
+			std::map<std::string, FunctionP>::iterator it;
+			FunctionP functionName = functionSet->vFunctions[functionID];
+			//for(uint k = 0; k < functionName->getNumberOfArguments(); k++) {
+			// workaround dok se genotip ne izradi kao vektor gena:
+			for (uint k = 0; k < this->maxArity; k++) {
+				this->push_back(randomConnectionGenerator(i));
+			}
 
-	if (currCol < levelsBack)
-	{
-		return (uint)(state_->getRandomizer()->getRandomInteger(0, emax - 1));
-	}
-
-	int emin = inputs + ((currCol - levelsBack) * rows);
-	return (uint)(state_->getRandomizer()->getRandomInteger(emin, emax - 1));
-}
-
-uint Cartesian::randOutput()
-{
-	int hmin = inputs + ((cols - levelsBack) * rows);
-	int hmax = inputs + (cols * rows);
-	return (uint)(state_->getRandomizer()->getRandomInteger(hmin, hmax - 1));
-}
-
-uint Cartesian::randFunction()
-{
-	return (uint)(state_->getRandomizer()->getRandomInteger(0, numFunc - 1));
-}
-
-void Cartesian::evaluate(voidP inputs, void* result, uint funcNum)
-{
-	funcSet->evaluate(inputs, result, funcNum);
-}
-
-void Cartesian::printGenotype()
-{
-	for (int i = 0; i < (int)(rows * cols * (inputConns + 1)); i++)
-	{
-		cout << this->at(i) << " ";
-		if (((i + 1) % (inputConns + 1)) == 0)
-		{
-			cout << "   ";
 		}
 	}
-	for (int i = 0; i < (int)outputs; i++)
-	{
-		cout << this->at((rows * cols * (inputConns + 1)) + i) << " ";
+	for(uint i = 0; i < nOutputs; i++) {
+		this->push_back(randomConnectionGenerator(nRows));
 	}
-	cout << endl;
 }
 
-uint Cartesian::getNumOfInputs()
+
+uint Cartesian::randomConnectionGenerator(uint rowNumber) 
 {
-	return inputs;
+	//This is the first index which is actually limited by levels back
+	int minimum = nInputs + nCols*nLevelsBack;
+
+	//Index of the first element of a row
+	int firstElementOfARow = nInputs + rowNumber*nCols;
+	if(minimum <= firstElementOfARow) {
+		minimum = firstElementOfARow - nLevelsBack*nCols;
+	}
+	else {
+		minimum = 0;
+	}
+	return state_->getRandomizer()->getRandomInteger(minimum, firstElementOfARow - 1);
 }
 
-uint Cartesian::getNumOfOutputs()
+
+void Cartesian::evaluate(vector<double>& inputData, vector<double>& results) 
 {
-	return outputs;
+	vector<double> working_vector (inputData);
+	vector<double> operands(this->maxArity);
+	double result = 0;
+	for(uint i = 0; i < this->size() - nOutputs; i++) {
+		int operatorID = this->operator[](i);
+		int numberOfArguments = functionSet->vFunctions[operatorID]->getNumberOfArguments();
+		//for(int k = i + 1; k < i + numberOfArguments + 1; k++) {
+		// workaround dok se genotip ne izradi kao vektor gena:
+		for (uint k = i + 1; k < i + maxArity + 1; k++) {
+			operands[k - i - 1] = working_vector[this->operator[](k)];
+		}
+		functionSet->vFunctions[operatorID]->evaluate(operands, result);
+		working_vector.push_back(result);
+		result = 0;
+		//i+=numberOfArguments;
+		// workaround dok se genotip ne izradi kao vektor gena:
+		i += maxArity;
+	}
+	results.resize(nOutputs);
+	int ir = 0;
+	for(uint i = this->size() - nOutputs; i < this->size(); i++) {
+		results[ir++] = working_vector[this->operator[](i)];
+	}
 }
 
-uint Cartesian::getNumOfInputConn()
-{
-	return inputConns;
-}
-
-voidP Cartesian::getConstantNames()
-{
-	return constantset;
-}
-
-uint Cartesian::getNumOfRows()
-{
-	return rows;
-}
-
-uint Cartesian::getNumOfCols()
-{
-	return cols;
-}
-
-uint Cartesian::getLevelsBack()
-{
-	return levelsBack;
-}
-
-uint Cartesian::getNumVars()
-{
-	return numVars;
-}
 
 }
 

@@ -1,68 +1,35 @@
 #ifndef Sub_h
 #define Sub_h
 #include "Function.h"
-
-namespace cart
+namespace Cartesian
 {
 	template <class T>
-	class Sub : public Function
+	class SubT: public Function
 	{
 	public:
-		Sub();
-		Sub(uint numArgs);
-		~Sub();
+		SubT();
+		~SubT();
 
-		void evaluate(voidP inputs, void* result);
+		void evaluate(std::vector<T>& inputs, T& result);
 	};
 
-	typedef Sub<double> SubDouble;
-	typedef Sub<int> SubInt;
-
+	typedef SubT<double> Sub;
 	template <class T>
-	Sub<T>::Sub()
+	SubT<T>::SubT()
 	{
 		name_ = "-";
-		numOfArgs_ = 2;
+		nArguments_ = 2;
 	}
 
 	template <class T>
-	Sub<T>::Sub(uint numArgs)
-	{
-		name_ = "-";
-		numOfArgs_ = numArgs;
-	}
+	SubT<T>::~SubT()
+	{}
 
 	template <class T>
-	Sub<T>::~Sub()
+	void SubT<T>::evaluate(std::vector<T> &inputs, T &result)
 	{
-	}
-
-	template <class T>
-	void Sub<T>::evaluate(voidP inputs, void* result)
-	{
-		T& diff = *(T*) result;
-		stringstream ss;
-		ss << *((string*) inputs.get());
-		vector<T> readInputs;
-		T input;
-		uint i = 0;
-		while (ss >> input)
-		{
-			readInputs.push_back(input);
-			++i;
-			if (i == numOfArgs_)
-			{
-				break;
-			}
-		}
-
-		diff = readInputs.at(0);
-		for (int i = 1; i < (int)numOfArgs_; i++)
-		{
-			diff -= readInputs.at(i);
-		}
+		result = inputs[0] - inputs[1];
 	}
 
 }
-
-#endif /* Sub_h */
+#endif //Sub_h

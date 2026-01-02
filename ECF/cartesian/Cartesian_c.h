@@ -1,7 +1,7 @@
 #ifndef Cartesian_h
 #define Cartesian_h
-#include "ECF/ECF_base.h"
-#include "ECF/Genotype.h"
+#include "../ECF_base.h"
+#include "../Genotype.h"
 
 
 namespace Cartesian {

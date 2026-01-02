@@ -1,7 +1,7 @@
 #ifndef CartesianCrsUniform_h
 #define CartesianCrsUniform_h
 
-#include "ecf/ECF_base.h"
+#include "../ECF_base.h"
 
 
 namespace Cartesian {

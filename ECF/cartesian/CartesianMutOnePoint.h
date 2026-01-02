@@ -1,7 +1,7 @@
 #ifndef CartesianMutOnePoint_h
 #define CartesianMutOnePoint_h
 
-#include "ecf/ECF_base.h"
+#include "../ECF_base.h"
 
 
 namespace Cartesian {

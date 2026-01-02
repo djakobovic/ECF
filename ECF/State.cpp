@@ -91,8 +91,8 @@ State::State()
 	this->mGenotypes_[gen->getName()] = gen;
 	gen = static_cast<GenotypeP> (new GEP::GEPChromosome);
 	this->mGenotypes_[gen->getName()] = gen;
-	//	gen = static_cast<GenotypeP> (new cart::Cartesian);
-//	this->mGenotypes_[gen->getName()] = gen;
+	gen = static_cast<GenotypeP> (new Cartesian::Cartesian);
+	this->mGenotypes_[gen->getName()] = gen;
 
 	// termination operators
 	OperatorP op = static_cast<OperatorP> (new TermStagnationOp);

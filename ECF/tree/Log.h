@@ -9,18 +9,18 @@ namespace Primitives {
 class Log : public Primitive
 {
 	public:
-		Log::Log(void)
+		Log(void)
 		{
 			nArguments_ = 1;
 			name_ = "log";
 		}
 
 
-		Log::~Log(void)
+		~Log(void)
 		{ }
 
 
-		void Log::execute(void* result, Tree& tree)
+		void execute(void* result, Tree& tree)
 		{
 			double& arg = *(double*)result;
 			getNextArgument(&arg, tree);

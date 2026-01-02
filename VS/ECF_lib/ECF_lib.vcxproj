@@ -29,7 +29,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -40,7 +40,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -181,6 +181,27 @@
     <ClInclude Include="..\..\ECF\binary\BinaryCrsMasked.h" />
     <ClInclude Include="..\..\ECF\binary\BinaryCrsNonGeometric.h" />
     <ClInclude Include="..\..\ECF\binary\BinaryCrsRandomRespectful.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Add.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Cartesian.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianCrxHalfUniform.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianCrxOnePoint.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianCrxUniform.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutNonSilent.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutOnePoint.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutSilent.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Cartesian_c.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Cos.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Div.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Exp.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Function.h" />
+    <ClInclude Include="..\..\ECF\cartesian\FunctionSet.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Mul.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Nlog.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Sin.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Sqrt.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Step.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Sub.h" />
     <ClInclude Include="..\..\ECF\Communicator.h" />
     <ClInclude Include="..\..\ECF\Context.h" />
     <ClInclude Include="..\..\ECF\Crossover.h" />
@@ -336,6 +357,15 @@
     <ClCompile Include="..\..\ECF\binary\BinaryCrsMasked.cpp" />
     <ClCompile Include="..\..\ECF\binary\BinaryCrsNonGeometric.cpp" />
     <ClCompile Include="..\..\ECF\binary\BinaryCrsRandomRespectful.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\Cartesian.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianCrxHalfUniform.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianCrxOnePoint.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianCrxUniform.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutNonSilent.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutOnePoint.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutSilent.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\FunctionSet.cpp" />
     <ClCompile Include="..\..\ECF\Crossover.cpp" />
     <ClCompile Include="..\..\ECF\Deme.cpp" />
     <ClCompile Include="..\..\ECF\FitnessMax.cpp" />

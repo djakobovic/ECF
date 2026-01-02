@@ -72,7 +72,7 @@ const std::string ECF_VERSION = "1.6.1";
 #include "apgenotype/APGenotype.h"
 #include "intgenotype/IntGenotype.h"
 #include "gep/GEPChromosome.h"
-//#include "cartesian/Cartesian.h"
+#include "cartesian/Cartesian.h"
 
 #endif // ECF_h
 

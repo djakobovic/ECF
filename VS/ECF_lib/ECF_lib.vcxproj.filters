@@ -40,6 +40,9 @@
     <Filter Include="GEP">
       <UniqueIdentifier>{37c8b96e-8687-4461-9bba-d3001a792eb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cartesian">
+      <UniqueIdentifier>{f163ad84-01fa-4b96-a5e5-eb335a5d989e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ECF\AlgDifferentialEvolution.h">
@@ -498,6 +501,69 @@
     <ClInclude Include="..\..\ECF\tree\Log.h">
       <Filter>Tree\Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Add.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Cartesian.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Cartesian_c.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianCrxHalfUniform.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianCrxOnePoint.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianCrxUniform.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutNonSilent.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutOnePoint.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutSilent.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Cos.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Div.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Exp.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Function.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\FunctionSet.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Mul.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Nlog.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Sin.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Sqrt.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Step.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Sub.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ECF\AlgDifferentialEvolution.cpp">
@@ -883,6 +949,33 @@
     </ClCompile>
     <ClCompile Include="..\..\ECF\gep\GEPChromosomeMutOp.cpp">
       <Filter>GEP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\Cartesian.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\CartesianCrxHalfUniform.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\CartesianCrxOnePoint.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\CartesianCrxUniform.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutNonSilent.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutOnePoint.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutSilent.cpp">
+      <Filter>Cartesian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ECF\cartesian\FunctionSet.cpp">
+      <Filter>Cartesian</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

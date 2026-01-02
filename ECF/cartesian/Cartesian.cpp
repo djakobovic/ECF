@@ -183,8 +183,18 @@ void Cartesian::write(XMLNode &xCart)
 
 	// write genome to sValue
 	std::vector<uint>& genome = *this;
-	for(uint i = 0; i < genome.size(); i++)
-		sValue << genome[i] << " ";
+	uint i = 0;
+	do {
+		uint iFunction = genome[i++];
+		sValue << "(" << functionSet->vFunctions[iFunction]->getName() << " ";
+		//for(uint arg = 0; arg < functionSet->vFunctions[iFunction]->getNumberOfArguments(); arg++)
+		// workaround dok se genotip ne izradi kao vektor gena:
+		for (uint arg = 0; arg < maxArity; arg++)
+			sValue << genome[i++] << " ";
+		sValue << ") ";
+	} while (i < (genome.size() - nOutputs));
+	for (uint out = 0; out < nOutputs; out++)
+		sValue << genome[i++] << " ";
 
 	xCart.addText(sValue.str().c_str());
 }

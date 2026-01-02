@@ -1,7 +1,7 @@
 #ifndef CartesianMutNewParameterLess_h
 #define CartesianMutNewParameterLess_h
 
-#include "ecf/ECF_base.h"
+#include "../ECF_base.h"
 
 namespace Cartesian {
 	/**

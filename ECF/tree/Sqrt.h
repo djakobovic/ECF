@@ -1,6 +1,7 @@
 #ifndef Sqrt_h
 #define Sqrt_h
 #include "Primitive.h"
+#include <cmath>
 
 namespace Tree {
 namespace Primitives {

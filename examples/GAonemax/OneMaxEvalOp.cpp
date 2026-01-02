@@ -17,8 +17,8 @@ FitnessP OneMaxEvalOp::evaluate(IndividualP individual)
 	// BitString genotype contains a std::vector of bool's named 'bits'
 	uint ones = 0;
 	for(uint i = 0; i<bitstr->bits.size(); i++){
-			if(bitstr->bits[i] == true)
-					ones++ ;
+		if(bitstr->bits[i] == true)
+			ones++ ;
 	}
 	fitness->setValue(ones);
 

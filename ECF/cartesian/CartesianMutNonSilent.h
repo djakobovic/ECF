@@ -1,7 +1,7 @@
 #ifndef CartesianMutNonSilent_h
 #define CartesianMutNonSilent_h
 
-#include "ecf/ECF_base.h"
+#include "../ECF_base.h"
 
 
 namespace Cartesian {

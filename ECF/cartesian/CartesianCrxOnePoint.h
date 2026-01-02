@@ -1,7 +1,7 @@
 #ifndef CartesianCrsOnePoint_h
 #define CartesianCrsOnePoint_h
 
-#include "ecf/ECF_base.h"
+#include "../ECF_base.h"
 
 
 namespace Cartesian {

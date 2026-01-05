@@ -11,10 +11,10 @@
 			<Entry key="numrows">2</Entry>
 			<Entry key="numcols">5</Entry>
 			<Entry key="levelsback">3</Entry>
-			<Entry key="functionset">+ * - / sqrt step</Entry>
+			<Entry key="functionset">+ * - / pos min max</Entry>
 		</Cartesian>
 	</Genotype>
-			<Entry key="constantset">x y z</Entry>
+			<Entry key="functionset">+ * - / pos min max sqrt ln</Entry>
 
 	<Registry>
 		<Entry key="population.size">1000</Entry>

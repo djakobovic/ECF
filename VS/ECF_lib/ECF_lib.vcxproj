@@ -196,8 +196,11 @@
     <ClInclude Include="..\..\ECF\cartesian\Exp.h" />
     <ClInclude Include="..\..\ECF\cartesian\Function.h" />
     <ClInclude Include="..\..\ECF\cartesian\FunctionSet.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Max.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Min.h" />
     <ClInclude Include="..\..\ECF\cartesian\Mul.h" />
     <ClInclude Include="..\..\ECF\cartesian\Nlog.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Pos.h" />
     <ClInclude Include="..\..\ECF\cartesian\Sin.h" />
     <ClInclude Include="..\..\ECF\cartesian\Sqrt.h" />
     <ClInclude Include="..\..\ECF\cartesian\Step.h" />

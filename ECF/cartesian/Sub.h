@@ -1,5 +1,5 @@
-#ifndef Sub_h
-#define Sub_h
+#ifndef CGPSub_h
+#define CGPSub_h
 #include "Function.h"
 namespace Cartesian
 {

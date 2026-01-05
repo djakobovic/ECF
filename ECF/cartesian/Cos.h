@@ -1,5 +1,5 @@
-#ifndef Cos_h
-#define Cos_h
+#ifndef CGPCos_h
+#define CGPCos_h
 #include "Function.h"
 
 namespace Cartesian

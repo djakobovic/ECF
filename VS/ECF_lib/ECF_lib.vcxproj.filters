@@ -564,6 +564,15 @@
     <ClInclude Include="..\..\ECF\cartesian\Sub.h">
       <Filter>Cartesian</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Pos.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Min.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Max.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ECF\AlgDifferentialEvolution.cpp">

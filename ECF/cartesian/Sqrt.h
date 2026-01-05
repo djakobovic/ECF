@@ -1,5 +1,5 @@
-#ifndef Sqrt_h
-#define Sqrt_h
+#ifndef CGPSqrt_h
+#define CGPSqrt_h
 #include "Function.h"
 namespace Cartesian
 {

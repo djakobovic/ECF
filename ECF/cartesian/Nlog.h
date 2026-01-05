@@ -1,5 +1,5 @@
-#ifndef NLog_h
-#define NLog_h
+#ifndef CGPNLog_h
+#define CGPNLog_h
 #include "Function.h"
 namespace Cartesian {
 

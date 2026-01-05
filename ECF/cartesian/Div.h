@@ -1,5 +1,5 @@
-#ifndef Div_h
-#define Div_h
+#ifndef CGPDiv_h
+#define CGPDiv_h
 #include "Function.h"
 
 namespace Cartesian

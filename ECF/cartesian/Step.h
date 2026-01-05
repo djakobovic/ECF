@@ -1,5 +1,5 @@
-#ifndef Step_h
-#define Step_h
+#ifndef CGPStep_h
+#define CGPStep_h
 #include "Function.h"
 namespace Cartesian {
 

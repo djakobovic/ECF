@@ -18,6 +18,9 @@
 #include "Nlog.h"
 #include "Exp.h"
 #include "Step.h"
+#include "Pos.h"
+#include "Min.h"
+#include "Max.h"
 
 // crossover operators
 #include "CartesianCrxOnePoint.h"

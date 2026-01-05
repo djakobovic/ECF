@@ -48,6 +48,14 @@ bool FunctionSet::initialize(StateP state)
 	func = (FunctionP) (new Step);
 	mAllFunctions[func->getName()] = func;
 
+	func = (FunctionP)(new Pos);
+	mAllFunctions[func->getName()] = func;
+
+	func = (FunctionP)(new Min);
+	mAllFunctions[func->getName()] = func;
+
+	func = (FunctionP)(new Max);
+	mAllFunctions[func->getName()] = func;
 
 	return true;
 

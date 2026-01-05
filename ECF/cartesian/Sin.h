@@ -1,5 +1,5 @@
-#ifndef Sin_h
-#define Sin_h
+#ifndef CGPSin_h
+#define CGPSin_h
 #include "Function.h"
 
 namespace Cartesian

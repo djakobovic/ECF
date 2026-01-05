@@ -1,5 +1,5 @@
-#ifndef Mul_h
-#define Mul_h
+#ifndef CGPMul_h
+#define CGPMul_h
 #include "Function.h"
 
 namespace Cartesian

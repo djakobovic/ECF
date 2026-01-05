@@ -1,5 +1,5 @@
-#ifndef Exp_h
-#define Exp_h
+#ifndef CGPExp_h
+#define CGPExp_h
 #include "Function.h"
 namespace Cartesian
 {

@@ -1,5 +1,5 @@
-#ifndef Add_h
-#define Add_h
+#ifndef CGPAdd_h
+#define CGPAdd_h
 #include "Function.h"
 
 namespace Cartesian

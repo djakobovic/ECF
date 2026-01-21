@@ -9,6 +9,36 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 set(SOURCE_FILES
+	ECF/cartesian/Add.h
+	ECF/cartesian/Cartesian.cpp
+	ECF/cartesian/Cartesian.h
+	ECF/cartesian/CartesianCrxHalfUniform.cpp
+	ECF/cartesian/CartesianCrxHalfUniform.h
+	ECF/cartesian/CartesianCrxOnePoint.cpp
+	ECF/cartesian/CartesianCrxOnePoint.h
+	ECF/cartesian/CartesianCrxUniform.cpp
+	ECF/cartesian/CartesianCrxUniform.h
+	ECF/cartesian/CartesianMutNewParameterLess.cpp
+	ECF/cartesian/CartesianMutNewParameterLess.h
+	ECF/cartesian/CartesianMutNonSilent.cpp
+	ECF/cartesian/CartesianMutNonSilent.h
+	ECF/cartesian/CartesianMutOnePoint.cpp
+	ECF/cartesian/CartesianMutOnePoint.h
+	ECF/cartesian/CartesianMutSilent.cpp
+	ECF/cartesian/CartesianMutSilent.h
+	ECF/cartesian/Cartesian_c.h
+	ECF/cartesian/Cos.h
+	ECF/cartesian/Div.h
+	ECF/cartesian/Exp.h
+	ECF/cartesian/Function.h
+	ECF/cartesian/FunctionSet.cpp
+	ECF/cartesian/FunctionSet.h
+	ECF/cartesian/Mul.h
+	ECF/cartesian/Nlog.h
+	ECF/cartesian/Sin.h
+	ECF/cartesian/Sqrt.h
+	ECF/cartesian/Step.h
+	ECF/cartesian/Sub.h
 	ECF/gep/AlgGEP.cpp 
 	ECF/gep/AlgGEP.h 
 	ECF/gep/GEPChromosome.cpp 

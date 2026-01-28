@@ -145,9 +145,9 @@ bool Cartesian::initialize(StateP state)
 		nFunctions++;
 	}
 
-	std::map<std::string, FunctionP>::iterator it;
+	std::map<std::string, uint>::iterator it;
 	for (it = functionSet->mFunctionSet.begin(); it != functionSet->mFunctionSet.end(); it++) {
-		uint nArgs = it->second->getNumberOfArguments();
+		uint nArgs = functionSet->vFunctions[it->second]->getNumberOfArguments();
 		if (nArgs > maxArity)
 		{
 			maxArity = nArgs;
@@ -165,9 +165,28 @@ void Cartesian::read(XMLNode &xCart)
 	std::istringstream ss(s);
 	std::string token;
 	uint i = 0;
-	while (getline(ss, token, ' '))
+	FunctionP func;
+	while (ss >> token)
 	{
-		this->at(i++) = stoi(token);
+		if (token[0] != '(') {	// output connections
+			this->at(i++) = stoi(token);
+			continue;
+		}
+		token.erase(0, 1);	// erase opening (
+		std::map <std::string, unsigned int>::iterator it = functionSet->mFunctionSet.find(token);
+		if (it == functionSet->mFunctionSet.end()) {
+			ECF_LOG_ERROR(state_, "Cartesian genotype: unused function (" + token + ")!");
+			throw("");
+		}
+		this->at(i++) = it->second;
+		//uint nArgs = functionSet->vFunctions[it->second]->getNumberOfArguments();
+		// workaround dok se genotip ne izradi kao vektor gena:
+		uint nArgs = maxArity;
+		for (uint arg = 0; arg < nArgs; arg++) {
+			ss >> token;
+			this->at(i++) = stoi(token);
+		}
+		ss >> token;	// read closing )
 	}
 }
 
@@ -277,8 +296,3 @@ void Cartesian::evaluate(vector<double>& inputData, vector<double>& results)
 
 
 }
-
-
-
-
-

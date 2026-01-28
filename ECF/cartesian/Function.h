@@ -17,7 +17,6 @@ namespace Cartesian
 		*/
 		virtual void evaluate(std::vector<double>& inputs, double& result) = 0;
 
-
 		std::string getName()
 		{
 			return name_;
@@ -35,6 +34,5 @@ namespace Cartesian
 
 	typedef std::shared_ptr<Function> FunctionP;
 }
-
 
 #endif /* Function_h */

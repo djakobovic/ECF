@@ -3,12 +3,8 @@
 
 namespace Cartesian {
 
-
 FunctionSet::FunctionSet()
-{
-
-
-}
+{ }
 
 
 bool FunctionSet::initialize(StateP state)
@@ -72,7 +68,7 @@ bool FunctionSet::addFunction(std::string name)
 		return false;
 
 	vFunctions.push_back(iter->second);
-	mFunctionSet[iter->first] = iter->second;
+	mFunctionSet[iter->first] = vFunctions.size() - 1;
 
 	return true;
 }

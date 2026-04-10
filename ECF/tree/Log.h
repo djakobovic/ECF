@@ -15,10 +15,8 @@ class Log : public Primitive
 			name_ = "log";
 		}
 
-
 		~Log(void)
 		{ }
-
 
 		void execute(void* result, Tree& tree)
 		{

@@ -19,6 +19,7 @@
 #include "Min.h"
 #include "Sqrt.h"
 #include "Log.h"
+#include "Avg.h"
 
 #endif
 

@@ -114,7 +114,6 @@ FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
 
 			// add the difference
 			value += pow(f.at(i*nSamples+j) - result, 2);
-			 //+= fabs(f.at(i*nSamples + j) - result);
 		}
 	}
 	value /= pow(nSamples,2);

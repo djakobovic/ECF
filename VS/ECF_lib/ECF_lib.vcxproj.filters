@@ -573,6 +573,9 @@
     <ClInclude Include="..\..\ECF\cartesian\Max.h">
       <Filter>Cartesian</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ECF\tree\Avg.h">
+      <Filter>Tree\Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ECF\AlgDifferentialEvolution.cpp">

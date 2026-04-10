@@ -8,7 +8,7 @@ Documentation is available at https://ecf.readthedocs.io/
 
 ## Installation
 
-Detailed instructions on how to build ECF on Windows or Unix/Linux are covered at https://ecf.readthedocs.io/install.html or on project web page. The provided 'INSTALL' file deals only with generic installation issues with  GNU automake tools.
+Detailed instructions on how to build ECF on Windows or Unix/Linux are covered at https://ecf.readthedocs.io/install.html or on project web page. 
 
 ## Support
 

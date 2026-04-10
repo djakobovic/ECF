@@ -4,10 +4,4 @@
     <option name="pythonIntegrationState" value="YES" />
   </component>
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
-  <component name="CidrRootsConfiguration">
-    <excludeRoots>
-      <file path="$PROJECT_DIR$/cmake-build-debug/CMakeFiles" />
-      <file path="$PROJECT_DIR$/cmake-build-release/CMakeFiles" />
-    </excludeRoots>
-  </component>
 </project>

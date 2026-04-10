@@ -18,7 +18,6 @@ protected:
 	bool valid_;	//!< is fitness value up-to-date
 	double value_;	//!< actual fitness value
 
-	// regular pointer (http://www.boost.org/doc/libs/1_36_0/libs/smart_ptr/sp_techniques.html#from_this)
 	// initialized in Individual::initialize()
 	Individual* individual_;
 

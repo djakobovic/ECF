@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 project(ECF)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -171,6 +171,7 @@ set(SOURCE_FILES
 	ECF/permutation/PermutationMutToggle.cpp
 	ECF/permutation/PermutationMutToggle.h
 	ECF/tree/Add.h
+	ECF/tree/Avg.h
 	ECF/tree/Cos.cpp
 	ECF/tree/Cos.h
 	ECF/tree/Div.h

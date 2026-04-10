@@ -6,6 +6,7 @@ pkginclude_bitstringdir = $(includedir)/ECF/bitstring
 pkginclude_permutationdir = $(includedir)/ECF/permutation
 pkginclude_apgenotypedir = $(includedir)/ECF/apgenotype
 pkginclude_intgenotypedir = $(includedir)/ECF/intgenotype
+pkginclude_cartesiandir = $(includedir)/ECF/cartesian
 pkginclude_xmldir = $(includedir)/ECF/xml
 pkginclude_xcsdir = $(includedir)/ECF/xcs
 pkginclude_gepdir = $(includedir)/ECF/gep
@@ -63,6 +64,7 @@ pkginclude_main_HEADERS = Algorithm.h \
 	TermMaxEvalOp.h \
 	TermStagnationOp.h
 pkginclude_tree_HEADERS = tree/Add.h \
+	tree/Avg.h \
 	tree/Cos.h \
 	tree/Div.h \
 	tree/Mul.h \
@@ -149,6 +151,27 @@ pkginclude_intgenotype_HEADERS = intgenotype/IntGenotype.h \
 	intgenotype/IntGenotypeCrxOp.h \
 	intgenotype/IntGenotypeCrxTwoPoint.h \
 	intgenotype/IntGenotypeMutOp.h
+pkginclude_cartesian_HEADERS = cartesian/Add.h \
+	cartesian/Cartesian.h \
+	cartesian/CartesianCrxHalfUniform.h \
+	cartesian/CartesianCrxOnePoint.h \
+	cartesian/CartesianCrxUniform.h \
+	cartesian/CartesianMutNewParameterLess.h \
+	cartesian/CartesianMutNonSilent.h \
+	cartesian/CartesianMutOnePoint.h \
+	cartesian/CartesianMutSilent.h \
+	cartesian/Cartesian_c.h \
+	cartesian/Cos.h \
+	cartesian/Div.h \
+	cartesian/Exp.h \
+	cartesian/Function.h \
+	cartesian/FunctionSet.h \
+	cartesian/Mul.h \
+	cartesian/Nlog.h \
+	cartesian/Sin.h \
+	cartesian/Sqrt.h \
+	cartesian/Step.h \ 
+	cartesian/Sub.h
 pkginclude_gep_HEADERS = gep/AlgGEP.h \
 	gep/GEPChromosome.h \
 	gep/GEPChromosomeCrsGene.h \
@@ -295,10 +318,19 @@ libecf_la_SOURCES += Algorithm.cpp \
 	gep/GEPChromosomeCrsTwoPoint.cpp \
 	gep/GEPChromosomeMutGauss.cpp \
 	gep/GEPChromosomeMutOp.cpp \
+	cartesian/Cartesian.cpp \
+	cartesian/CartesianCrxHalfUniform.cpp \
+	cartesian/CartesianCrxOnePoint.cpp \
+	cartesian/CartesianCrxUniform.cpp \
+	cartesian/CartesianMutNewParameterLess.cpp \
+	cartesian/CartesianMutNonSilent.cpp \
+	cartesian/CartesianMutOnePoint.cpp \
+	cartesian/CartesianMutSilent.cpp \
+	cartesian/FunctionSet.cpp \
 	xml/xmlParser.cpp \
 	xcs/AlgXCS.cpp \
 	xcs/Classifier.cpp \
 	xcs/Environment.cpp \
 	xcs/XCSParams.cpp
 
-libecf_la_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/binary -I$(top_srcdir)/floatingpoint -I$(top_srcdir)/bitstring -I$(top_srcdir)/tree -I$(top_srcdir)/permutation -I$(top_srcdir)/apgenotype -I$(top_srcdir)/intgenotype -I$(top_srcdir)/gep -I$(top_srcdir)/xml -I$(top_srcdir)/xcs
+libecf_la_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/binary -I$(top_srcdir)/floatingpoint -I$(top_srcdir)/bitstring -I$(top_srcdir)/tree -I$(top_srcdir)/permutation -I$(top_srcdir)/apgenotype -I$(top_srcdir)/intgenotype -I$(top_srcdir)/cartesian -I$(top_srcdir)/gep -I$(top_srcdir)/xml -I$(top_srcdir)/xcs

@@ -132,7 +132,7 @@ bool Cartesian::initialize(StateP state)
 	}
 	nInputs = nConstants + nVariables;
 
-	//Functionset parametri su malo složeniji
+	//Functionset parameters
 	sptr = getParameterValue(state, "functionset");
 	names = *((std::string*) sptr.get());
 	ss.str("");
@@ -140,11 +140,13 @@ bool Cartesian::initialize(StateP state)
 	ss << names;
 	name="";
 
+	nFunctions = 0;
 	while(ss >> name) {
 		functionSet->addFunction(name);
 		nFunctions++;
 	}
 
+	maxArity = 0;
 	std::map<std::string, uint>::iterator it;
 	for (it = functionSet->mFunctionSet.begin(); it != functionSet->mFunctionSet.end(); it++) {
 		uint nArgs = functionSet->vFunctions[it->second]->getNumberOfArguments();

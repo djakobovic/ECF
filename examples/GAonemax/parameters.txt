@@ -8,7 +8,7 @@
 
 	<Genotype>
 		<BitString>
-			<Entry key="size">50</Entry>
+			<Entry key="size">250</Entry>
 		</BitString>
 	</Genotype>
 
@@ -16,8 +16,8 @@
 		<Entry key="randomizer.seed">0</Entry> 
 		<Entry key="population.size">3</Entry>
 		<Entry key="mutation.indprob">0.3</Entry> 
-		<Entry key="term.eval">0</Entry>
-		<Entry key="term.fitnessval">500</Entry> 
+		<Entry key="term.eval">999999</Entry>
+		<Entry key="term.fitnessval">250</Entry> 
 		<Entry key="log.level">3</Entry>
 		<Entry key="log.frequency">10</Entry>
 		<Entry key="log.filename">log.txt</Entry>

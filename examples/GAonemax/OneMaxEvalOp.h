@@ -29,4 +29,27 @@ public:
 typedef std::shared_ptr<OneMaxEvalOp> OneMaxEvalOpP;
 
 
+
+class MyEvalOp : public EvaluateOp
+{
+public:
+	StateP state_;
+
+	bool initialize(StateP state)
+	{
+		state_ = state;
+		return true;
+	}
+	FitnessP evaluate(IndividualP individual)
+	{
+		DemeP myDeme = state_->getPopulation()->getLocalDeme();
+		for (IndividualP ind : *myDeme) {
+			std::cout << ind->index << ": " << ind->toString() << std::endl;
+		}
+		return (FitnessP)(new FitnessMin);
+	}
+};
+
+
 #endif // OneMaxEvalOp_h
+

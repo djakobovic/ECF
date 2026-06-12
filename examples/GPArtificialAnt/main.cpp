@@ -8,7 +8,7 @@
 #include "MoveAhead.h"
 #include <iostream>
 #include <fstream>
-#include <string.h>
+#include <string>
 
 
 int main(int argc, char **argv)

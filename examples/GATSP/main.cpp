@@ -2,6 +2,10 @@
 #include "TSPEvalOp.h"
 
 
+//
+// this main() function optimizes a single TSP instance
+// (instance filename defined in parameters)
+//
 int main(int argc, char **argv)
 {
 	StateP state (new State);
@@ -9,14 +13,11 @@ int main(int argc, char **argv)
 	TSPEvalOp* tsp = new TSPEvalOp();
 	state->setEvalOp(tsp);
 
-	//state->addAlgorithm((AlgorithmP) new Alg);
-
 	state->initialize(argc, argv);
 	state->run();
 
 	return 0;
 }
-
 
 
 //

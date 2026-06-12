@@ -1,8 +1,8 @@
 
-Function minimization example - using FloatingPoint or Binary genotype (see more on this example in help/tutorial.html).
+Function minimization example - using FloatingPoint or Binary genotype (see more on this example in documentation).
 
 
-Running the example (more info in help/install.html)
+Running the example
 	Windows: compile the provided VisualStudio solution in 'VS' directory (having previously compiled the ECF_lib solution)
 	Linux: compile with the provided 'Makefile' (having previously compiled the ECF library)
 

@@ -6,6 +6,12 @@ using namespace SpaceFlight::Simulation;
 using namespace msclr::interop;
 #define _AFXDLL
 
+
+//
+// To compile, build ECF.lib with the option "Multi-threaded DLL (/MD)" for "Runtime Library" parameter
+//
+
+
 class SpaceFlightEvalOp : public EvaluateOp
 {
 public:

@@ -4,22 +4,24 @@
 #include "ActivationFunctions/SineFunction.h"
 #include "Algorithms/Backpropagation.h"
 
-int main(int argc, char **argv) {
+
+int main(int argc, char **argv) 
+{
 	StateP state(new State);
 
-	/*Setting the evaluation operator.*/
+	/* Set the evaluation operator. */
 	FunctionMinEvalOpP func (new FunctionMinEvalOp);
 	state->setEvalOp(func);
 
-	/*Setting the backpropagation as the working algorithm.*/
+	/* Add the backpropagation algorithm. */
 	BackpropagationP bp(new Backpropagation);
 	state->addAlgorithm(bp);
 
-	/*Adding a NeuralNetwork genotype.*/
+	/* Add a NeuralNetwork genotype. */
 	NeuralNetworkP nn(new NeuralNetwork);
 	state->addGenotype(nn);
 
-	/*User provided activation function.*/
+	/* User provided activation function. */
 	SineFunction* sinusTest = new SineFunction("sin");
 	nn->setActivationFunction(sinusTest);
 
@@ -29,7 +31,7 @@ int main(int argc, char **argv) {
 	NeuralNetwork* f = (NeuralNetwork*)state->getHoF()->getBest()[0]->getGenotype().get();
 	f->generateConfigFile("Testing/configFile");
 
-	// PROGRAM FOR TESTING THE RESULT NN
+	// PROGRAM FOR TESTING THE NN RESULT
 
 	// cout << "\n>>>Time to use this program!<<<\n";
 	// while (true) {

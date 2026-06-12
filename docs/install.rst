@@ -15,6 +15,11 @@ used to build examples and user projects. Each example has its "VS"
 subdirectory with a VS solution file that can be used to build either
 debug or release version (having previously built the ECF_lib project). 
 
+To compile a new VS example project, set the "C++ / Code generation" option 
+to "Multi-threaded (/MT)" for Release, or "Multi-threaded Debug (/MTd)"
+for Debug (to avoid the need for VS DDLs).
+
+
 CMake
 ~~~~~
 

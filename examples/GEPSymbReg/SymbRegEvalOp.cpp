@@ -42,8 +42,8 @@ bool SymbRegEvalOp::initialize(StateP state)
 		}
 	}
 	return true;
-
 }
+
 bool SymbRegEvalOp::csvRead(StateP state, std::string entry, std::vector<double>* vec){
 	std::ifstream stream;
 	std::string line;
@@ -58,6 +58,7 @@ bool SymbRegEvalOp::csvRead(StateP state, std::string entry, std::vector<double>
 }
 
 void SymbRegEvalOp::registerParameters(StateP state){
+	// optional - read data from input files
 	/*state->getRegistry()->registerEntry("x.data", (voidP)(new std::string), ECF::STRING);
 	state->getRegistry()->registerEntry("y.data", (voidP)(new std::string), ECF::STRING);
 	state->getRegistry()->registerEntry("f.data", (voidP)(new std::string), ECF::STRING);
@@ -74,17 +75,16 @@ FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
 	// The system is multigenic. We iterate over every gene, transform it to a tree, execute it and link it with the results of its fellow genes
 	// The user specifies the linking function programatically or in the parameters
 
-	//// a) Transform genes into subtrees and store them in a vector
+	// a) just assemble the whole expression
+	gep->assemble();
+
+	//// b) Transform genes into subtrees and store them in a vector
 	//std::vector<Tree::Tree*> tree;
 	//tree.push_back(gep->makeCellTree());
 	//for (uint g = 0; g < gep->genes; g++){
 	//	tree.push_back(gep->toTree(g));
 	////	cout << tree[g]->toString() << endl;
 	//}
-
-
-	// b) or just assemble the whole expression
-	gep->assemble();
 
 
 	double value = 0;
@@ -94,12 +94,12 @@ FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
 		for (uint j = 0; j < nSamples; j++){
 			result = 0;
 
-			// execute the whole expression
+			// a) execute the whole expression
 			gep->setTerminalValue("X", &x.at(i));
 			gep->setTerminalValue("Y", &y.at(j));
 			gep->execute(&result);
 
-			// or, execute every subtree and link manually
+			// b) or, execute every subtree and link manually
 			/*
 			for (uint g = 0; g < gep->genes; g++){
 				// for each test data instance, the x value (domain) must be set

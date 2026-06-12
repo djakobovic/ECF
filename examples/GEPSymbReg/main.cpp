@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	//XMLNode xInd = XMLNode::parseFile("./ind.xml", "Individual");
 	//IndividualP ind = (IndividualP) new Individual(state);
 	//ind->read(xInd);
-	//ECF_LOG(state, 3, "TEST XML READ OUTPUT:\n"+ind->toString());
+	//ECF_LOG(state, 3, "loaded individual:\n" + ind->toString());
 
 	state->run();
 	return 0;

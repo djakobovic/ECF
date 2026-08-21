@@ -7,7 +7,7 @@
 /**
  * \defgroup coco BBOB function minimization (from http://coco.gforge.inria.fr)
  * \ingroup examples
- * \brief Function minimization example - using FloatingPoint or Binary genotype (see more on this example in help/tutorial.html)
+ * \brief Function minimization example - using FloatingPoint or Binary genotype
  *
  * \par Description
  * Tries to find the (global) minimum of a continuous multidimensional function.

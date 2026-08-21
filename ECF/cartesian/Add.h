@@ -31,8 +31,8 @@ namespace Cartesian
 	template <class T>
 	void AddT<T>::evaluate(std::vector<T>& inputs, T& result)
 	{
-		double sum = 0;
-		for (uint i = 0; i < nArguments_; i++) {
+		T sum = inputs[0];
+		for (uint i = 1; i < nArguments_; i++) {
 			sum += inputs[i];
 		}
 

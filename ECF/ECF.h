@@ -1,8 +1,8 @@
 /*! \mainpage ECF - Evolutionary Computation Framework
  *
- * The information about ECF installation and usage can be found in help/install.html and help/tutorial.html
+ * The information about ECF installation and usage can be found in docs/ or at https://ecf.readthedocs.io/
  *
- * See the list of examples (in modules) or class hierarchy for more information on ECF components.
+ * See Topics for list of examples and more information on ECF components.
  *
 */
 
@@ -55,7 +55,7 @@
 
 typedef std::shared_ptr<void>  voidP;
 
-const std::string ECF_VERSION = "1.6.1";
+const std::string ECF_VERSION = "1.7";
 
 // base:
 #include "ECF_base.h"

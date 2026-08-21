@@ -1,7 +1,17 @@
-#include "Cartesian.h"
 #include <cctype>
 #include <map>
 #include <vector>
+#include "Cartesian.h"
+
+// crossover operators
+#include "CartesianCrxOnePoint.h"
+#include "CartesianCrxHalfUniform.h"
+#include "CartesianCrxUniform.h"
+
+// mutation operators
+#include "CartesianMutOnePoint.h"
+#include "CartesianMutNonSilent.h"
+#include "CartesianMutOnePointActive.h"
 
 
 namespace Cartesian {
@@ -10,6 +20,7 @@ namespace Cartesian {
 Cartesian::Cartesian(void)
 {
 	name_ = "Cartesian";
+	functionSet_ = (FunctionSetP)(new FunctionSet);
 }
 
 
@@ -20,15 +31,13 @@ Cartesian::~Cartesian(void)
 Cartesian* Cartesian::copy()
 {
 	Cartesian *newObject = new Cartesian(*this);
-	// no deep copy code needed
-
 	return newObject;
 }
 
 
 std::vector<CrossoverOpP> Cartesian::getCrossoverOp()
 {
-	vector<CrossoverOpP> crxOps;
+	std::vector<CrossoverOpP> crxOps;
 	crxOps.push_back((CrossoverOpP) (new CartesianCrxOnePoint));	// ok
 	crxOps.push_back((CrossoverOpP) (new CartesianCrxHalfUniform));	// ok
 	crxOps.push_back((CrossoverOpP) (new CartesianCrxUniform));		// ok
@@ -38,11 +47,10 @@ std::vector<CrossoverOpP> Cartesian::getCrossoverOp()
 
 std::vector<MutationOpP> Cartesian::getMutationOp()
 {
-	vector<MutationOpP> mutOps;
-////	mutOps.push_back((MutationOpP) (new CartesianMutOnePoint));	// treba popraviti
-	mutOps.push_back((MutationOpP) (new CartesianMutNonSilent));	// ok
-////	mutOps.push_back((MutationOpP) (new CartesianMutSilent));	// treba popraviti
-	mutOps.push_back((MutationOpP) (new CartesianMutNewParameterLess));	// ok
+	std::vector<MutationOpP> mutOps;
+	mutOps.push_back((MutationOpP) (new CartesianMutOnePoint));
+	mutOps.push_back((MutationOpP) (new CartesianMutNonSilent));	
+	mutOps.push_back((MutationOpP) (new CartesianMutOnePointActive));	
 	return mutOps;
 }
 
@@ -54,85 +62,92 @@ void Cartesian::registerParameters(StateP state)
 	registerParameter(state, "numcols", (voidP) (new uint(10)), ECF::UINT, "number of columns (default: 10)");
 	registerParameter(state, "levelsback", (voidP) (new uint(2)), ECF::UINT, "number of previous columns to be used as possible inputs (default: 2)");
 	registerParameter(state, "numvariables", (voidP) (new uint(1)), ECF::UINT, "number of input variables (default: 1)");
-	registerParameter(state, "functionset", (voidP) (new std::string), ECF::STRING, "set of functions to use (default: none)");
-	//registerParameter(state, "constantset", (voidP)(new std::string), ECF::STRING, "set of input constants (default: none)");
+	registerParameter(state, "functionset", (voidP) (new std::string), ECF::STRING, "set of functions to use (mandatory)");
+	registerParameter(state, "constantset", (voidP)(new std::string), ECF::STRING, "set of input constants (default: none)");
 }
 
 
 bool Cartesian::initialize(StateP state)
 {
-	if (!isParameterDefined(state, "functionset")){
-		ECF_LOG_ERROR(state, "Error: required parameters for CGP genotype not defined (functionset)!");
-		throw("");
-	}
-
 	state_ = state;
 	std::stringstream ss;
 	std::string names,name;
 	voidP sptr;
 
+	sptr = getParameterValue(state, "functionset");
+	names = *((std::string*)sptr.get());
+
+	if (!isParameterDefined(state, "functionset")) {
+		ECF_LOG_ERROR(state, "Cartesian initialization error: required parameters for CGP genotype not defined (functionset)!");
+		return false;
+	}
+
 	// create and initialize the function set
-	functionSet = static_cast<FunctionSetP> (new FunctionSet);
-	functionSet->initialize(state_);
+	//functionSet_ = FunctionSetP (new FunctionSet);	// TODO: vratiti ako se FunctionSet prebaci u State
+	functionSet_->initialize(state_);
 
 	uint number;
-	//Simple parameters
+	// Simple parameters
 	sptr = getParameterValue(state, "numvariables");
 	number = *((uint*) sptr.get());
 	if(number <= 0) {
-		ECF_LOG_ERROR(state, "CGP initialization error: Number of variables is smaller than 1 or can not be parsed into a number.");
+		ECF_LOG_ERROR(state, "Cartesian initialization error: Number of variables is smaller than 1 or cannot be parsed into a number.");
 		return false;
 	}
-	nVariables = number;
+	nVariables_ = number;
 
 	sptr = getParameterValue(state,"numoutputs");
 	number = *((uint*) sptr.get());
 	if(number <= 0) {
-		ECF_LOG_ERROR(state, "CGP initialization error: Number of outputs is smaller than 1 or can not be parsed into a number.");
+		ECF_LOG_ERROR(state, "Cartesian initialization error: Number of outputs is smaller than 1 or cannot be parsed into a number.");
 		return false;
 	}
-	nOutputs = number;
+	nOutputs_ = number;
 
 	sptr = getParameterValue(state,"numrows");
 	number = *((uint*) sptr.get());
 	if(number <= 0) {
-		ECF_LOG_ERROR(state, "CGP initialization error: Number of rows is smaller than 1 or can not be parsed into a number.");
+		ECF_LOG_ERROR(state, "Cartesian initialization error: Number of rows is smaller than 1 or cannot be parsed into a number.");
 		return false;
 	}
-	nRows = number;
+	nRows_ = number;
 
 	sptr = getParameterValue(state,"numcols");
 	number = *((uint*) sptr.get());
 	if(number <= 0) {
-		ECF_LOG_ERROR(state, "CGP initialization error: Number of columns is smaller than 1 or can not be parsed into a number.");
+		ECF_LOG_ERROR(state, "Cartesian initialization error: Number of columns is smaller than 1 or cannot be parsed into a number.");
 		return false;
 	}
-	nCols = number;
+	nCols_ = number;
 
 	sptr = getParameterValue(state,"levelsback");
 	number = *((uint*) sptr.get());
 	if(number <= 0) {
-		ECF_LOG_ERROR(state, "CGP initialization error: Number of columns is smaller than 1 or can not be parsed into a number.");
+		ECF_LOG_ERROR(state, "Cartesian initialization error: Number of columns is smaller than 1 or cannot be parsed into a number.");
 		return false;
 	}
-	nLevelsBack = number;
+	nLevelsBack_ = number;
 
-	nConstants = 0;
+	nConstants_ = 0;
+	constants_.clear();
 	sptr = getParameterValue(state,"constantset");
 	if (sptr) {
 		names = *((std::string*)sptr.get());
-		number = 0;
 		ss.str("");
 		ss.clear();
 		ss << names;
 		while (ss >> name) {
-			++number;
+			std::istringstream token(name);
+			double value;
+			if (token >> value) {
+				constants_.push_back(value);
+			}
 		}
-		nConstants = number;
+		nConstants_ = (uint) constants_.size();
 	}
-	nInputs = nConstants + nVariables;
+	nInputs_ = nConstants_ + nVariables_;
 
-	//Functionset parameters
+	// Functionset parameters
 	sptr = getParameterValue(state, "functionset");
 	names = *((std::string*) sptr.get());
 	ss.str("");
@@ -140,21 +155,28 @@ bool Cartesian::initialize(StateP state)
 	ss << names;
 	name="";
 
-	nFunctions = 0;
+	nFunctions_ = 0;
 	while(ss >> name) {
-		functionSet->addFunction(name);
-		nFunctions++;
-	}
-
-	maxArity = 0;
-	std::map<std::string, uint>::iterator it;
-	for (it = functionSet->mFunctionSet.begin(); it != functionSet->mFunctionSet.end(); it++) {
-		uint nArgs = functionSet->vFunctions[it->second]->getNumberOfArguments();
-		if (nArgs > maxArity)
-		{
-			maxArity = nArgs;
+		if (functionSet_->addFunction(name))
+			nFunctions_++;
+		else {
+			ECF_LOG_ERROR(state, "Cartesian initialization error: unknown function (\"" + name + "\")");
+			return false;
 		}
 	}
+	if (nFunctions_ == 0) {
+		ECF_LOG_ERROR(state, "Cartesian initialization error: no valid functions in functionset");
+		return false;
+	}
+
+	maxArity_ = 0;
+	std::map<std::string, uint>::iterator it;
+	for (it = functionSet_->mFunctionSet.begin(); it != functionSet_->mFunctionSet.end(); it++) {
+		uint nArgs = functionSet_->vFunctions[it->second]->getNumberOfArguments();
+		if (nArgs > maxArity_)
+			maxArity_ = nArgs;
+	}
+
 	buildRandomGenome();
 
 	return true;
@@ -166,29 +188,34 @@ void Cartesian::read(XMLNode &xCart)
 	std::string s = xCart.getText(0);
 	std::istringstream ss(s);
 	std::string token;
-	uint i = 0;
+	uint iNode = nInputs_;	// starting node index
+	uint iOutput = 0;
 	FunctionP func;
 	while (ss >> token)
 	{
 		if (token[0] != '(') {	// output connections
-			this->at(i++) = stoi(token);
+			outputs_[iOutput++] = stoi(token);
 			continue;
 		}
+
 		token.erase(0, 1);	// erase opening (
-		std::map <std::string, unsigned int>::iterator it = functionSet->mFunctionSet.find(token);
-		if (it == functionSet->mFunctionSet.end()) {
+		std::map <std::string, unsigned int>::iterator it = functionSet_->mFunctionSet.find(token);
+		if (it == functionSet_->mFunctionSet.end()) {
 			ECF_LOG_ERROR(state_, "Cartesian genotype: unused function (" + token + ")!");
-			throw("");
+			throw std::runtime_error("Cartesian genotype: unused function (" + token + ")!");
 		}
-		this->at(i++) = it->second;
-		//uint nArgs = functionSet->vFunctions[it->second]->getNumberOfArguments();
-		// workaround dok se genotip ne izradi kao vektor gena:
-		uint nArgs = maxArity;
+
+		nodes_[iNode].setPrimitive(functionSet_->vFunctions[it->second]);
+
+		uint nArgs = functionSet_->vFunctions[it->second]->getNumberOfArguments();
+		nodes_[iNode].arguments_.resize(nArgs);
+		
 		for (uint arg = 0; arg < nArgs; arg++) {
 			ss >> token;
-			this->at(i++) = stoi(token);
+			nodes_[iNode].arguments_[arg] = stoi(token);
 		}
-		ss >> token;	// read closing )
+
+		iNode++;
 	}
 }
 
@@ -197,25 +224,24 @@ void Cartesian::write(XMLNode &xCart)
 {
 	xCart = XMLNode::createXMLTopNode("Cartesian");
 	std::stringstream sValue;
-	sValue << this->size();
+	sValue << getGenomeSize();
 	xCart.addAttribute("size", sValue.str().c_str());
 
 	sValue.str("");
 
-	// write genome to sValue
-	std::vector<uint>& genome = *this;
-	uint i = 0;
-	do {
-		uint iFunction = genome[i++];
-		sValue << "(" << functionSet->vFunctions[iFunction]->getName() << " ";
-		//for(uint arg = 0; arg < functionSet->vFunctions[iFunction]->getNumberOfArguments(); arg++)
-		// workaround dok se genotip ne izradi kao vektor gena:
-		for (uint arg = 0; arg < maxArity; arg++)
-			sValue << genome[i++] << " ";
+	// output all nodes
+	for (uint iNode = nInputs_; iNode < nodes_.size(); iNode++) {
+		sValue << "(" << nodes_[iNode].primitive_->getName() << " ";
+		uint nArgs = (uint) nodes_[iNode].arguments_.size();
+		for (uint i = 0; i < nArgs; i++) {
+			sValue << nodes_[iNode].arguments_[i];
+			if (i < nArgs - 1)
+				sValue << " ";
+		}
 		sValue << ") ";
-	} while (i < (genome.size() - nOutputs));
-	for (uint out = 0; out < nOutputs; out++)
-		sValue << genome[i++] << " ";
+	}
+	for (uint i = 0; i < outputs_.size(); i++)
+		sValue << outputs_[i] << " ";
 
 	xCart.addText(sValue.str().c_str());
 }
@@ -223,76 +249,130 @@ void Cartesian::write(XMLNode &xCart)
 
 uint Cartesian::getGenomeSize()
 {
-	return this->size();
+	return nRows_ * nCols_ + nOutputs_;
 }
 
 
 void Cartesian::buildRandomGenome() 
 {
-	for (uint i = 0; i < nRows; i++) {
-		for(uint j = 0; j < nCols; j++) {
+	// allocate for input nodes
+	nodes_.resize(nInputs_);
 
-			int functionID = state_->getRandomizer()->getRandomInteger(nFunctions);
-			//Pushing a function
-			this->push_back(functionID);
-			std::map<std::string, FunctionP>::iterator it;
-			FunctionP functionName = functionSet->vFunctions[functionID];
-			//for(uint k = 0; k < functionName->getNumberOfArguments(); k++) {
-			// workaround dok se genotip ne izradi kao vektor gena:
-			for (uint k = 0; k < this->maxArity; k++) {
-				this->push_back(randomConnectionGenerator(i));
+	for (uint iCol = 0; iCol < nCols_; iCol++) {
+		for(uint j = 0; j < nRows_; j++) {
+
+			Node newNode;
+
+			// select a function
+			int functionID = state_->getRandomizer()->getRandomInteger(nFunctions_);
+			newNode.setPrimitive(functionSet_->vFunctions[functionID]);
+
+			// select arguments
+			FunctionP function = functionSet_->vFunctions[functionID];
+			for (uint k = 0; k < function->getNumberOfArguments(); k++) {
+				uint iArgument = randomNodeInputConnection(iCol);
+				newNode.arguments_.push_back(iArgument);
 			}
-
+			nodes_.push_back(newNode);
 		}
 	}
-	for(uint i = 0; i < nOutputs; i++) {
-		this->push_back(randomConnectionGenerator(nRows));
+
+	// select outputs (among all function nodes)
+	outputs_.resize(nOutputs_);
+	for(uint i = 0; i < nOutputs_; i++) {
+		outputs_[i] = randomOutputConnection();
 	}
 }
 
 
-uint Cartesian::randomConnectionGenerator(uint rowNumber) 
+uint Cartesian::randomNodeInputConnection(uint column)
 {
-	//This is the first index which is actually limited by levels back
-	int minimum = nInputs + nCols*nLevelsBack;
+	// First node index in this column
+	uint firstNodeInColumn = nInputs_ + column * nRows_;
 
-	//Index of the first element of a row
-	int firstElementOfARow = nInputs + rowNumber*nCols;
-	if(minimum <= firstElementOfARow) {
-		minimum = firstElementOfARow - nLevelsBack*nCols;
-	}
-	else {
-		minimum = 0;
-	}
-	return state_->getRandomizer()->getRandomInteger(minimum, firstElementOfARow - 1);
+	// First column that is allowed
+	uint firstAllowedColumn = (column > nLevelsBack_) ? column - nLevelsBack_ : 0;
+
+	uint firstAllowedNode = nInputs_ + firstAllowedColumn * nRows_;
+
+	uint nPreviousFunctionNodes = firstNodeInColumn - firstAllowedNode;
+
+	uint nCandidates = nInputs_ + nPreviousFunctionNodes;
+
+	uint id = state_->getRandomizer()->getRandomInteger(nCandidates);
+
+	// primary inputs 
+	if (id < nInputs_)
+		return id;
+
+	// allowed function nodes
+	return firstAllowedNode + (id - nInputs_);
 }
 
 
-void Cartesian::evaluate(vector<double>& inputData, vector<double>& results) 
+uint Cartesian::randomOutputConnection()
 {
-	vector<double> working_vector (inputData);
-	working_vector.resize(this->nInputs);
-	vector<double> operands(this->maxArity);
+	return (uint) state_->getRandomizer()->getRandomInteger(nInputs_, (uint) nodes_.size() - 1);
+}
+
+
+void Cartesian::evaluate(std::vector<double>& inputData, std::vector<double>& results) 
+{
+	if (inputData.size() != nVariables_) {
+		throw std::runtime_error("Cartesian error: inputData vector size not equal to number of input variables.");
+	}
+
+	std::vector<double> node_values(inputData);
+	// add constants to values vector
+	node_values.insert(node_values.end(), constants_.begin(), constants_.end());
+
+	std::vector<double> operands(this->maxArity_);
 	double result = 0;
-	for(uint i = 0; i < this->size() - nOutputs; i++) {
-		int operatorID = this->operator[](i);
-		int numberOfArguments = functionSet->vFunctions[operatorID]->getNumberOfArguments();
-		//for(int k = i + 1; k < i + numberOfArguments + 1; k++) {
-		// workaround dok se genotip ne izradi kao vektor gena:
-		for (uint k = i + 1; k < i + maxArity + 1; k++) {
-			operands[k - i - 1] = working_vector[this->operator[](k)];
+	// calculate 
+	for (uint i = nInputs_; i < nodes_.size(); i++) {
+		int numberOfArguments = nodes_[i].primitive_->getNumberOfArguments();
+		for(int k = 0; k < numberOfArguments; k++) {
+			operands[k] = node_values[nodes_[i].arguments_[k]];
 		}
-		functionSet->vFunctions[operatorID]->evaluate(operands, result);
-		working_vector.push_back(result);
-		result = 0;
-		//i+=numberOfArguments;
-		// workaround dok se genotip ne izradi kao vektor gena:
-		i += maxArity;
+		nodes_[i].primitive_->evaluate(operands, result);
+		node_values.push_back(result);
 	}
-	results.resize(nOutputs);
+	results.resize(nOutputs_);
 	int ir = 0;
-	for(uint i = this->size() - nOutputs; i < this->size(); i++) {
-		results[ir++] = working_vector[this->operator[](i)];
+	for (uint i = 0; i < outputs_.size(); i++) {
+		results[i] = node_values[outputs_[i]];
+	}
+}
+
+
+void Cartesian::getActiveFunctionNodes(std::vector<uint>& activeNodes)
+{
+	const uint size = (uint) nodes_.size();
+	std::vector<bool> activeFlags(size, false);
+
+	// for all output nodes, recursively add their argument nodes
+	for (const uint i : outputs_)
+		if (i >= nInputs_) {
+			activeFlags[i] = true;
+			addRecursivelyActiveFunctionNodes(activeFlags, i);
+		}
+
+	activeNodes.clear();
+	for (uint i = nInputs_; i < activeFlags.size(); i++)
+		if(activeFlags[i])
+			activeNodes.push_back(i);
+}
+
+
+void Cartesian::addRecursivelyActiveFunctionNodes(std::vector<bool>& activeFlags, uint node)
+{
+	for (uint iArg = 0; iArg < nodes_[node].primitive_->getNumberOfArguments(); iArg++) {
+		uint iActive = nodes_[node].arguments_[iArg];
+
+		if (iActive >= nInputs_ && activeFlags[iActive] == false) {
+			activeFlags[iActive] = true;
+			addRecursivelyActiveFunctionNodes(activeFlags, iActive);
+		}
 	}
 }
 

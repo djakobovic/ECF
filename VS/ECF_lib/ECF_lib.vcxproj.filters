@@ -519,16 +519,10 @@
     <ClInclude Include="..\..\ECF\cartesian\CartesianCrxUniform.h">
       <Filter>Cartesian</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.h">
-      <Filter>Cartesian</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ECF\cartesian\CartesianMutNonSilent.h">
       <Filter>Cartesian</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ECF\cartesian\CartesianMutOnePoint.h">
-      <Filter>Cartesian</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ECF\cartesian\CartesianMutSilent.h">
       <Filter>Cartesian</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ECF\cartesian\Cos.h">
@@ -575,6 +569,12 @@
     </ClInclude>
     <ClInclude Include="..\..\ECF\tree\Avg.h">
       <Filter>Tree\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\Node.h">
+      <Filter>Cartesian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutOnePointActive.h">
+      <Filter>Cartesian</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -974,19 +974,16 @@
     <ClCompile Include="..\..\ECF\cartesian\CartesianCrxUniform.cpp">
       <Filter>Cartesian</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.cpp">
-      <Filter>Cartesian</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ECF\cartesian\CartesianMutNonSilent.cpp">
       <Filter>Cartesian</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ECF\cartesian\CartesianMutOnePoint.cpp">
       <Filter>Cartesian</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ECF\cartesian\CartesianMutSilent.cpp">
+    <ClCompile Include="..\..\ECF\cartesian\FunctionSet.cpp">
       <Filter>Cartesian</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ECF\cartesian\FunctionSet.cpp">
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutOnePointActive.cpp">
       <Filter>Cartesian</Filter>
     </ClCompile>
   </ItemGroup>

@@ -10,7 +10,7 @@
 /**
  * \defgroup tsp Traveling Salesperson Problem (TSP)
  * \ingroup examples
- * \brief TSP example - illustration for Permutation genotype (see more on this example in help/tutorial.html)
+ * \brief TSP example - illustration for Permutation genotype (see more on this example in https://ecf.readthedocs.io/tutorial.html)
  *
  * \par Description
  * The TSP is a classic combinatorial problem which represents a large number of problem instances.

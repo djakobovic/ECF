@@ -1,11 +1,13 @@
 #ifndef Function_h
 #define Function_h
 #include "Cartesian_c.h"
-#include <math.h>
 
 
 namespace Cartesian
 {
+	/**
+	 * Virtual class for function nodes in CGP.
+	 */
 	class Function
 	{
 	public:
@@ -13,8 +15,8 @@ namespace Cartesian
 		virtual ~Function() {}
 
 		/**
-		Evaluate result with given inputs in one of implemented derived classes.
-		*/
+		 * Evaluate result with given inputs in one of implemented derived classes.
+		 */
 		virtual void evaluate(std::vector<double>& inputs, double& result) = 0;
 
 		std::string getName()
@@ -31,7 +33,6 @@ namespace Cartesian
 		std::string name_;
 		uint nArguments_;
 	};
-
 	typedef std::shared_ptr<Function> FunctionP;
 }
 

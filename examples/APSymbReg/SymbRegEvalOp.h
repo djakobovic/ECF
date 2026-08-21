@@ -3,7 +3,7 @@
 
 
 /**
- * \defgroup apsymbreg Symbolic regression (Analytic Programming)
+ * \defgroup apsymbreg Symbolic regression with Analytic Programming (AP)
  * \ingroup examples
  * \brief Symbolic regression example - illustration for APGenotype genotype
  *
@@ -24,7 +24,7 @@
  * \ingroup apsymbreg
  * \brief Symbolic regression evaluation operator (using AP genotype).
  */
-class SymbRegEvalOp : public EvaluateOp
+class APSymbRegEvalOp : public EvaluateOp
 {
 public:
 	FitnessP evaluate(IndividualP individual);
@@ -34,6 +34,6 @@ public:
 	uint nSamples;
 	bool useAPGenotype;
 };
-typedef std::shared_ptr<SymbRegEvalOp> SymbRegEvalOpP;
+typedef std::shared_ptr<APSymbRegEvalOp> APSymbRegEvalOpP;
 
 #endif // SymbRegEvalOp_h

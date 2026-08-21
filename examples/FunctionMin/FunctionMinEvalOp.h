@@ -7,7 +7,7 @@
 /**
  * \defgroup fmin Function minimization
  * \ingroup examples
- * \brief Function minimization example - using FloatingPoint or Binary genotype (see more on this example in help/tutorial.html)
+ * \brief Function minimization example - using FloatingPoint or Binary genotype (see more on this example in https://ecf.readthedocs.io/tutorial.html)
  *
  * \par Description
  * Tries to find the (global) minimum of a continuous multidimensional function.

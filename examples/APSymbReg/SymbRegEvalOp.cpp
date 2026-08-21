@@ -4,7 +4,7 @@
 
 
 // called only once, before the evolution – generates training data
-bool SymbRegEvalOp::initialize(StateP state)
+bool APSymbRegEvalOp::initialize(StateP state)
 {
 	nSamples = 10;
 	double x = -10;
@@ -23,7 +23,7 @@ bool SymbRegEvalOp::initialize(StateP state)
 }
 
 
-FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
+FitnessP APSymbRegEvalOp::evaluate(IndividualP individual)
 {
 	// we try to minimize the function value, so we use FitnessMin fitness (for minimization problems)
 	FitnessP fitness (new FitnessMin);

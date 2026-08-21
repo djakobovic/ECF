@@ -4,22 +4,27 @@
 #include <sstream>
 #include <fstream>
 
+#include "CGP/Cartesian.h"
+#include "CGP/Cartesian_c.h"
+
 
 // called only once, before the evolution - generates training data
-bool SymbRegEvalOp::initialize(StateP state)
+bool CGPSymbRegEvalOp::initialize(StateP state)
 {
-	nSamples = 10;
-	inputs.resize(nSamples);
+	nSamples_ = 10;
+	inputs_.resize(nSamples_);
+	x1.clear(); x2.clear(); x3.clear();
+	y1.clear(); y2.clear(); y3.clear();
 
-	for(uint i = 0; i < nSamples; i++) {
+	for(uint i = 0; i < nSamples_; i++) {
 		x1.push_back(i + 1);
 		x2.push_back(i + 5);
-		x3.push_back(nSamples - i);
+		x3.push_back(nSamples_ - i);
 
-		inputs[i].resize(3);
-		inputs[i][0] = x1[i];
-		inputs[i][1] = x2[i];
-		inputs[i][2] = x3[i];
+		inputs_[i].resize(3);
+		inputs_[i][0] = x1[i];
+		inputs_[i][1] = x2[i];
+		inputs_[i][2] = x3[i];
 
 		y1.push_back(x1[i] + x2[i]*x1[i] - x3[i]);
 		y2.push_back(x1[i] * x3[i]);
@@ -36,20 +41,16 @@ bool SymbRegEvalOp::initialize(StateP state)
 }
 
 
-FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
+FitnessP CGPSymbRegEvalOp::evaluate(IndividualP individual)
 {
 	FitnessP fitness (new FitnessMin);
 	Cartesian::Cartesian* cartesian = (Cartesian::Cartesian*) individual->getGenotype().get();
 
-	//int solution[] = { 0, 0, 1, 1, 3, 2, 4 };
-	//for (int i = 0; i < 7; i++)
-	//	cartesian->operator[](i) = solution[i];
-
 	double currentFitness = 0;
 	std::vector<double> result;
 
-	for(uint i = 0; i < nSamples; i++)	{
-		cartesian->evaluate(inputs[i], result);
+	for(uint i = 0; i < nSamples_; i++)	{
+		cartesian->evaluate(inputs_[i], result);
 
 		currentFitness += fabs(result[0] - y1[i]);
 		currentFitness += fabs(result[1] - y2[i]);

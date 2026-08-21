@@ -17,14 +17,14 @@
 //#define XCS_DEBUG
 
 
-/** \defgroup xcs XCS learning classifier system
-	\ingroup algorithms
+/** defgroup xcs XCS learning classifier system
+	ingroup algorithms
 */
 
 
 /**
-* \brief XCS classifier system
-* \ingroup algorithms xcs
+* brief XCS classifier system
+* ingroup algorithms xcs
 */
 class XCS : public Algorithm
 {

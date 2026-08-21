@@ -1,10 +1,10 @@
 #ifndef Cartesian_h_h
 #define Cartesian_h_h
 
-// genotype
+// genotype declaration
 #include "Cartesian_c.h"
 
-// function set - put all avaliable function names and objects there
+// function set
 #include "FunctionSet.h"
 
 // available functions
@@ -21,16 +21,5 @@
 #include "Pos.h"
 #include "Min.h"
 #include "Max.h"
-
-// crossover operators
-#include "CartesianCrxOnePoint.h"
-#include "CartesianCrxHalfUniform.h"
-#include "CartesianCrxUniform.h"
-
-// mutation operators
-#include "CartesianMutOnePoint.h"
-#include "CartesianMutNonSilent.h"
-#include "CartesianMutSilent.h"
-#include "CartesianMutNewParameterLess.h"
 
 #endif /* Cartesian_h_h */

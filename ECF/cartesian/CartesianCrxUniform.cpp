@@ -19,22 +19,27 @@ bool CartesianCrxUniform::initialize(StateP state)
 
 bool CartesianCrxUniform::mate(GenotypeP gen1, GenotypeP gen2, GenotypeP child)
 {
-	//std::cout << "Cartesian cross unifrom" << std::endl;
 	Cartesian* p1 = (Cartesian*) (gen1.get());
 	Cartesian* p2 = (Cartesian*) (gen2.get());
 	Cartesian* ch = (Cartesian*) (child.get());
 
+	// cross function nodes
 	int randomParentChooser;
-	for(unsigned long i = 0; i < p1->size(); i++) {
+	for(uint i = 0; i < p1->nodes_.size(); i++) {
 		randomParentChooser = state_->getRandomizer()->getRandomInteger(0, 1);
-		switch (randomParentChooser) {
-			case 0:
-				ch->at(i) = p1->at(i);
-				break;
-			default:
-				ch->at(i) = p2->at(i);
-				break;
-		}
+		if (randomParentChooser) 
+			ch->nodes_[i] = p1->nodes_[i];
+		else
+			ch->nodes_[i] = p2->nodes_[i];
+	}
+
+	// cross outputs
+	for (uint i = 0; i < p1->nOutputs_; i++) {
+		randomParentChooser = state_->getRandomizer()->getRandomInteger(0, 1);
+		if (randomParentChooser)
+			ch->outputs_[i] = p1->outputs_[i];
+		else
+			ch->outputs_[i] = p2->outputs_[i];
 	}
 
 	return true;

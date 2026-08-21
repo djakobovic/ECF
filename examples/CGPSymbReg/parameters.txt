@@ -7,22 +7,24 @@
 	<Genotype>
 		<Cartesian>
 			<Entry key="numvariables">3</Entry>
-			<Entry key="numoutputs">2</Entry>
+			<Entry key="numoutputs">3</Entry>
 			<Entry key="numrows">2</Entry>
 			<Entry key="numcols">5</Entry>
-			<Entry key="levelsback">3</Entry>
-			<Entry key="functionset">+ * - / pos min max</Entry>
+			<Entry key="levelsback">5</Entry>
+			<Entry key="functionset">+ * - / min max step sqrt sin cos</Entry>
+			<Entry key="constantset"> 1 </Entry>
 		</Cartesian>
 	</Genotype>
-			<Entry key="functionset">+ * - / pos min max sqrt ln</Entry>
 
 	<Registry>
-		<Entry key="population.size">1000</Entry>
+		<Entry key="population.size">250</Entry>
 		<Entry key="mutation.indprob">0.7</Entry>
-		<Entry key="term.maxgen">50</Entry>
+		<Entry key="term.maxgen">250</Entry>
 		<Entry key="term.fitnessval">0</Entry>
-		<Entry key="log.level">4</Entry>
+		<Entry key="log.level">3</Entry>
 		<Entry key="log.frequency">1</Entry>
 		<Entry key="log.filename">log.txt</Entry>
+		<Entry key="batch.repeats">0</Entry>
+		<Entry key="batch.statsfile">stats.txt</Entry>
 	</Registry>
 </ECF>

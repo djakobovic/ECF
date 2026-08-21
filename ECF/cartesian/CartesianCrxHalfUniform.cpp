@@ -19,27 +19,27 @@ bool CartesianCrxHalfUniform::initialize(StateP state)
 
 bool CartesianCrxHalfUniform::mate(GenotypeP gen1, GenotypeP gen2, GenotypeP child)
 {
-	//std::cout << "Cartesian half unifrom" << std::endl;
 	Cartesian* p1 = (Cartesian*) (gen1.get());
 	Cartesian* p2 = (Cartesian*) (gen2.get());
 	Cartesian* ch = (Cartesian*) (child.get());
 
-	int randomHalf = state_->getRandomizer()->getRandomInteger(0, 1);
-	uint begin = randomHalf * p1->size() / 2, end = begin + p1->size() / 2;
-	if (randomHalf)
-		*ch = *p2;
-	else
-		*ch = *p1;
-	for(uint i = begin; i < end; i++) {
-		int randomParentChooser = state_->getRandomizer()->getRandomInteger(0, 1);
-		switch (randomParentChooser) {
-			case 0:
-				ch->at(i) = p1->at(i);
-				break;
-			default:
-				ch->at(i) = p2->at(i);
-				break;
-		}
+	// copy all from 1st parent
+	ch->nodes_ = p1->nodes_;
+	ch->outputs_ = p1->outputs_;
+
+	// cross function nodes
+	int geneSwitch;
+	for (uint i = 0; i < p1->nodes_.size(); i++) {
+		geneSwitch = state_->getRandomizer()->getRandomInteger(0, 1);
+		if (geneSwitch)
+			ch->nodes_[i] = p2->nodes_[i];
+	}
+
+	// cross outputs
+	for (uint i = 0; i < p1->nOutputs_; i++) {
+		geneSwitch = state_->getRandomizer()->getRandomInteger(0, 1);
+		if (geneSwitch)
+			ch->outputs_[i] = p2->outputs_[i];
 	}
 
 	return true;

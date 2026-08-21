@@ -220,6 +220,33 @@ Currently supported genotypes and associated operators are:
 
 .. code-block:: xml
 
+   <APGenotype>
+		<Entry key="crx.arithmetic">0</Entry>
+		<Entry key="crx.arithmeticsimple">0</Entry>
+		<Entry key="crx.arithmeticsingle">0</Entry>
+		<Entry key="crx.average">0</Entry>
+		<Entry key="crx.bga">0</Entry>
+		<Entry key="crx.blxalpha">0</Entry>
+		<Entry key="crx.blxalphabeta">0</Entry>
+		<Entry key="crx.discrete">0</Entry>
+		<Entry key="crx.flat">0</Entry>
+		<Entry key="crx.heuristic">0</Entry>
+		<Entry key="crx.local">0</Entry>
+		<Entry key="crx.onepoint">0</Entry>
+		<Entry key="crx.sbx">0</Entry>
+		<Entry key="dimension">1</Entry>
+		<!-- number of real valued variables (mandatory) -->
+		<Entry key="functionset"></Entry>
+		<!-- set of functional tree elements (mandatory) -->
+		<Entry key="lbound">-10</Entry>
+		<!-- lower bound for each variable (mandatory) -->
+		<Entry key="mut.simple">0</Entry>
+		<Entry key="terminalset"></Entry>
+		<!-- set of terminal tree elements (mandatory) -->
+		<Entry key="ubound">10</Entry>
+		<!-- upper bound for each variable (mandatory) -->
+   </APGenotype>
+
    <Binary>
        <Entry key="crx.halfuniform">0</Entry>
        <Entry key="crx.nongeometric">0</Entry>
@@ -255,6 +282,26 @@ Currently supported genotypes and associated operators are:
        <!-- number of bits (mandatory) -->
    </BitString>
 
+   <Cartesian>
+		<Entry key="crx.halfuniform">0</Entry>
+		<Entry key="crx.onepoint">0</Entry>
+		<Entry key="crx.uniform">0</Entry>
+		<Entry key="functionset"></Entry>
+		<!-- set of functions to use (default: none) -->
+		<Entry key="levelsback">2</Entry>
+		<!-- number of previous columns to be used as possible inputs (default: 2) -->
+		<Entry key="mut.newparameterless">0</Entry>
+		<Entry key="mut.nonsilent">0</Entry>
+		<Entry key="numcols">10</Entry>
+		<!-- number of columns (default: 10) -->
+		<Entry key="numoutputs">1</Entry>
+		<!-- number of functional outputs (default: 1) -->
+		<Entry key="numrows">1</Entry>
+		<!-- number of rows (default: 1) -->
+		<Entry key="numvariables">1</Entry>
+		<!-- number of input variables (default: 1) -->
+   </Cartesian>
+
    <FloatingPoint>
        <Entry key="crx.arithmetic">0</Entry>
        <Entry key="crx.arithmeticsimple">0</Entry>
@@ -277,6 +324,12 @@ Currently supported genotypes and associated operators are:
        <Entry key="ubound">10</Entry>
        <!-- upper bound for each variable (mandatory) -->
    </FloatingPoint>
+
+   <IntGenotype>
+		<Entry key="lbound">-10</Entry>
+		<Entry key="size">1</Entry>
+		<Entry key="ubound">10</Entry>
+   </IntGenotype>
 
    <Permutation>
        <Entry key="crx.COSA">0</Entry>
@@ -340,7 +393,6 @@ parameters "crossover.protected" or "mutation.protected", e.g.
 
     <Entry key="mutation.protected">1 2 </Entry>
     <Entry key="crossover.protected">0 2 </Entry>
-
  
 
 5. Using multiple genotypes
@@ -602,6 +654,33 @@ par.txt'.
 
    <Genotype> <!-- mandatory parameters are commented -->
 
+   <APGenotype>
+		<Entry key="crx.arithmetic">0</Entry>
+		<Entry key="crx.arithmeticsimple">0</Entry>
+		<Entry key="crx.arithmeticsingle">0</Entry>
+		<Entry key="crx.average">0</Entry>
+		<Entry key="crx.bga">0</Entry>
+		<Entry key="crx.blxalpha">0</Entry>
+		<Entry key="crx.blxalphabeta">0</Entry>
+		<Entry key="crx.discrete">0</Entry>
+		<Entry key="crx.flat">0</Entry>
+		<Entry key="crx.heuristic">0</Entry>
+		<Entry key="crx.local">0</Entry>
+		<Entry key="crx.onepoint">0</Entry>
+		<Entry key="crx.sbx">0</Entry>
+		<Entry key="dimension">1</Entry>
+		<!-- number of real valued variables (mandatory) -->
+		<Entry key="functionset"></Entry>
+		<!-- set of functional tree elements (mandatory) -->
+		<Entry key="lbound">-10</Entry>
+		<!-- lower bound for each variable (mandatory) -->
+		<Entry key="mut.simple">0</Entry>
+		<Entry key="terminalset"></Entry>
+		<!-- set of terminal tree elements (mandatory) -->
+		<Entry key="ubound">10</Entry>
+		<!-- upper bound for each variable (mandatory) -->
+   </APGenotype>
+
    <Binary>
        <Entry key="crx.halfuniform">0</Entry>
        <Entry key="crx.nongeometric">0</Entry>
@@ -637,6 +716,26 @@ par.txt'.
        <!-- number of bits (mandatory) -->
    </BitString>
 
+   <Cartesian>
+		<Entry key="crx.halfuniform">0</Entry>
+		<Entry key="crx.onepoint">0</Entry>
+		<Entry key="crx.uniform">0</Entry>
+		<Entry key="functionset"></Entry>
+		<!-- set of functions to use (default: none) -->
+		<Entry key="levelsback">2</Entry>
+		<!-- number of previous columns to be used as possible inputs (default: 2) -->
+		<Entry key="mut.newparameterless">0</Entry>
+		<Entry key="mut.nonsilent">0</Entry>
+		<Entry key="numcols">10</Entry>
+		<!-- number of columns (default: 10) -->
+		<Entry key="numoutputs">1</Entry>
+		<!-- number of functional outputs (default: 1) -->
+		<Entry key="numrows">1</Entry>
+		<!-- number of rows (default: 1) -->
+		<Entry key="numvariables">1</Entry>
+		<!-- number of input variables (default: 1) -->
+   </Cartesian>
+
    <FloatingPoint>
        <Entry key="crx.arithmetic">0</Entry>
        <Entry key="crx.arithmeticsimple">0</Entry>
@@ -659,6 +758,12 @@ par.txt'.
        <Entry key="ubound">10</Entry>
        <!-- upper bound for each variable (mandatory) -->
    </FloatingPoint>
+
+   <IntGenotype>
+		<Entry key="lbound">-10</Entry>
+		<Entry key="size">1</Entry>
+		<Entry key="ubound">10</Entry>
+   </IntGenotype>
 
    <Permutation>
        <Entry key="crx.COSA">0</Entry>
@@ -763,11 +868,5 @@ par.txt'.
        <!-- max number of seconds to run (default: none) -->
        <Entry key="term.stagnation">50</Entry>
        <!-- max number of consecutive generations without improvement (default: 5000 / pop_size) -->
-
-       <!-- parallel ECF parameters: -->
-       <Entry key="parallel.type">eval</Entry> <!-- implicit parallelization method: eval - evaluation, mut - mutation + eval -->
-       <Entry key="parallel.sync">0</Entry> <!-- implicit parallelization synchronicity: 0 - async, 1 - sync -->
-       <Entry key="parallel.jobsize">10</Entry> <!-- implicit parallelization jobsize (individuals per job) -->
    </Registry>
    </ECF>
-

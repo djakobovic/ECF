@@ -2,22 +2,35 @@
 #define Cartesian_h
 #include "../ECF_base.h"
 #include "../Genotype.h"
+#include "Node.h"
+#include "Function.h"
 
 
 namespace Cartesian {
 
+/**
+* \defgroup cgp Cartesian
+* \ingroup genotypes
+*/
+
 class FunctionSet;
 typedef std::shared_ptr<FunctionSet> FunctionSetP;
 
+
 /**
-CGP je trenutno vektor indeksa funkcija i oznaka prethodnih gena kao operanada.
-TODO: preraditi u vektor gena, gdje jedan gen predstavlja skup indeksa cvora u CGP mrezi.
-*/
-class Cartesian : public std::vector<uint>, public Genotype
+ * \ingroup genotypes cgp
+ * CGP (Cartesian genetic programming) is implemented as a vector of Nodes and final output connections.
+ * 
+ * Nodes can be input nodes (variables and constants) or function nodes.
+ * A function Node points to a function primitive which has a predefined number of arguments.
+ */
+class Cartesian : public Genotype
 {
 public:
 	Cartesian(void);
 	~Cartesian(void);
+
+	Cartesian(const Cartesian& other) = default;
 
 	/**
 	 * Initialize a genotype object (read parameters, perform sanity check, build data)
@@ -54,37 +67,58 @@ public:
 	 */
 	void write(XMLNode &xCart);
 
+	/**
+	 * Returns number of mutable genotype elements (function and output nodes)
+	 */
 	uint getGenomeSize();
 
 	/**
-	Build random genotype choosing input connections, outputs and functions
-	*/
+	 * Build random genotype choosing functions and argument connections
+	 */
 	void buildRandomGenome();
 
 	/**
-	Return result for required inputs (optional: from node with index funcNum) 
-	*/
+	 * Calculate CGP results for given inputs 
+	 */
 	void evaluate(std::vector<double>& inputData, std::vector<double>& results);
 
-	uint randomConnectionGenerator(uint column);
+	/**
+	 * Return a random connection from given column, considering levels_back
+	 */
+	uint randomNodeInputConnection(uint column);
 
-	FunctionSetP functionSet;		//!< function nodes
+	/**
+	 * Return a random connection for the output (currently excludes input nodes)
+	 */
+	uint randomOutputConnection();
+
+	/**
+	 * Build a vector with indexes of active function nodes (excluding input nodes)
+	 */
+	void getActiveFunctionNodes(std::vector<uint>&);
+
+protected:
+	void addRecursivelyActiveFunctionNodes(std::vector<bool>& activeFlags, uint node);
 
 public:
 	StateP state_;					//!< local copy of state
+	FunctionSetP functionSet_;		//!< pointer to function set
+	std::vector<Node> nodes_;       //!< genotype nodes (input nodes and function nodes)
+	std::vector<uint> outputs_;     //!< output nodes
+	std::vector<double> constants_; //!< input nodes with constant values
 
 	// user defined parameters
-	uint nVariables;				//!< number of input variables
-	uint nConstants;				//!< number of input constants
-	uint nOutputs;					//!< number of final outputs
-	uint nRows;						//!< number of rows
-	uint nCols;						//!< number of columns
-	uint nLevelsBack;				//!< levels back parameter		
-	uint nFunctions;				//!< number of functions
+	uint nVariables_;				//!< number of input variables
+	uint nConstants_;				//!< number of input constants
+	uint nOutputs_;					//!< number of final outputs
+	uint nRows_;					//!< number of rows
+	uint nCols_;					//!< number of columns
+	uint nLevelsBack_;				//!< levels back parameter		
+	uint nFunctions_;				//!< number of used functions
 
 	// derived parameters
-	uint nInputs;					//!< total number of inputs (including constants)
-	uint maxArity;					//!< max number of inputs for all function nodes (gates)
+	uint nInputs_;					//!< total number of inputs (variables and constants)
+	uint maxArity_;					//!< max number of inputs for all function nodes
 };
 
 }

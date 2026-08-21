@@ -9,9 +9,10 @@ FunctionSet::FunctionSet()
 
 bool FunctionSet::initialize(StateP state)
 {
-	// TODO: initialize map with all functions
-
 	state_ = state;
+	vFunctions.clear();
+	mFunctionSet.clear();
+	mAllFunctions.clear();
 
 	// register existing functions
 	FunctionP func = (FunctionP) (new Add);
@@ -60,15 +61,13 @@ bool FunctionSet::initialize(StateP state)
 
 bool FunctionSet::addFunction(std::string name)
 {
-	// mark given function as active (add to vector of used functions)
-
 	func_iter iter = mAllFunctions.find(name);
 	// if not found, return false
 	if(iter == mAllFunctions.end())
 		return false;
 
 	vFunctions.push_back(iter->second);
-	mFunctionSet[iter->first] = vFunctions.size() - 1;
+	mFunctionSet[iter->first] = (uint) vFunctions.size() - 1;
 
 	return true;
 }

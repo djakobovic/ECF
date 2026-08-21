@@ -5,7 +5,7 @@
 /**
  * \defgroup onemax OneMax problem
  * \ingroup examples
- * \brief OneMax example - illustration for BitString genotype (see more on this example in help/tutorial.html)
+ * \brief OneMax example - illustration for BitString genotype (see more on this example in https://ecf.readthedocs.io/tutorial.html)
  *
  * \par Description
  * The onemax optimization is a simple search which counts the ones in a bit string.

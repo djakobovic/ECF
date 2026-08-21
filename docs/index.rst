@@ -1,6 +1,6 @@
 
 **********************************************************
-Evolutionary Computation Framework - documentation (v 1.6)
+Evolutionary Computation Framework - documentation (v 1.7)
 **********************************************************
 
 Introduction

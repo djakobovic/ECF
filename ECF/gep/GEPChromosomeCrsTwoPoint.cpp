@@ -25,7 +25,7 @@ namespace GEP{
 		uint bitCrsSecond, tmp;
 		do
 		{
-			bitCrsSecond = state_->getRandomizer()->getRandomInteger(p1->size());
+			bitCrsSecond = state_->getRandomizer()->getRandomInteger((uint) p1->size());
 		} while (bitCrs == bitCrsSecond);
 
 		if (bitCrs>bitCrsSecond)

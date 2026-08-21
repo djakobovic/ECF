@@ -29,7 +29,7 @@ namespace Cartesian
 	template  <class T>
 	void SqrtT<T>::evaluate(std::vector<T> &inputs, T &result)
 	{
-		result = 0;
+		result = inputs[0];
 		if(inputs[0] > 0)
 			result = sqrt(inputs[0]);
 	}

@@ -2,7 +2,7 @@
 
 
 // called only once, before the evolution – generates training data
-bool SymbRegEvalOp::initialize(StateP state)
+bool GEPSymbRegEvalOp::initialize(StateP state)
 {
 	x.clear();
 	y.clear();
@@ -33,7 +33,7 @@ bool SymbRegEvalOp::initialize(StateP state)
 		X = x.at(i);
 		for (uint j = 0; j < nSamples; j++) {
 			Y = y.at(j);
-			// F1
+			// select target function
 			//f.push_back(sin(X) + sin(Y*Y)); // F2
 			//f.push_back(2*sin(X)*cos(Y)); // F3
 			f.push_back(X*Y + sin((X + 1)*(Y - 1))); // F4
@@ -44,7 +44,7 @@ bool SymbRegEvalOp::initialize(StateP state)
 	return true;
 }
 
-bool SymbRegEvalOp::csvRead(StateP state, std::string entry, std::vector<double>* vec){
+bool GEPSymbRegEvalOp::csvRead(StateP state, std::string entry, std::vector<double>* vec){
 	std::ifstream stream;
 	std::string line;
 	voidP sptr = state->getRegistry()->getEntry(entry);
@@ -57,15 +57,17 @@ bool SymbRegEvalOp::csvRead(StateP state, std::string entry, std::vector<double>
 	return true;
 }
 
-void SymbRegEvalOp::registerParameters(StateP state){
+void GEPSymbRegEvalOp::registerParameters(StateP state)
+{
 	// optional - read data from input files
-	/*state->getRegistry()->registerEntry("x.data", (voidP)(new std::string), ECF::STRING);
+	/*
+	state->getRegistry()->registerEntry("x.data", (voidP)(new std::string), ECF::STRING);
 	state->getRegistry()->registerEntry("y.data", (voidP)(new std::string), ECF::STRING);
 	state->getRegistry()->registerEntry("f.data", (voidP)(new std::string), ECF::STRING);
 	*/
 }
 
-FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
+FitnessP GEPSymbRegEvalOp::evaluate(IndividualP individual)
 {
 	// we try to minimize the function value, so we use FitnessMin fitness (for minimization problems)
 	FitnessP fitness(new FitnessMin);
@@ -75,10 +77,10 @@ FitnessP SymbRegEvalOp::evaluate(IndividualP individual)
 	// The system is multigenic. We iterate over every gene, transform it to a tree, execute it and link it with the results of its fellow genes
 	// The user specifies the linking function programatically or in the parameters
 
-	// a) just assemble the whole expression
+	// a) just assemble the whole genotype in a single expression to evaluate
 	gep->assemble();
 
-	//// b) Transform genes into subtrees and store them in a vector
+	//// b) or transform genes into subtrees and store them in a vector to evaluate separately
 	//std::vector<Tree::Tree*> tree;
 	//tree.push_back(gep->makeCellTree());
 	//for (uint g = 0; g < gep->genes; g++){

@@ -5,20 +5,16 @@
 
 
 namespace Cartesian {
+
 /**
- * \brief Cartesian genotype: one point mutation operator
- */
+  * \ingroup genotypes cgp
+  * Cartesian genotype: one point mutation operator
+  * Mutation point is randomly chosen among all genes in genotype (active or not). 
+  * Chosen mutation point might be function or output node. 
+  */
 class CartesianMutOnePoint: public MutationOp 
 {
-protected:
-	double mutProb_;
-
 public:
-	/**
-	Mutation point is randomly chosen among all integer values in genotype.
-	Chosen mutation point might be input connection, function or output. 
-	Predetermined rules are applied in order to obtain valid genotype by mutation.
-	*/
 	bool mutate(GenotypeP gene);
 	bool initialize(StateP);
 	void registerParameters(StateP);

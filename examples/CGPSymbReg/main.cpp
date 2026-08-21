@@ -6,13 +6,13 @@ int main(int argc, char **argv)
 {
 	StateP state(new State);
 
-	CartesianP cgp (new Cartesian::Cartesian);
-	state->addGenotype(cgp);
+	state->setEvalOp(new CGPSymbRegEvalOp);
 
-	state->setEvalOp(new SymbRegEvalOp);
-
-	state->initialize(argc, argv);
+	if (!state->initialize(argc, argv))
+		return 1;
 	state->run();
+
+	return 0;
 
 	// optional block: write best individual to 'best.txt'
 	std::vector<IndividualP> hof = state->getHoF()->getBest();

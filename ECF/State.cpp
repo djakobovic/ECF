@@ -776,7 +776,11 @@ bool State::initialize(int argc, char **argv)
 
 	} // try
 
-	catch(std::string& msg) {
+	catch (const std::exception& e)
+	{
+		std::cout << "Initialization exception: " << e.what();
+	}
+	catch(const std::string& msg) {
 		std::cout << msg << std::endl;
 	}
 	catch(const char* msg) {
@@ -1067,82 +1071,92 @@ bool State::run()
 		return true;
 	}
 
-	startTime_ = time(NULL);
-	std::string stime = ctime(&startTime_);
-	ECF_LOG(this, 3, "Start time: " + stime);
-	// adjust with previous runtime (from milestone)
-	startTime_ -= milestoneElapsedTime_;
+	try {
+		startTime_ = time(NULL);
+		std::string stime = ctime(&startTime_);
+		ECF_LOG(this, 3, "Start time: " + stime);
+		// adjust with previous runtime (from milestone)
+		startTime_ -= milestoneElapsedTime_;
 
-	// evaluate initial population
-	ECF_LOG(this, 2, "Evaluating initial population...");
-	algorithm_->initializePopulation(state_);
-
-	currentTime_ = time(NULL);
-	elapsedTime_ = currentTime_ - startTime_;
-	ECF_LOG(this, 2, "Generation: " + uint2str(context_->generationNo_));
-	ECF_LOG(this, 2, "Elapsed time: " + uint2str((uint) elapsedTime_));
-	population_->updateDemeStats();
-
-	// call user-defined operators
-	ECF_LOG(this, 5, "Calling user defined operators...");
-	for(uint i = 0; i < activeUserOps_.size(); i++)
-		activeUserOps_[i]->operate(state_);
-
-	// termination ops
-	ECF_LOG(this, 5, "Checking termination conditions...");
-	for(uint i = 0; i < activeTerminationOps_.size(); i++)
-		activeTerminationOps_[i]->operate(state_);
-
-	// run the algorithm
-	while(context_->bTerminate_ == false) {
-		context_->generationNo_++;
-		ECF_LOG(this, 5, "Calling the active algorithm");
-		algorithm_->advanceGeneration(state_);
+		// evaluate initial population
+		ECF_LOG(this, 2, "Evaluating initial population...");
+		algorithm_->initializePopulation(state_);
 
 		currentTime_ = time(NULL);
 		elapsedTime_ = currentTime_ - startTime_;
 		ECF_LOG(this, 2, "Generation: " + uint2str(context_->generationNo_));
-		ECF_LOG(this, 2, "Elapsed time: " + uint2str((uint) elapsedTime_));
-
+		ECF_LOG(this, 2, "Elapsed time: " + uint2str((uint)elapsedTime_));
 		population_->updateDemeStats();
-
-		IndividualP bestInd = this->getPopulation()->getHof()->getBest().at(0);
-		ECF_LOG(this, 4, "Generation best:\n" + bestInd->toString());
 
 		// call user-defined operators
 		ECF_LOG(this, 5, "Calling user defined operators...");
-		for(uint i = 0; i < activeUserOps_.size(); i++)
+		for (uint i = 0; i < activeUserOps_.size(); i++)
 			activeUserOps_[i]->operate(state_);
 
 		// termination ops
 		ECF_LOG(this, 5, "Checking termination conditions...");
-		for(uint i = 0; i < activeTerminationOps_.size(); i++)
+		for (uint i = 0; i < activeTerminationOps_.size(); i++)
 			activeTerminationOps_[i]->operate(state_);
 
-		if(context_->bTerminate_)
-			logger_->saveTo(true);
-		else
-			logger_->saveTo();
+		// run the algorithm
+		while (context_->bTerminate_ == false) {
+			context_->generationNo_++;
+			ECF_LOG(this, 5, "Calling the active algorithm");
+			algorithm_->advanceGeneration(state_);
 
-		if(bSaveMilestone_ && 
+			currentTime_ = time(NULL);
+			elapsedTime_ = currentTime_ - startTime_;
+			ECF_LOG(this, 2, "Generation: " + uint2str(context_->generationNo_));
+			ECF_LOG(this, 2, "Elapsed time: " + uint2str((uint)elapsedTime_));
+
+			population_->updateDemeStats();
+
+			IndividualP bestInd = this->getPopulation()->getHof()->getBest().at(0);
+			ECF_LOG(this, 4, "Current best:\n" + bestInd->toString());
+
+			// call user-defined operators
+			ECF_LOG(this, 5, "Calling user defined operators...");
+			for (uint i = 0; i < activeUserOps_.size(); i++)
+				activeUserOps_[i]->operate(state_);
+
+			// termination ops
+			ECF_LOG(this, 5, "Checking termination conditions...");
+			for (uint i = 0; i < activeTerminationOps_.size(); i++)
+				activeTerminationOps_[i]->operate(state_);
+
+			if (context_->bTerminate_)
+				logger_->saveTo(true);
+			else
+				logger_->saveTo();
+
+			if (bSaveMilestone_ &&
 				milestoneInterval_ > 0 && context_->generationNo_ % milestoneInterval_ == 0)
+				saveMilestone();
+
+			migration_->operate(state_);
+		}
+
+		// output HallOfFame
+		XMLNode xHoF;
+		population_->getHof()->write(xHoF);
+		char* out = xHoF.createXMLString(true);
+		ECF_LOG(this, 1, "\nBest of run: \n" + std::string(out));
+		freeXMLString(out);
+
+		logger_->saveTo(true);
+		if (bSaveMilestone_)
 			saveMilestone();
 
-		migration_->operate(state_);
+		logger_->closeLog();
 	}
-
-	// output HallOfFame
-	XMLNode xHoF;
-	population_->getHof()->write(xHoF);
-	char *out = xHoF.createXMLString(true);
-	ECF_LOG(this, 1, "\nBest of run: \n" + std::string(out));
-	freeXMLString(out);
-
-	logger_->saveTo(true);
-	if(bSaveMilestone_)
-		saveMilestone();
-
-	logger_->closeLog();
+	catch (const std::exception& e)
+	{
+		std::cout << "Runtime exception: " << e.what();
+	}
+	catch (...)
+	{
+		cout << "Unkown error in algorithm run!";
+	}
 
 	return true;
 }

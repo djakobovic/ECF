@@ -28,8 +28,8 @@ namespace Cartesian
 	template <class T>
 	void MulT<T>::evaluate(std::vector<T> &inputs, T &result)
 	{
-		double product = 1;
-		for(uint i = 0; i < nArguments_; ++i)
+		T product = inputs[0];
+		for(uint i = 1; i < nArguments_; ++i)
 		{
 		   product *= inputs[i];
 		}

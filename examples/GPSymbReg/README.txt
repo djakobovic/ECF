@@ -2,10 +2,6 @@
 Symbolic regression example - illustration for Tree genotype (see more on this example in documentation).
 
 
-Running the example
-	Windows: compile the provided VisualStudio solution in 'VS' directory (having previously compiled the ECF_lib solution)
-	Linux: compile with the provided 'Makefile' (having previously compiled the ECF library)
-
 Description
     The objective is to find a symbolic form of an unknown function (i.e. find a mapping between the given set of input and output values). The fitness is defined with total error for the given set of output values.
 

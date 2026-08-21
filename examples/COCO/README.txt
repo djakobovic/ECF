@@ -2,10 +2,6 @@
 Function minimization example with BBoB function minimization (from http://coco.gforge.inria.fr).
 
 
-Running the example (more info in help/install.html)
-	Windows: compile the provided VisualStudio solution in 'VS' directory (having previously compiled the ECF_lib solution)
-	Linux: compile with the provided 'Makefile' (having previously compiled the ECF library)
-
 Description
 	Tries to find the (global) minimum of a continuous multidimensional function. The example uses either FloatingPoint or Binary genotype. Functions are implemented in Black-Box Optimization Benchmarking package available at http://coco.gforge.inria.fr. 
 	The location of the optimum is drawn uniformly from [-4, 4] in all dimensions for all functions. The value of the optimum of all functions is set to zero in this example (in original BBoB package the value is in [-100, 100]). 
@@ -30,4 +26,3 @@ References
 
 	http://coco.gforge.inria.fr
 	http://coco.lri.fr/downloads/download11.06/bbobdocfunctions.pdf
-

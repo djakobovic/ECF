@@ -186,10 +186,9 @@
     <ClInclude Include="..\..\ECF\cartesian\CartesianCrxHalfUniform.h" />
     <ClInclude Include="..\..\ECF\cartesian\CartesianCrxOnePoint.h" />
     <ClInclude Include="..\..\ECF\cartesian\CartesianCrxUniform.h" />
-    <ClInclude Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.h" />
     <ClInclude Include="..\..\ECF\cartesian\CartesianMutNonSilent.h" />
     <ClInclude Include="..\..\ECF\cartesian\CartesianMutOnePoint.h" />
-    <ClInclude Include="..\..\ECF\cartesian\CartesianMutSilent.h" />
+    <ClInclude Include="..\..\ECF\cartesian\CartesianMutOnePointActive.h" />
     <ClInclude Include="..\..\ECF\cartesian\Cartesian_c.h" />
     <ClInclude Include="..\..\ECF\cartesian\Cos.h" />
     <ClInclude Include="..\..\ECF\cartesian\Div.h" />
@@ -200,6 +199,7 @@
     <ClInclude Include="..\..\ECF\cartesian\Min.h" />
     <ClInclude Include="..\..\ECF\cartesian\Mul.h" />
     <ClInclude Include="..\..\ECF\cartesian\Nlog.h" />
+    <ClInclude Include="..\..\ECF\cartesian\Node.h" />
     <ClInclude Include="..\..\ECF\cartesian\Pos.h" />
     <ClInclude Include="..\..\ECF\cartesian\Sin.h" />
     <ClInclude Include="..\..\ECF\cartesian\Sqrt.h" />
@@ -365,10 +365,9 @@
     <ClCompile Include="..\..\ECF\cartesian\CartesianCrxHalfUniform.cpp" />
     <ClCompile Include="..\..\ECF\cartesian\CartesianCrxOnePoint.cpp" />
     <ClCompile Include="..\..\ECF\cartesian\CartesianCrxUniform.cpp" />
-    <ClCompile Include="..\..\ECF\cartesian\CartesianMutNewParameterLess.cpp" />
     <ClCompile Include="..\..\ECF\cartesian\CartesianMutNonSilent.cpp" />
     <ClCompile Include="..\..\ECF\cartesian\CartesianMutOnePoint.cpp" />
-    <ClCompile Include="..\..\ECF\cartesian\CartesianMutSilent.cpp" />
+    <ClCompile Include="..\..\ECF\cartesian\CartesianMutOnePointActive.cpp" />
     <ClCompile Include="..\..\ECF\cartesian\FunctionSet.cpp" />
     <ClCompile Include="..\..\ECF\Crossover.cpp" />
     <ClCompile Include="..\..\ECF\Deme.cpp" />

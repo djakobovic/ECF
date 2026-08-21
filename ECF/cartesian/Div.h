@@ -35,8 +35,6 @@ namespace Cartesian
 		result = fabs(inputs[1]) > MIN ? inputs[0] / inputs[1] : inputs[0];
 	}
 
-
-
 }
 
 #endif //Div_h

@@ -3,31 +3,30 @@
 
 
 /**
- * \defgroup symbreg Symbolic regression (GP)
+ * \defgroup gepsymbreg Symbolic regression with Gene Expression Programming (GEP)
  * \ingroup examples
- * \brief Symbolic regression example - illustration for Tree genotype (see more on this example in help/tutorial.html)
+ * \brief GEP symbolic regression example - illustration for GEP genotype
  *
  * \par Description
  * The objective is to find a symbolic form of an unknown function (i.e. find a mapping between the given set 
  * of input and output values). 
  * The fitness is defined with total error for the given set of output values.
  * 
- * \par Tree genotype parameters (in the config file)
- * - set of functions (inner tree nodes)
- * - set of terminals (variables and constants, tree leaves)
- * - min and max tree depth
+ * \par GEP genotype parameters (in the config file)
+ * - set of functions 
+ * - set of terminals (input variables and constants)
  *
  */
  
  
 /**
- * \ingroup symbreg
- * \brief Symbolic regression evaluation operator.
+ * \ingroup gepsymbreg
+ * \brief GEP symbolic regression evaluation operator.
  */
 #include <cmath>
 #include <ECF/ECF.h>
 #include <fstream>
-class SymbRegEvalOp : public EvaluateOp
+class GEPSymbRegEvalOp : public EvaluateOp
 {
 public:
 	FitnessP evaluate(IndividualP individual);
@@ -39,6 +38,6 @@ public:
 	std::vector<double> f;
 	uint nSamples;
 };
-typedef std::shared_ptr<SymbRegEvalOp> SymbRegEvalOpP;
+typedef std::shared_ptr<GEPSymbRegEvalOp> GEPSymbRegEvalOpP;
 
 #endif // SymbRegEvalOp_h

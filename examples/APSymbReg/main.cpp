@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	StateP state (new State);
 
 	// set the evaluation operator
-	state->setEvalOp(new SymbRegEvalOp);
+	state->setEvalOp(new APSymbRegEvalOp);
 
 	state->initialize(argc, argv);
 	state->run();

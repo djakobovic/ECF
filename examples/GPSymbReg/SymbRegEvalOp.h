@@ -5,7 +5,7 @@
 /**
  * \defgroup symbreg Symbolic regression (GP)
  * \ingroup examples
- * \brief Symbolic regression example - illustration for Tree genotype (see more on this example in help/tutorial.html)
+ * \brief Symbolic regression example - illustration for Tree genotype (see more on this example in https://ecf.readthedocs.io/tutorial.html)
  *
  * \par Description
  * The objective is to find a symbolic form of an unknown function (i.e. find a mapping between the given set 

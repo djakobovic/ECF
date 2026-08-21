@@ -432,6 +432,18 @@ example <http://ecf.zemris.fer.hr/html/group__symbreg.html>`__ in the manual.
 Tree genotype <gp.html>`__.
 
  
+4.1 Symbolic regression - alternatives to GP
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+Apart from the Tree genotype, symbolic regression in ECF may be performed with these additional genotypes (see respective examples):
+
+- `Gene Expression Programming (GEP) example <http://ecf.zemris.fer.hr/html/group__gepsymbreg.html>`_
+
+- `Cartesian Genetic Programming (CGP) example <http://ecf.zemris.fer.hr/html/group__cgpsymbreg.html>`_
+
+- `Analytic Programming (AP) example <http://ecf.zemris.fer.hr/html/group__apsymbreg.html>`_
+
+
 
 --------------
 

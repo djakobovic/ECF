@@ -1,10 +1,6 @@
 
-Artificial ant example.
+Artificial ant GP example.
 
-
-Running the example 
-	Windows: compile the provided VisualStudio solution in 'VS' directory (having previously compiled the ECF_lib solution)
-	Linux: compile with the provided 'Makefile' (having previously compiled the ECF library)
 
 Description
 	Evolves a control program for the artificial ant. The objective is to traverse a given environment and collect as many food items as possible. The ant 'sees' only a single location in front, and can only turn left, right or move forward. The food is eaten if the ant moves in the same location.

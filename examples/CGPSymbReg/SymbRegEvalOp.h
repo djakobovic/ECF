@@ -3,28 +3,28 @@
 
 
 /**
- * \defgroup symbreg Symbolic regression (GP)
+ * \defgroup cgpsymbreg Symbolic regression with Cartesian Genetic Programming (CGP)
  * \ingroup examples
- * \brief Symbolic regression example - illustration for Tree genotype (see more on this example in help/tutorial.html)
+ * \brief CGP symbolic regression example - illustration for Cartesian genotype 
  *
  * \par Description
  * The objective is to find a symbolic form of an unknown function (i.e. find a mapping between the given set 
  * of input and output values). 
  * The fitness is defined with total error for the given set of output values.
  * 
- * \par Tree genotype parameters (in the config file)
- * - set of functions (inner tree nodes)
- * - set of terminals (variables and constants, tree leaves)
- * - min and max tree depth
+ * \par Cartesian genotype parameters (in the config file)
+ * - set of functions 
+ * - set of terminals (input variables and constants)
+ * - genotype dimensions (rows, columns)
  *
  */
  
  
 /**
- * \ingroup symbreg
- * \brief Symbolic regression evaluation operator.
+ * \ingroup cgpsymbreg
+ * \brief CGP symbolic regression evaluation operator.
  */
-class SymbRegEvalOp : public EvaluateOp
+class CGPSymbRegEvalOp : public EvaluateOp
 {
 public:
 	FitnessP evaluate(IndividualP individual);
@@ -40,10 +40,9 @@ public:
 	std::vector<double> y2;
 	std::vector<double> y3;
 
-	std::vector< std::vector<double> > inputs;
-
-	uint nSamples;
+	std::vector< std::vector<double> > inputs_;
+	uint nSamples_;
 };
-typedef std::shared_ptr<SymbRegEvalOp> SymbRegEvalOpP;
+typedef std::shared_ptr<CGPSymbRegEvalOp> CGPSymbRegEvalOpP;
 
 #endif // SymbRegEvalOp_h

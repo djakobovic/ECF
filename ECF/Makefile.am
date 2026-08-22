@@ -156,10 +156,9 @@ pkginclude_cartesian_HEADERS = cartesian/Add.h \
 	cartesian/CartesianCrxHalfUniform.h \
 	cartesian/CartesianCrxOnePoint.h \
 	cartesian/CartesianCrxUniform.h \
-	cartesian/CartesianMutNewParameterLess.h \
+	cartesian/CartesianMutOnePointActive.h \
 	cartesian/CartesianMutNonSilent.h \
 	cartesian/CartesianMutOnePoint.h \
-	cartesian/CartesianMutSilent.h \
 	cartesian/Cartesian_c.h \
 	cartesian/Cos.h \
 	cartesian/Div.h \
@@ -171,7 +170,8 @@ pkginclude_cartesian_HEADERS = cartesian/Add.h \
 	cartesian/Sin.h \
 	cartesian/Sqrt.h \
 	cartesian/Step.h \ 
-	cartesian/Sub.h
+	cartesian/Sub.h \
+	cartesian/Node.h
 pkginclude_gep_HEADERS = gep/AlgGEP.h \
 	gep/GEPChromosome.h \
 	gep/GEPChromosomeCrsGene.h \
@@ -322,10 +322,9 @@ libecf_la_SOURCES += Algorithm.cpp \
 	cartesian/CartesianCrxHalfUniform.cpp \
 	cartesian/CartesianCrxOnePoint.cpp \
 	cartesian/CartesianCrxUniform.cpp \
-	cartesian/CartesianMutNewParameterLess.cpp \
+	cartesian/CartesianMutOnePointActive.cpp \
 	cartesian/CartesianMutNonSilent.cpp \
 	cartesian/CartesianMutOnePoint.cpp \
-	cartesian/CartesianMutSilent.cpp \
 	cartesian/FunctionSet.cpp \
 	xml/xmlParser.cpp \
 	xcs/AlgXCS.cpp \

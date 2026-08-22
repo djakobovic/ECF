@@ -1,6 +1,7 @@
 #ifndef CGPDiv_h
 #define CGPDiv_h
 #include "Function.h"
+#include <cmath>
 
 namespace Cartesian
 {

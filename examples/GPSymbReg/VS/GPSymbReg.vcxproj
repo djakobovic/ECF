@@ -117,7 +117,7 @@
       <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_57_0;../../../;C:\Program Files (x86)\boost\boost_1_51;C:\Program Files (x86)\boost\boost_1_47;C:\Program Files (x86)\boost\boost_1_38;C:\Program Files\boost\boost_1_38;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -154,7 +154,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_57_0;../../../;C:\Program Files (x86)\boost\boost_1_51;C:\Program Files (x86)\boost\boost_1_47;C:\Program Files (x86)\boost\boost_1_38;C:\Program Files\boost\boost_1_38;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>

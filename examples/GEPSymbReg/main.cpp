@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 	// initialize & run
 	state->initialize(argc, argv);
 
+	// optional: read individual from file
 	//XMLNode xInd = XMLNode::parseFile("./ind.xml", "Individual");
 	//IndividualP ind = (IndividualP) new Individual(state);
 	//ind->read(xInd);

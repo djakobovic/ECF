@@ -1,6 +1,7 @@
 #ifndef CGPCos_h
 #define CGPCos_h
 #include "Function.h"
+#include <cmath>
 
 namespace Cartesian
 {

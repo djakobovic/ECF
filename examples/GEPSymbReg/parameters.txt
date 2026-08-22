@@ -37,8 +37,8 @@
 		<Entry key="randomizer.seed">0</Entry>
 		<Entry key="population.size">100</Entry>
 		<Entry key="population.demes">1</Entry>
-		<Entry key="mutation.indprob">0.5</Entry>
-		<Entry key="term.maxgen">50</Entry>
+		<Entry key="mutation.indprob">0.7</Entry>
+		<Entry key="term.maxgen">250</Entry>
 		<Entry key="term.eval">50000</Entry>
 		<Entry key="term.fitnessval">0.00001</Entry>
 		<Entry key="log.level">3</Entry>

@@ -1,6 +1,7 @@
 #ifndef CGPSin_h
 #define CGPSin_h
 #include "Function.h"
+#include <cmath>
 
 namespace Cartesian
 {

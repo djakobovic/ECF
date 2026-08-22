@@ -9,9 +9,9 @@
 	<Registry>
 		<Entry key="randomizer.seed">0</Entry>
 		<Entry key="cec.function">1</Entry>
-		<Entry key="population.size">30</Entry>
+		<Entry key="population.size">300</Entry>
 		<Entry key="mutation.indprob">0.3</Entry>
-		<Entry key="term.maxgen">15000</Entry>
+		<Entry key="term.maxgen">1500</Entry>
 		<Entry key="term.stagnation">3000</Entry>
 		<Entry key="log.filename">log.txt</Entry>
 		<Entry key="log.frequency">100</Entry>
